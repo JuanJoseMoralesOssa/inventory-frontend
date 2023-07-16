@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './public/components/home/home.component';
 import { PathNotFoundComponent } from './public/components/errors/path-not-found/path-not-found.component';
+import { BoardsComponent } from './public/pages/boards/boards.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
     path: "",
     pathMatch: "full",
     redirectTo: "/home"
+  },
+  {
+    path: "boards",
+    component: BoardsComponent
   },
   {
     path: "security",

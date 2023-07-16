@@ -1,5 +1,70 @@
-<section class="max-w-7xl mx-auto border-x justify-between">
-  <app-logo-icon></app-logo-icon>
-  <a routerLink="home">Tu inventario</a>
+<header
+  class="3xl:max-w-7xl mx-auto border-x justify-between flex items-center bg-orange-700 border-gray-200 md:px-6 shadow-md">
+  <div class="flex flex-wrap justify-between items-center">
+    <div class="flex mx-4 my-3 items-center">
+      <a routerLink="home" class="flex"><app-logo-icon class="w-12"></app-logo-icon></a>
+      <a routerLink="home">
+        <p class="font-black text-xl text-white">Tu inventario</p>
+      </a>
+    </div>
+    <app-navbar></app-navbar>
+  </div>
+  <div class="p-2 flex items-center">
+    <div class="flex space-x-2">
+      <button class="text-white" type="button">
+        <fa-icon [icon]="faBell"></fa-icon>
+      </button>
+      <button class="text-white" type="button">
+        <fa-icon [icon]="faInfoCircle"></fa-icon>
+      </button>
+      <button type="button" class="flex rounded-full text-white" aria-expanded="false" type="button"
+        (click)="isOpen = !isOpen" cdkOverlayOrigin #menuOverlay="cdkOverlayOrigin">
+        <img loading="lazy" class="w-8 h-8 rounded-full" src="/assets/svg/profile-white.svg" alt="user photo">
+      </button>
+    </div>
+  </div>
+  <span id="navbar-toggle" (click)="openDialog()" class="text-white md:hidden pr-2 md:pr-0 relative">
+    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18 h16" />
+    </svg>
+  </span>
+</header>
 
-</section>
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="menuOverlay" [cdkConnectedOverlayOpen]="isOpen"
+  (overlayOutsideClick)="isOpen = !isOpen">
+  <div class="z-50 my-6 w-60 text-base list-none bg-white rounded divide-y divide-gray-100 shadow">
+    <div class="py-3 px-4 flex justify-between items-center">
+      <span class="block text-sm text-center text-gray-900">Cuenta</span>
+      <button (click)="isOpen = !isOpen" class="w-6 h-6 text-gray-900 font-semibold">
+        x
+      </button>
+    </div>
+    <div class="py-3 px-4 flex items-center space-x-4">
+      <img class="w-10 h-10 rounded-full" src="/assets/svg/profile.svg" alt="" />
+      <div class="space-y-1">
+        <div>Jese Leos</div>
+        <div class="text-sm text-gray-500">juan@gmail.com</div>
+      </div>
+    </div>
+    <ul class="py-1">
+      <li>
+        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">Profile</a>
+      </li>
+      <li>
+        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">Activity</a>
+      </li>
+      <li>
+        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">Cards</a>
+      </li>
+      <li>
+        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">Settings</a>
+      </li>
+    </ul>
+    <ul class="py-1">
+      <li>
+        <a href="#" class="block py-2 px-4 text-sm text-gray-700">Log out</a>
+      </li>
+    </ul>
+  </div>
+</ng-template>
