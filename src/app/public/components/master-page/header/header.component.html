@@ -1,34 +1,36 @@
 <header
-  class="3xl:max-w-7xl mx-auto border-x justify-between flex items-center bg-orange-700 border-gray-200 md:px-6 shadow-md">
+  class="3xl:max-w-7xl mx-auto mb-4 border-x justify-between flex items-center bg-orange-700 border-gray-200 md:px-6 shadow-md">
   <div class="flex flex-wrap justify-between items-center">
     <div class="flex mx-4 my-3 items-center">
       <a routerLink="home" class="flex"><app-logo-icon class="w-12"></app-logo-icon></a>
       <a routerLink="home">
-        <p class="font-black text-xl text-white">Tu inventario</p>
+        <span class="font-black text-xl text-white">Tu inventario</span>
       </a>
     </div>
     <app-navbar></app-navbar>
   </div>
-  <div class="p-2 flex items-center">
-    <div class="flex space-x-2">
-      <button class="text-white" type="button">
-        <fa-icon [icon]="faBell"></fa-icon>
-      </button>
-      <button class="text-white" type="button">
-        <fa-icon [icon]="faInfoCircle"></fa-icon>
-      </button>
-      <button type="button" class="flex rounded-full text-white" aria-expanded="false" type="button"
-        (click)="isOpen = !isOpen" cdkOverlayOrigin #menuOverlay="cdkOverlayOrigin">
-        <img loading="lazy" class="w-8 h-8 rounded-full" src="/assets/svg/profile-white.svg" alt="user photo">
-      </button>
+  <div class="justify-between flex items-center">
+    <div class="py-2 flex items-center">
+      <div class="flex space-x-2 ">
+        <button class="text-white" type="button">
+          <fa-icon [icon]="faBell"></fa-icon>
+        </button>
+        <button class="text-white" type="button">
+          <fa-icon [icon]="faInfoCircle"></fa-icon>
+        </button>
+        <button type="button" class="flex rounded-full text-white" aria-expanded="false" type="button"
+          (click)="isOpen = !isOpen" cdkOverlayOrigin #menuOverlay="cdkOverlayOrigin">
+          <img loading="lazy" class="w-8 h-8 rounded-full" src="/assets/svg/profile-white.svg" alt="user photo">
+        </button>
+      </div>
     </div>
+    <span id="navbar-toggle" (click)="openDialog()" class="text-white md:hidden pr-2 md:pr-0 relative ml-0 sm:ml-10">
+      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18 h16" />
+      </svg>
+    </span>
   </div>
-  <span id="navbar-toggle" (click)="openDialog()" class="text-white md:hidden pr-2 md:pr-0 relative">
-    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="none" viewBox="0 0 24 24"
-      stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18 h16" />
-    </svg>
-  </span>
 </header>
 
 <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="menuOverlay" [cdkConnectedOverlayOpen]="isOpen"
