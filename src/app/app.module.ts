@@ -7,6 +7,10 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { DialogModule } from '@angular/cdk/dialog';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkTableModule } from '@angular/cdk/table';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +28,7 @@ import { ScrollComponent } from './public/pages/scroll/scroll.component';
 import { TableComponent } from './public/pages/table/table.component';
 import { SideMenuModalComponent } from './public/components/master-page/side-menu-modal/side-menu.component';
 import { SideMenuComponent } from './public/components/master-page/side-menu/side-menu.component';
+import { DashboardComponent } from './public/pages/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +45,7 @@ import { SideMenuComponent } from './public/components/master-page/side-menu/sid
     ScrollComponent,
     TableComponent,
     SideMenuComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +59,10 @@ import { SideMenuComponent } from './public/components/master-page/side-menu/sid
     ScrollingModule,
     CdkTableModule,
     ReactiveFormsModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

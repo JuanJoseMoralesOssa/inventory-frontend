@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DialogRef } from '@angular/cdk/dialog';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { ConfigSideMenu } from 'src/app/config/config.side.menu';
 
 @Component({
   selector: 'app-side-menu-modal',
@@ -10,6 +11,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 export class SideMenuModalComponent {
 
   faClose = faClose;
+  options = ConfigSideMenu.listMenus;
 
   constructor(
     private dialogRef: DialogRef,

@@ -3,11 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './public/components/home/home.component';
 import { PathNotFoundComponent } from './public/components/errors/path-not-found/path-not-found.component';
 import { BoardsComponent } from './public/pages/boards/boards.component';
+import { DashboardComponent } from './public/pages/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
-  path: "home",
-  component: HomeComponent
+    path: "home",
+    component: HomeComponent,
+  },
+  {
+    path: "dashboard",
+    component: DashboardComponent,
   },
   {
     path: "",
@@ -16,15 +21,15 @@ const routes: Routes = [
   },
   {
     path: "boards",
-    component: BoardsComponent
+    component: BoardsComponent,
   },
   {
     path: "security",
-    loadChildren: () => import("./modules/security/security.module").then(m => m.SecurityModule)
+    loadChildren: () => import("./modules/security/security.module").then(m => m.SecurityModule),
   },
   {
     path: "parameters",
-    loadChildren: () => import("./modules/parameters/parameters.module").then(m => m.ParametersModule)
+    loadChildren: () => import("./modules/parameters/parameters.module").then(m => m.ParametersModule),
   },
   {
     path: "reports",
@@ -32,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: "sales",
-    loadChildren: () => import("./modules/sales/sales.module").then(m => m.SalesModule)
+    loadChildren: () => import("./modules/sales/sales.module").then(m => m.SalesModule),
   },
   {
     path: "**",

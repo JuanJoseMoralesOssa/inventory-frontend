@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ConfigSideMenu } from 'src/app/config/config.side.menu';
+import { SharedSideNavInfoServiceService } from 'src/app/services/shared-side-nav-info-service.service';
+
 
 @Component({
   selector: 'app-side-menu',
@@ -8,5 +11,16 @@ import { Component } from '@angular/core';
 export class SideMenuComponent {
 
   collapsed = false;
-  
+  options = ConfigSideMenu.listMenus;
+
+  constructor(
+    private sharedSideNavInfoService: SharedSideNavInfoServiceService
+  ) {
+
+  }
+
+  chooseOption(option: string) {
+    // Al hacer clic en el botón del primer componente, se dispara la acción en el servicio.
+    this.sharedSideNavInfoService.triggerAction(option);
+  }
 }
