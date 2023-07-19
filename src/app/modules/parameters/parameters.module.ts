@@ -14,6 +14,8 @@ import { DeletePackingComponent } from './packing/delete-packing/delete-packing.
 import { ListPackingComponent } from './packing/list-packing/list-packing.component';
 import { EditPackingComponent } from './packing/edit-packing/edit-packing.component';
 import { CreatePackingComponent } from './packing/create-packing/create-packing.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CdkTableModule } from '@angular/cdk/table';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { CreatePackingComponent } from './packing/create-packing/create-packing.
   ],
   imports: [
     CommonModule,
-    ParametersRoutingModule
+    ParametersRoutingModule,
+    ReactiveFormsModule,
+    CdkTableModule,
   ]
 })
 export class ParametersModule { }

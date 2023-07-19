@@ -6,7 +6,7 @@
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" cdk-table [dataSource]="dataSourceProducts">
       <tr cdk-header-row class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
         *cdkHeaderRowDef="columns"></tr>
-      <tr cdk-row class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+      <tr cdk-row class="border-b dark:bg-gray-800 dark:border-gray-700"
         [ngClass]="{'bg-red-300':row.price<100}" *cdkRowDef="let row; columns: columns"></tr>
       <tr cdk-footer-row class="text-xl text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400"
         *cdkFooterRowDef="columns"></tr>

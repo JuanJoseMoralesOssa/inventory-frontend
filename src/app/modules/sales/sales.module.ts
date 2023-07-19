@@ -14,6 +14,8 @@ import { CreateRemissionComponent } from './remission/create-remission/create-re
 import { ListRemissionComponent } from './remission/list-remission/list-remission.component';
 import { EditRemissionComponent } from './remission/edit-remission/edit-remission.component';
 import { DeleteRemissionComponent } from './remission/delete-remission/delete-remission.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CdkTableModule } from '@angular/cdk/table';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { DeleteRemissionComponent } from './remission/delete-remission/delete-re
   ],
   imports: [
     CommonModule,
-    SalesRoutingModule
+    SalesRoutingModule,
+    ReactiveFormsModule,
+    CdkTableModule,
   ]
 })
 export class SalesModule { }

@@ -1,6 +1,6 @@
 import { DataSource } from "@angular/cdk/collections";
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ProductModel } from "src/app/models/product.model";
+import { ProductModel } from "../models/product.model";
 
 export class DataSourceProduct extends DataSource<ProductModel> {
 
@@ -17,10 +17,10 @@ export class DataSourceProduct extends DataSource<ProductModel> {
   }
 
   getTotal() {
-    const products = this.data.getValue();
-    return products
-          .map(item => item.price)
-          .reduce((price, total) => price + total, 0);
+    // const products = this.data.getValue();
+    // return products
+    //       .map(item => item.price)
+    //       .reduce((price, total) => price + total, 0);
   }
 
 
@@ -38,8 +38,12 @@ export class DataSourceProduct extends DataSource<ProductModel> {
 
      *
      */
-    const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-    this.data.next(newProducts);
+
+
+
+
+    // const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
+    // this.data.next(newProducts);
   }
 
   update(id: ProductModel['id'], changes:Partial<ProductModel>) {

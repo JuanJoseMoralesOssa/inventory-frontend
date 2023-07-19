@@ -27,7 +27,8 @@
   </div>
   <div class="py-1">
     <ul class="pt-2 cursor-pointer">
-      <li class="text-gray-700 hover:bg-orange-100 dark:hover:bg-orange-600" *ngFor="let option of options">
+      <li class="text-gray-700 border-b-2 border-yellow-300 hover:bg-orange-100 dark:hover:bg-orange-600"
+        *ngFor="let option of options">
         <a class="py-3 px-8 block font-semibold" [routerLink]="option.route">
           <i class="text-xl w-8 my-2 text-center" [class]="option.icon"></i>
           <span class="ml-6 w-full">{{option.text}}</span>

@@ -1,26 +1,26 @@
 import { DataSource } from "@angular/cdk/collections";
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ProductModel } from "src/app/models/product.model";
+import { SaleModel } from "../models/sale.model";
 
-export class DataSourceProduct extends DataSource<ProductModel> {
+export class DataSourceSale extends DataSource<SaleModel> {
 
-  data = new BehaviorSubject<ProductModel[]>([]);
-  originalData : ProductModel[] =  [];
+  data = new BehaviorSubject<SaleModel[]>([]);
+  originalData : SaleModel[] =  [];
 
-  connect(): Observable<ProductModel[]>{
+  connect(): Observable<SaleModel[]>{
     return this.data
   }
 
-  init(products: ProductModel[]) {
+  init(products: SaleModel[]) {
     this.originalData = products;
     this.data.next(products);
   }
 
   getTotal() {
-    const products = this.data.getValue();
-    return products
-          .map(item => item.price)
-          .reduce((price, total) => price + total, 0);
+    // const products = this.data.getValue();
+    // return products
+    //       .map(item => item.price)
+    //       .reduce((price, total) => price + total, 0);
   }
 
 
@@ -38,11 +38,15 @@ export class DataSourceProduct extends DataSource<ProductModel> {
 
      *
      */
-    const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-    this.data.next(newProducts);
+
+
+
+
+    // const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
+    // this.data.next(newProducts);
   }
 
-  update(id: ProductModel['id'], changes:Partial<ProductModel>) {
+  update(id: SaleModel['id'], changes:Partial<SaleModel>) {
     const products = this.data.getValue();
     const productIndex = products.findIndex(item => item.id === id);
     if (productIndex !== -1) {
