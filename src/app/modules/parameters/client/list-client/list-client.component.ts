@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { DataSourceClient } from 'src/app/data-sources/client-data-source';
+import { faEye, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-list-client',
@@ -14,6 +15,9 @@ import { DataSourceClient } from 'src/app/data-sources/client-data-source';
 })
 export class ListClientComponent {
 
+  faEye = faEye;
+  faPenToSquare = faPenToSquare;
+  faTrashCan = faTrashCan;
   dataSourceClients = new DataSourceClient();
   clients: ClientModel[] = [];
 
@@ -24,13 +28,19 @@ export class ListClientComponent {
     this.clients = [
       {
         id: 30,
+        clientName: 'Juana',
+        sales: [{ id: 1 }, {id:2}],
       },
       {
         id: 40,
+        clientName: 'Maria',
+        sales: [ {id:2}],
       },
       {
         id: 50,
-      }
+        clientName: 'Pepe',
+        sales: [],
+      },
     ]
     this.dataSourceClients.init(this.clients)
   }
@@ -59,7 +69,7 @@ export class ListClientComponent {
   }
 
                       // muestra el id de rimero para cambiar el orden es aqui abajo
-  columns: string[] = ['id', 'name', 'price', 'cover','actions'];
+  columns: string[] = ['id','clientName', 'sales', 'actions'];
   total = 0;
   input = new FormControl('', {nonNullable: true})
 

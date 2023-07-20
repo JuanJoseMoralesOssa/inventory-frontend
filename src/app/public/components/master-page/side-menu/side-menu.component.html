@@ -1,9 +1,9 @@
-<div class="w-14 h-14 flex items-center bg-amber-700 transition-all ease-in-out shadow rounded-2xl"
+<div class="w-14 h-14 flex items-center bg-amber-700 transition-all ease-in-out shadow rounded-2xl mb-1"
   [ngClass]="collapsed ? 'h-fit w-full p-1': '' ">
-  <div class="flex items-center rounded-2xl px-2" [ngClass]="collapsed ? 'w-1/4 bg-amber-600 py-2': '' ">
+  <div class="flex items-center rounded-2xl px-2" [ngClass]="collapsed ? 'w-1/4 bg-amber-600 py-2 border-2 border-yellow-500': '' ">
     <button (click)="collapsed = !collapsed"
-      class="bg-white text-center w-10 rounded-md p-1 font-black text-2xl border-none cursor-pointer">
-    <fa-icon [icon]="fahouse"></fa-icon>
+      class="bg-white text-center w-10 rounded-md p-1 font-black text-2xl border-none cursor-pointer" [ngClass]="collapsed ? 'text-amber-800': '' ">
+      <fa-icon [icon]="fahouse"></fa-icon>
     </button>
     <div *ngIf="collapsed" (click)="collapsed = !collapsed"
       class="ml-2 text-2xl font-bold text-white mr-auto cursor-pointer">

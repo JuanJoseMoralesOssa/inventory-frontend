@@ -28,62 +28,62 @@
           [dataSource]="dataSourceClients">
           <tr cdk-header-row class="text-xs text-gray-700 uppercase bg-amber-50 dark:bg-gray-700 dark:text-gray-400"
             *cdkHeaderRowDef="columns"></tr>
-          <tr cdk-row class="border-b dark:bg-gray-800 dark:border-gray-700" [ngClass]="{'bg-red-300':row.price<100}"
-            *cdkRowDef="let row; columns: columns"></tr>
+          <tr cdk-row class="border-b dark:bg-gray-800 dark:border-gray-700"
+            [ngClass]="{'bg-green-50':row.sales.length > 4}" *cdkRowDef="let row; columns: columns"></tr>
           <tr cdk-footer-row class="text-xl text-gray-700 uppercase bg-amber-200 dark:bg-gray-700 dark:text-gray-400"
             *cdkFooterRowDef="columns"></tr>
 
-
           <!-- Id column -->
           <ng-container cdkColumnDef="id">
-            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Id.</th>
-            <td cdk-cell class="px-6 py-4" [ngClass]="{'bg-red-500':row.price<100}" *cdkCellDef="let row">{{row.id}}
+            <th cdk-header-cell class="py-3 px-8 w-6" *cdkHeaderCellDef>Id</th>
+            <td cdk-cell class="py-3 px-8 w-6" *cdkCellDef="let row">{{row.id}}</td>
+            <td cdk-footer-cell class="py-3 px-8 w-6" *cdkFooterCellDef></td>
+          </ng-container>
+
+          <!-- Client Name column -->
+          <ng-container cdkColumnDef="clientName">
+            <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Nombre</th>
+            <td cdk-cell class="px-6 py-3" *cdkCellDef="let row">{{row.clientName}}</td>
+            <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
+          </ng-container>
+
+          <!-- Sales column -->
+          <ng-container cdkColumnDef="sales">
+            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Ventas</th>
+            <td cdk-cell class="px-6 py-3 overflow-y-auto" *cdkCellDef="let row">
+              <div class="flex space-x-2 space-y-1 w-full flex-wrap h-16 items-center justify-center md:justify-start">
+                <p class="bg-green-500 hover:bg-green-700 py-1 px-2 h-8 text-white rounded-full text-center flex justify-center items-center"
+                  *ngFor="let sale of row.sales">
+                  <span>{{ sale.id }}</span>
+                </p>
+              </div>
             </td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
           </ng-container>
 
-          <!-- Title column -->
-          <ng-container cdkColumnDef="name">
-            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Name</th>
-            <td cdk-cell class="px-6 py-4" *cdkCellDef="let row">{{row.title}}</td>
-            <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
-          </ng-container>
-
-          <!-- Price column -->
-          <ng-container cdkColumnDef="price">
-            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Price</th>
-            <td cdk-cell class="px-6 py-4" [ngClass]="{'bg-red-200':row.price<100}" *cdkCellDef="let row">{{row.price}}
-            </td>
-            <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef> {{ total }}</td>
-          </ng-container>
-
-          <!-- Cover column -->
-          <ng-container cdkColumnDef="cover">
-            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Cover</th>
-            <td cdk-cell class="px-6 py-4" *cdkCellDef="let row">
-              <img class="w-20" [src]="row.images[0]" alt="">
-            </td>
-            <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
-          </ng-container>
 
           <!-- Actions column -->
           <ng-container cdkColumnDef="actions">
             <th cdk-header-cell class="py-3 px-6 w-28" *cdkHeaderCellDef>Acciones</th>
-            <td cdk-cell class="px-6 py-4 space-x-2 flex items-center justify-center" *cdkCellDef="let row">
+            <td cdk-cell class="px-6 py-3 space-x-2 flex items-center justify-center text-white" *cdkCellDef="let row">
               <span
-                class="bg-blue-500 hover:bg-blue-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center"
+                class="bg-blue-500 hover:bg-blue-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center "
                 (click)="view(row)">
-                <img src="/assets/svg/eye.svg" alt="View icon">
+                <!-- <img src="/assets/svg/eye.svg" alt="View icon"> -->
+                <fa-icon [icon]="faEye"></fa-icon>
               </span>
               <span
                 class="bg-yellow-500 hover:bg-yellow-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center"
                 (click)="update(row)">
-                <img src="/assets/svg/edit.svg" alt="update icon">
+                <fa-icon [icon]="faPenToSquare"></fa-icon>
+
+                <!-- <img src="/assets/svg/edit.svg" alt="update icon"> -->
               </span>
               <span
                 class="bg-red-500 hover:bg-red-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center"
                 (click)="remove(row)">
-                <img src="/assets/svg/trash.svg" alt="delete icon">
+                <fa-icon [icon]="faTrashCan"></fa-icon>
+                <!-- <img src="/assets/svg/trash.svg" alt="delete icon"> -->
               </span>
             </td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
