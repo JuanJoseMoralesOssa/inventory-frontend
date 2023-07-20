@@ -41,7 +41,7 @@ export class DataSourceClient extends DataSource<ClientModel> {
 
 
 
-    
+
     // const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
     // this.data.next(newProducts);
   }
@@ -56,6 +56,10 @@ export class DataSourceClient extends DataSource<ClientModel> {
       }
       this.data.next(products);
     }
+  }
+
+  delete(id: ClientModel['id']) {
+
   }
 
   disconnect() {  }

@@ -17,7 +17,7 @@
       </div>
       <div class="w-full sm:w-24 flex justify-center items-center py-2">
         <button
-          class="border-amber-900 border-2 py-3 px-4 rounded-md bg-amber-900 text-white font-bold text-base">Nuevo</button>
+          class="bg-amber-900 hover:bg-amber-500 border-amber-900 border-2 py-3 px-4 rounded-md text-white hover:text-amber-900 font-bold text-base">Nuevo</button>
       </div>
     </div>
   </div>
@@ -26,11 +26,11 @@
       <div class="w-full grow bg-white-600 p-2">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" cdk-table
           [dataSource]="dataSourceClients">
-          <tr cdk-header-row class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          <tr cdk-header-row class="text-xs text-gray-700 uppercase bg-amber-50 dark:bg-gray-700 dark:text-gray-400"
             *cdkHeaderRowDef="columns"></tr>
           <tr cdk-row class="border-b dark:bg-gray-800 dark:border-gray-700" [ngClass]="{'bg-red-300':row.price<100}"
             *cdkRowDef="let row; columns: columns"></tr>
-          <tr cdk-footer-row class="text-xl text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400"
+          <tr cdk-footer-row class="text-xl text-gray-700 uppercase bg-amber-200 dark:bg-gray-700 dark:text-gray-400"
             *cdkFooterRowDef="columns"></tr>
 
 
@@ -44,14 +44,14 @@
 
           <!-- Title column -->
           <ng-container cdkColumnDef="name">
-            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Name.</th>
+            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Name</th>
             <td cdk-cell class="px-6 py-4" *cdkCellDef="let row">{{row.title}}</td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
           </ng-container>
 
           <!-- Price column -->
           <ng-container cdkColumnDef="price">
-            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Price.</th>
+            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Price</th>
             <td cdk-cell class="px-6 py-4" [ngClass]="{'bg-red-200':row.price<100}" *cdkCellDef="let row">{{row.price}}
             </td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef> {{ total }}</td>
@@ -59,7 +59,7 @@
 
           <!-- Cover column -->
           <ng-container cdkColumnDef="cover">
-            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Cover.</th>
+            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Cover</th>
             <td cdk-cell class="px-6 py-4" *cdkCellDef="let row">
               <img class="w-20" [src]="row.images[0]" alt="">
             </td>
@@ -68,9 +68,23 @@
 
           <!-- Actions column -->
           <ng-container cdkColumnDef="actions">
-            <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Actions</th>
-            <td cdk-cell class="px-6 py-4" *cdkCellDef="let row">
-              <button (click)="update(row)">Update</button>
+            <th cdk-header-cell class="py-3 px-6 w-28" *cdkHeaderCellDef>Acciones</th>
+            <td cdk-cell class="px-6 py-4 space-x-2 flex items-center justify-center" *cdkCellDef="let row">
+              <span
+                class="bg-blue-500 hover:bg-blue-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center"
+                (click)="view(row)">
+                <img src="/assets/svg/eye.svg" alt="View icon">
+              </span>
+              <span
+                class="bg-yellow-500 hover:bg-yellow-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center"
+                (click)="update(row)">
+                <img src="/assets/svg/edit.svg" alt="update icon">
+              </span>
+              <span
+                class="bg-red-500 hover:bg-red-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center"
+                (click)="remove(row)">
+                <img src="/assets/svg/trash.svg" alt="delete icon">
+              </span>
             </td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
           </ng-container>

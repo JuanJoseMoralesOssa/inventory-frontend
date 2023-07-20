@@ -16,6 +16,7 @@ import { EditPackingComponent } from './packing/edit-packing/edit-packing.compon
 import { CreatePackingComponent } from './packing/create-packing/create-packing.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk/table';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { CdkTableModule } from '@angular/cdk/table';
     ParametersRoutingModule,
     ReactiveFormsModule,
     CdkTableModule,
+    FontAwesomeModule,
   ]
 })
 export class ParametersModule { }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import { ConfigSideMenu } from 'src/app/config/config.side.menu';
 import { SharedSideNavInfoServiceService } from 'src/app/services/shared-side-nav-info-service.service';
 
@@ -12,6 +13,7 @@ export class SideMenuComponent {
 
   collapsed = true;
   options = ConfigSideMenu.listMenus;
+  fahouse = faHouse;
 
   constructor(
     private sharedSideNavInfoService: SharedSideNavInfoServiceService

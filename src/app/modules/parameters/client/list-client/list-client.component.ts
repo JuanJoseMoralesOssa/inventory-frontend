@@ -13,18 +13,38 @@ import { DataSourceClient } from 'src/app/data-sources/client-data-source';
   styleUrls: ['./list-client.component.css']
 })
 export class ListClientComponent {
+
   dataSourceClients = new DataSourceClient();
   clients: ClientModel[] = [];
+
 
   constructor(
     private businessLogicService: BusinessLogicService,
   ) {
-
+    this.clients = [
+      {
+        id: 30,
+      },
+      {
+        id: 40,
+      },
+      {
+        id: 50,
+      }
+    ]
+    this.dataSourceClients.init(this.clients)
   }
 
   ngOnInit(): void {
     // this.getClientsData();
 
+    this.input.valueChanges
+      .pipe(
+        debounceTime(300)
+      )
+      .subscribe(value => {
+        this.dataSourceClients.find(value);
+      });
   }
 
   getClientsData(): void {
@@ -60,9 +80,14 @@ export class ListClientComponent {
   // }
 
   update(client: ClientModel) {
-
     this.dataSourceClients.update(client.id, { id: 20});
   }
 
+  view(client: ClientModel) {
 
+  }
+
+  remove(client: ClientModel) {
+    this.dataSourceClients.delete(client.id);
+  }
 }

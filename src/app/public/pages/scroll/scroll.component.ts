@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ProductModel } from '../../../models/product.model'
+import { Product } from '../../../models/product'
 
 @Component({
   selector: 'app-scroll',
@@ -10,13 +10,13 @@ import { ProductModel } from '../../../models/product.model'
 })
 export class ScrollComponent {
 
-  products: ProductModel[] = [];
+  products: Product[] = [];
   constructor(
     private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
-    this.http.get<ProductModel[]>('https://api.escuelajs.co/api/v1/products')
+    this.http.get<Product[]>('https://api.escuelajs.co/api/v1/products')
       .subscribe(data => {
         this.products = data;
       })

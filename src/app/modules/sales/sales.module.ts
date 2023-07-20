@@ -16,6 +16,7 @@ import { EditRemissionComponent } from './remission/edit-remission/edit-remissio
 import { DeleteRemissionComponent } from './remission/delete-remission/delete-remission.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk/table';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { CdkTableModule } from '@angular/cdk/table';
     SalesRoutingModule,
     ReactiveFormsModule,
     CdkTableModule,
+    FontAwesomeModule,
   ]
 })
 export class SalesModule { }

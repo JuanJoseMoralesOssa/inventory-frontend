@@ -1,3 +1,7 @@
+import { SaleModel } from "./sale.model";
+
 export interface BillModel {
-  id: number;
+  id?: number;
+  bill?: number;
+  sale?: SaleModel;
 }

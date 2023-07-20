@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { Component } from '@angular/core';
-import { ProductModel } from '../../../models/product.model';
+import { Product } from '../../../models/product';
 import { DataSourceProduct } from './data-source';
 import { debounceTime } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class TableComponent {
   ) { }
 
   ngOnInit(): void {
-    this.http.get<ProductModel[]>('https://api.escuelajs.co/api/v1/products')
+    this.http.get<Product[]>('https://api.escuelajs.co/api/v1/products')
       .subscribe(data => {
         this.dataSourceProducts.init(data);
         this.total = this.dataSourceProducts.getTotal();
@@ -38,7 +38,7 @@ export class TableComponent {
       });
   }
 
-  update(product: ProductModel) {
+  update(product: Product) {
     this.dataSourceProducts.update(product.id, { price: 20});
   }
 }
