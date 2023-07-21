@@ -12,6 +12,9 @@ import { ListPackingComponent } from './packing/list-packing/list-packing.compon
 import { EditPackingComponent } from './packing/edit-packing/edit-packing.component';
 import { DeletePackingComponent } from './packing/delete-packing/delete-packing.component';
 import { CreatePackingComponent } from './packing/create-packing/create-packing.component';
+import { ViewClientComponent } from './client/view-client/view-client.component';
+import { ViewProductComponent } from './product/view-product/view-product.component';
+import { ViewPackingComponent } from './packing/view-packing/view-packing.component';
 
 const routes: Routes = [
   {
@@ -31,6 +34,10 @@ const routes: Routes = [
     component: CreateClientComponent,
   },
   {
+    path: "view-client",
+    component: ViewClientComponent,
+  },
+  {
     path: "list-product",
     component: ListProductComponent,
   },
@@ -47,6 +54,10 @@ const routes: Routes = [
     component: CreateProductComponent,
   },
   {
+    path: "view-product",
+    component: ViewProductComponent,
+  },
+  {
     path: "list-packing",
     component: ListPackingComponent,
   },
@@ -61,6 +72,10 @@ const routes: Routes = [
   {
     path: "save-packing",
     component: CreatePackingComponent,
+  },
+  {
+    path: "view-packing",
+    component: ViewPackingComponent,
   },
 ];
 

@@ -12,6 +12,9 @@ import { EditBillComponent } from './bill/edit-bill/edit-bill.component';
 import { ListBillComponent } from './bill/list-bill/list-bill.component';
 import { CreateBillComponent } from './bill/create-bill/create-bill.component';
 import { DeleteBillComponent } from './bill/delete-bill/delete-bill.component';
+import { ViewSaleComponent } from './sale/view-sale/view-sale.component';
+import { ViewRemissionComponent } from './remission/view-remission/view-remission.component';
+import { ViewBillComponent } from './bill/view-bill/view-bill.component';
 
 const routes: Routes = [
   {
@@ -31,6 +34,10 @@ const routes: Routes = [
     component: CreateSaleComponent,
   },
   {
+    path: "view-sale",
+    component: ViewSaleComponent,
+  },
+  {
     path: "list-remission",
     component: ListRemissionComponent,
   },
@@ -47,6 +54,10 @@ const routes: Routes = [
     component: CreateRemissionComponent,
   },
   {
+    path: "view-remission",
+    component: ViewRemissionComponent,
+  },
+  {
     path: "list-bill",
     component: ListBillComponent,
   },
@@ -61,6 +72,10 @@ const routes: Routes = [
   {
     path: "save-bill",
     component: CreateBillComponent,
+  },
+  {
+    path: "view-bill",
+    component: ViewBillComponent,
   },
 ];
 

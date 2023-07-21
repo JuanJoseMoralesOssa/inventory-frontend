@@ -45,8 +45,14 @@ export class DataSourceClient extends DataSource<ClientModel> {
 
   create(client: ClientModel) {
     const clients = this.data.getValue();
-    const maxValue = Math.max(...clients.map(clientElem => clientElem.id!)) + 1;
-    client.id = maxValue;
+    if (clients.length > 0) {
+      const maxValue = Math.max(...clients.map(clientElem => clientElem.id!));
+      if (maxValue) {
+        client.id = maxValue + 1;
+      }
+    } else {
+      client.id = 1;
+    }
     if (client.id) {
       client.sales = [];
       clients.push(client)

@@ -18,6 +18,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk/table';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DialogModule } from '@angular/cdk/dialog';
+import { ViewBillComponent } from './bill/view-bill/view-bill.component';
+import { ViewRemissionComponent } from './remission/view-remission/view-remission.component';
+import { ViewSaleComponent } from './sale/view-sale/view-sale.component';
 
 
 @NgModule({
@@ -33,7 +36,10 @@ import { DialogModule } from '@angular/cdk/dialog';
     CreateRemissionComponent,
     ListRemissionComponent,
     EditRemissionComponent,
-    DeleteRemissionComponent
+    DeleteRemissionComponent,
+    ViewBillComponent,
+    ViewRemissionComponent,
+    ViewSaleComponent
   ],
   imports: [
     CommonModule,

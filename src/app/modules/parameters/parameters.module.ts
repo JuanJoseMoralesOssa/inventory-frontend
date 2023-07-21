@@ -18,6 +18,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk/table';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DialogModule } from '@angular/cdk/dialog';
+import { ViewClientComponent } from './client/view-client/view-client.component';
+import { ViewPackingComponent } from './packing/view-packing/view-packing.component';
+import { ViewProductComponent } from './product/view-product/view-product.component';
 
 
 @NgModule({
@@ -33,7 +36,10 @@ import { DialogModule } from '@angular/cdk/dialog';
     DeletePackingComponent,
     ListPackingComponent,
     EditPackingComponent,
-    CreatePackingComponent
+    CreatePackingComponent,
+    ViewClientComponent,
+    ViewPackingComponent,
+    ViewProductComponent
   ],
   imports: [
     CommonModule,
