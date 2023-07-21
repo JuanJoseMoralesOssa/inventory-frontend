@@ -16,7 +16,7 @@
         <input type="search" class="w-full" [formControl]="input">
       </div>
       <div class="w-full sm:w-24 flex justify-center items-center py-2">
-        <button
+        <button (click)="openDialog('create')"
           class="bg-amber-900 hover:bg-amber-500 border-amber-900 border-2 py-3 px-4 rounded-md text-white hover:text-amber-900 font-bold text-base">Nuevo</button>
       </div>
     </div>
@@ -65,23 +65,23 @@
           <!-- Actions column -->
           <ng-container cdkColumnDef="actions">
             <th cdk-header-cell class="py-3 px-6 w-28" *cdkHeaderCellDef>Acciones</th>
-            <td cdk-cell class="px-6 py-3 space-x-2 flex items-center justify-center text-white" *cdkCellDef="let row">
+            <td cdk-cell class="px-6 py-3 space-x-2 flex items-center justify-center text-white text-lg"
+              *cdkCellDef="let row">
               <span
                 class="bg-blue-500 hover:bg-blue-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center "
-                (click)="view(row)">
+                (click)="openDialog('view'); view(row)">
                 <!-- <img src="/assets/svg/eye.svg" alt="View icon"> -->
                 <fa-icon [icon]="faEye"></fa-icon>
               </span>
               <span
                 class="bg-yellow-500 hover:bg-yellow-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center"
-                (click)="update(row)">
+                (click)="getClientValue(row);openDialog('edit')"> <!-- update(row) -->
                 <fa-icon [icon]="faPenToSquare"></fa-icon>
-
                 <!-- <img src="/assets/svg/edit.svg" alt="update icon"> -->
               </span>
               <span
                 class="bg-red-500 hover:bg-red-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center"
-                (click)="remove(row)">
+                (click)="getClientValue(row);openDialog('remove')"> <!-- remove(row) -->
                 <fa-icon [icon]="faTrashCan"></fa-icon>
                 <!-- <img src="/assets/svg/trash.svg" alt="delete icon"> -->
               </span>

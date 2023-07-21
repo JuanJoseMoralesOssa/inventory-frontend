@@ -1,5 +1,5 @@
 import { DataSource } from "@angular/cdk/collections";
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, max } from 'rxjs';
 import { ClientModel } from "../models/client.model";
 
 export class DataSourceClient extends DataSource<ClientModel> {
@@ -39,27 +39,41 @@ export class DataSourceClient extends DataSource<ClientModel> {
      *
      */
 
-
-
-
     // const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
     // this.data.next(newProducts);
   }
 
+  create(client: ClientModel) {
+    const clients = this.data.getValue();
+    const maxValue = Math.max(...clients.map(clientElem => clientElem.id!)) + 1;
+    client.id = maxValue;
+    if (client.id) {
+      client.sales = [];
+      clients.push(client)
+    }
+    this.data.next(clients);
+  }
+
+
   update(id: ClientModel['id'], changes:Partial<ClientModel>) {
-    const products = this.data.getValue();
-    const productIndex = products.findIndex(item => item.id === id);
-    if (productIndex !== -1) {
-      products[productIndex] = {
-        ...products[productIndex],
+    const clients = this.data.getValue();
+    const clientIndex = clients.findIndex(item => item.id === id);
+    if (clientIndex !== -1) {
+      clients[clientIndex] = {
+        ...clients[clientIndex],
         ...changes,
       }
-      this.data.next(products);
+      this.data.next(clients);
     }
   }
 
   delete(id: ClientModel['id']) {
-
+    const clients = this.data.getValue();
+    const clientIndex = clients.findIndex(item => item.id === id);
+    if (clientIndex !== -1) {
+      clients.splice(clientIndex, 1);
+      this.data.next(clients);
+    }
   }
 
   disconnect() {  }

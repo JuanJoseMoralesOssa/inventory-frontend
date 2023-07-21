@@ -11,7 +11,7 @@ import { SharedSideNavInfoServiceService } from 'src/app/services/shared-side-na
 })
 export class SideMenuComponent {
 
-  collapsed =  false;
+  collapsed =  true;
   options = ConfigSideMenu.listMenus;
   fahouse = faHouse;
 

@@ -17,6 +17,7 @@ import { DeleteRemissionComponent } from './remission/delete-remission/delete-re
 import { ReactiveFormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk/table';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DialogModule } from '@angular/cdk/dialog';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ReactiveFormsModule,
     CdkTableModule,
     FontAwesomeModule,
+    DialogModule,
   ]
 })
 export class SalesModule { }

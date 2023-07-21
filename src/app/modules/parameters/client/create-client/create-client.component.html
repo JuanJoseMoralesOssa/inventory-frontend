@@ -1,1 +1,44 @@
-<p>create-client works!</p>
+<div class="flex flex-col justify-between bg-amber-700 rounded-xl overflow-y-scroll">
+  <div class="flex items-center h-fit justify-between border-b-2 border-amber-200 ">
+    <p class="m-3 font-semibold text-lg text-white">Agregar cliente</p>
+    <button (click)="closeDialog()" class="hover:text-red-500 text-red-300 text-3xl m-3">
+      <fa-icon [icon]="faCircleXmark"></fa-icon>
+    </button>
+  </div>
+  <div class="h-fit">
+    <div class="flex flex-row mx-2 md:mx-3 my-3 h-96">
+      <form [formGroup]="fGroup" class="flex flex-col justify-between mx-auto">
+        <div class="h-5/6">
+          <div
+            class="relative z-0 w-64 md:w-96 mb-6 py-3 px-1 sm:px-2 h-fit
+                  shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block dark:bg-yellow-700 dark:border-yellow-600 dark:placeholder-yellow-400 dark:text-white dark:focus:ring-amber-500 dark:focus:border-amber-500 dark:shadow-sm-light">
+            <input type="text" name="clientName" id="clientName" formControlName="clientName"
+              class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-emerald-500 focus:outline-none focus:ring-0 focus:border-emerald-600 peer rounded-e-lg"
+              placeholder=" " required autofocus />
+            <label for="clientName"
+              class="px-2 pt-3 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-2 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-emerald-600 peer-focus:dark:text-emerald-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-2">
+              Nombre</label>
+            <div class="text-red-300 text-center italic text-lg" *ngIf="GetFormGroup['clientName'].errors
+                          && (GetFormGroup['clientName'].dirty || GetFormGroup['clientName'].touched)">
+              <strong>Este campo es requerido</strong>
+            </div>
+          </div>
+        </div>
+        <div class="block border-t-2 border-yellow-50">
+          <div class="flex justify-between items-center h-10 space-x-1 space-y-1 m-3">
+            <button (click)="closeDialog()"
+              class="px-5 py-2.5 bg-gray-400 rounded-lg hover:bg-gray-500 hover:border-2 hover:border-white text-white hover:text-gray-300
+                focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium text-sm w-full sm:w-auto text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+              Cancelar
+            </button>
+            <button type="submit" (click)="closeWithRes()"
+              class="px-5 py-2.5 bg-blue-400 rounded-lg hover:bg-blue-500 hover:border-2 hover:border-white text-white hover:text-gray-300
+                focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm w-full sm:w-auto text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Crear
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

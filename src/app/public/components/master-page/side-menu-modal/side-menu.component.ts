@@ -18,7 +18,7 @@ export class SideMenuModalComponent {
   ) {
   }
 
-  close() {
+  closeDialog() {
     this.dialogRef.close();
   }
 }
