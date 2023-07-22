@@ -46,6 +46,32 @@ export class DataSourceRemission extends DataSource<RemissionModel> {
     // this.data.next(newProducts);
   }
 
+  create(remission: RemissionModel) {
+    const remissions = this.data.getValue();
+    if (remissions.length > 0) {
+      const maxValue = Math.max(...remissions.map(remissionElem => remissionElem.id!));
+      if (maxValue) {
+        remission.id = maxValue + 1;
+      }
+    } else {
+      remission.id = 1;
+    }
+    if (remission.id) {
+      remission.sale = {};
+      remissions.push(remission)
+    }
+    this.data.next(remissions);
+  }
+
+  delete(id: RemissionModel['id']) {
+    const remissions = this.data.getValue();
+    const remissionIndex = remissions.findIndex(item => item.id === id);
+    if (remissionIndex !== -1) {
+      remissions.splice(remissionIndex, 1);
+      this.data.next(remissions);
+    }
+  }
+
   update(id: RemissionModel['id'], changes:Partial<RemissionModel>) {
     const products = this.data.getValue();
     const productIndex = products.findIndex(item => item.id === id);

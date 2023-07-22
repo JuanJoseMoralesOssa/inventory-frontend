@@ -46,6 +46,32 @@ export class DataSourcePacking extends DataSource<PackingModel> {
     // this.data.next(newProducts);
   }
 
+  create(packing: PackingModel) {
+    const packings = this.data.getValue();
+    if (packings.length > 0) {
+      const maxValue = Math.max(...packings.map(packingElem => packingElem.id!));
+      if (maxValue) {
+        packing.id = maxValue + 1;
+      }
+    } else {
+      packing.id = 1;
+    }
+    if (packing.id) {
+      packing.products = [];
+      packings.push(packing)
+    }
+    this.data.next(packings);
+  }
+
+  delete(id: PackingModel['id']) {
+    const packings = this.data.getValue();
+    const packingIndex = packings.findIndex(item => item.id === id);
+    if (packingIndex !== -1) {
+      packings.splice(packingIndex, 1);
+      this.data.next(packings);
+    }
+  }
+
   update(id: PackingModel['id'], changes:Partial<PackingModel>) {
     const products = this.data.getValue();
     const productIndex = products.findIndex(item => item.id === id);

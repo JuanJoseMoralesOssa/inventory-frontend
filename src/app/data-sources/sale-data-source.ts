@@ -11,14 +11,14 @@ export class DataSourceSale extends DataSource<SaleModel> {
     return this.data
   }
 
-  init(products: SaleModel[]) {
-    this.originalData = products;
-    this.data.next(products);
+  init(sales: SaleModel[]) {
+    this.originalData = sales;
+    this.data.next(sales);
   }
 
   getTotal() {
-    // const products = this.data.getValue();
-    // return products
+    // const sales = this.data.getValue();
+    // return sales
     //       .map(item => item.price)
     //       .reduce((price, total) => price + total, 0);
   }
@@ -29,12 +29,12 @@ export class DataSourceSale extends DataSource<SaleModel> {
     /**
      *solucion
 
-    const newProducts = this.originalData
+    const newSales = this.originalData
      .filter(item => {
       const word = `${item.id}-${item.title}-${item.price}}`;
       return word.toLowerCase().includes(query.toLowerCase())
      });
-    this.data.next(newProducts);
+    this.data.next(newSales);
 
      *
      */
@@ -42,19 +42,44 @@ export class DataSourceSale extends DataSource<SaleModel> {
 
 
 
-    // const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-    // this.data.next(newProducts);
+    // const newSales = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
+    // this.data.next(newSales);
+  }
+
+    create(sale: SaleModel) {
+    const sales = this.data.getValue();
+    if (sales.length > 0) {
+      const maxValue = Math.max(...sales.map(saleElem => saleElem.id!));
+      if (maxValue) {
+        sale.id = maxValue + 1;
+      }
+    } else {
+      sale.id = 1;
+    }
+      if (sale.id) {
+      sales.push(sale)
+    }
+    this.data.next(sales);
+  }
+
+  delete(id: SaleModel['id']) {
+    const sales = this.data.getValue();
+    const saleIndex = sales.findIndex(item => item.id === id);
+    if (saleIndex !== -1) {
+      sales.splice(saleIndex, 1);
+      this.data.next(sales);
+    }
   }
 
   update(id: SaleModel['id'], changes:Partial<SaleModel>) {
-    const products = this.data.getValue();
-    const productIndex = products.findIndex(item => item.id === id);
-    if (productIndex !== -1) {
-      products[productIndex] = {
-        ...products[productIndex],
+    const sales = this.data.getValue();
+    const saleIndex = sales.findIndex(item => item.id === id);
+    if (saleIndex !== -1) {
+      sales[saleIndex] = {
+        ...sales[saleIndex],
         ...changes,
       }
-      this.data.next(products);
+      this.data.next(sales);
     }
   }
 

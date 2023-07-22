@@ -108,10 +108,6 @@ export class ListClientComponent {
     this.dataSourceClients.delete(id);
   }
 
-  remove(client: ClientModel) {
-    this.dataSourceClients.delete(client.id);
-  }
-
   getClientValue(client: ClientModel) {
     this.client = client;
   }
