@@ -27,12 +27,12 @@ export class DashboardComponent implements OnDestroy{
     const selectedOption = ConfigSideMenu.listMenus.find(item => item.text.toLowerCase() === option.toLowerCase());
     if (selectedOption) {
       selectedOption.component().then(componentInstance => {
-        this.makeInstance(componentInstance)
+        this.loadComponent(componentInstance)
       });
     }
   }
 
-  makeInstance(componentInstance: any) {
+  loadComponent(componentInstance: any) {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentInstance);
     this.details.createComponent(componentFactory);
   }
