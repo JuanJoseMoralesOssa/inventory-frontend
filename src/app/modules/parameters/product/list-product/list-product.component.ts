@@ -21,7 +21,7 @@ export class ListProductComponent {
   faTrashCan = faTrashCan;
   dataSourceProducts = new DataSourceProduct();
   products: ProductModel[] = [];
-  columns: string[] = ['id', 'code', 'productName','totalQuantity','totalWeight','sales','packingId', 'actions'];
+  columns: string[] = ['id', 'code', 'productName','totalQuantity','totalWeight','sales','packing', 'actions'];
   input = new FormControl('', { nonNullable: true })
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
 
@@ -34,18 +34,12 @@ export class ListProductComponent {
     this.products = [
       {
         id: 30,
-        productName: 'Juana',
+        code: '001',
+        productName: 'Manzana',
+        totalQuantity: 10,
+        totalWeight: 20,
+        packing: {packing:'hola'},
         sales: [{ id: 1 }, {id:2}],
-      },
-      {
-        id: 40,
-        productName: 'Maria',
-        sales: [ {id:2}],
-      },
-      {
-        id: 50,
-        productName: 'Pepe',
-        sales: [],
       },
     ]
     this.dataSourceProducts.init(this.products);

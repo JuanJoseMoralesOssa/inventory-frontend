@@ -56,15 +56,15 @@
 
           <!-- Total Quantity column -->
           <ng-container cdkColumnDef="totalQuantity">
-            <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Nombre</th>
-            <td cdk-cell class="px-6 py-3" *cdkCellDef="let row">{{row.productName}}</td>
+            <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Cantidad total</th>
+            <td cdk-cell class="px-6 py-3" *cdkCellDef="let row">{{row.totalQuantity}}</td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
           </ng-container>
 
           <!-- Total Weight column -->
           <ng-container cdkColumnDef="totalWeight">
-            <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Nombre</th>
-            <td cdk-cell class="px-6 py-3" *cdkCellDef="let row">{{row.productName}}</td>
+            <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Peso total</th>
+            <td cdk-cell class="px-6 py-3" *cdkCellDef="let row">{{row.totalWeight}}</td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
           </ng-container>
 
@@ -82,12 +82,13 @@
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
           </ng-container>
 
-          <!-- Packing ID column -->
-          <ng-container cdkColumnDef="packingId">
-            <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Nombre</th>
-            <td cdk-cell class="px-6 py-3" *cdkCellDef="let row">
-              <p class="bg-neutral-500 hover:bg-neutral-700 py-1 px-2 h-8 text-white rounded-full text-center flex justify-center items-center">
-                <span>{{row.packingId}}</span>
+          <!-- Product Packing column -->
+          <ng-container cdkColumnDef="packing">
+            <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Empaque</th>
+            <td cdk-cell class="px-6 py-3 overflow-y-auto" *cdkCellDef="let row">
+              <p
+                class="bg-neutral-50 hover:bg-neutral-100 py-1 px-2 h-8 text-black rounded-full text-center flex justify-center items-center">
+                <span>{{row.packing.packing}}</span>
               </p>
             </td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
