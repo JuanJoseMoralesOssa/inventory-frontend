@@ -121,9 +121,9 @@ export class ListClientComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isClientModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ClientModel.');
@@ -140,9 +140,9 @@ export class ListClientComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isClientModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ClientModel.');
@@ -157,9 +157,9 @@ export class ListClientComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            console.log('====================================');
-            console.log(output, this.client.id);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output, this.client.id);
+            // console.log('====================================');
             if (this.client.id) {
               this.delete(this.client.id);
             }

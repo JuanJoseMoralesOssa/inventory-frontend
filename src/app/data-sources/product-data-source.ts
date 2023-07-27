@@ -52,9 +52,9 @@ export class DataSourceProduct extends DataSource<ProductModel> {
     } else {
       product.id = 1;
     }
-      if (product.id) {
+    if (product.id) {
       product.sales = [];
-      products.push(product)
+      products.push(product);
     }
     this.data.next(products);
   }

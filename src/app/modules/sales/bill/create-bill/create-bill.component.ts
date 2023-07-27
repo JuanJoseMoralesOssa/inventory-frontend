@@ -28,7 +28,7 @@ export class CreateBillComponent {
 
   BuildForm() {
     this.fGroup = this.fb.group({
-      billName: ['', [Validators.required]]
+      billNum: ['', [Validators.required]]
     });
   }
 

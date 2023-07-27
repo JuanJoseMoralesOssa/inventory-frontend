@@ -28,8 +28,9 @@
           [dataSource]="dataSourceBills">
           <tr cdk-header-row class="text-xs text-gray-700 uppercase bg-amber-50 dark:bg-gray-700 dark:text-gray-400"
             *cdkHeaderRowDef="columns"></tr>
-          <tr cdk-row class="border-b dark:bg-gray-800 dark:border-gray-700"
-            [ngClass]="{'bg-green-50':row.sales.length > 4}" *cdkRowDef="let row; columns: columns"></tr>
+          <tr cdk-row class="border-b dark:bg-gray-800 dark:border-gray-700" *cdkRowDef="let row; columns: columns">
+          </tr>
+          <!-- [ngClass]="{'bg-green-50':row.sale}" -->
           <tr cdk-footer-row class="text-xl text-gray-700 uppercase bg-amber-200 dark:bg-gray-700 dark:text-gray-400"
             *cdkFooterRowDef="columns"></tr>
 
@@ -42,19 +43,19 @@
 
           <!-- Bill Number column -->
           <ng-container cdkColumnDef="billNum">
-            <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Numero</th>
+            <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Factura</th>
             <td cdk-cell class="px-6 py-3" *cdkCellDef="let row">{{row.bill}}</td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
           </ng-container>
 
           <!-- Sale column -->
-          <ng-container cdkColumnDef="sales">
+          <ng-container cdkColumnDef="sale">
             <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Venta</th>
             <td cdk-cell class="px-6 py-3 overflow-y-auto" *cdkCellDef="let row">
-              <div class="flex w-full items-center justify-center md:justify-start">
+              <div class="flex w-full items-center justify-center md:justify-start" *ngIf="row.sale.id">
                 <p
                   class="bg-green-500 hover:bg-green-700 py-1 px-2 h-8 text-white rounded-full text-center flex justify-center items-center">
-                  <span>{{ row.sale }}</span>
+                  <span>{{ row.sale.id }}</span>
                 </p>
               </div>
             </td>

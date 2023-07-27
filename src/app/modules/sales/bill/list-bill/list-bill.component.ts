@@ -21,7 +21,7 @@ export class ListBillComponent {
   faTrashCan = faTrashCan;
   dataSourceBills = new DataSourceBill();
   bills: BillModel[] = [];
-  columns: string[] = ['id', 'billNum', 'sales', 'actions'];
+  columns: string[] = ['id', 'billNum', 'sale', 'actions'];
   input = new FormControl('', { nonNullable: true })
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
 
@@ -74,12 +74,12 @@ export class ListBillComponent {
     });
   }
 
-  update(bill: BillModel) {
-    this.dataSourceBills.update(bill.id, { bill: bill.bill });
+  update(p_bill: BillModel) {
+    this.dataSourceBills.update(p_bill.id, { bill: p_bill.bill });
   }
 
   create(p_bill: BillModel) {
-    this.dataSourceBills.create( { id: p_bill.id, bill: p_bill.bill, sale: p_bill.sale});
+    this.dataSourceBills.create( { id: p_bill.id, bill: p_bill.bill});
   }
 
   view(bill: BillModel) {
@@ -103,9 +103,9 @@ export class ListBillComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isBillModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada BillModel.');
@@ -122,9 +122,9 @@ export class ListBillComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isBillModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada BillModel.');
@@ -139,9 +139,9 @@ export class ListBillComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            console.log('====================================');
-            console.log(output, this.bill.id);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output, this.bill.id);
+            // console.log('====================================');
             if (this.bill.id) {
               this.delete(this.bill.id);
             }

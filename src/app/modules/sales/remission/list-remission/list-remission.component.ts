@@ -21,7 +21,7 @@ export class ListRemissionComponent {
   faTrashCan = faTrashCan;
   dataSourceRemissions = new DataSourceRemission();
   remissions: RemissionModel[] = [];
-  columns: string[] = ['id', 'remissionNum', 'sales', 'actions'];
+  columns: string[] = ['id', 'remissionNum', 'sale', 'actions'];
   input = new FormControl('', { nonNullable: true })
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
 
@@ -119,9 +119,9 @@ export class ListRemissionComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isRemissionModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada RemissionModel.');
@@ -138,9 +138,9 @@ export class ListRemissionComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isRemissionModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada RemissionModel.');
@@ -155,9 +155,9 @@ export class ListRemissionComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            console.log('====================================');
-            console.log(output, this.remission.id);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output, this.remission.id);
+            // console.log('====================================');
             if (this.remission.id) {
               this.delete(this.remission.id);
             }
@@ -173,8 +173,8 @@ export class ListRemissionComponent {
   return (
     typeof obj === 'object' &&
     'id' in obj &&
-    'remissionName' in obj &&
-    'sales' in obj
+    'remission' in obj &&
+    'sale' in obj
     );
   }
 

@@ -103,9 +103,9 @@ export class ListPackingComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isPackingModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada PackingModel.');
@@ -122,9 +122,9 @@ export class ListPackingComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isPackingModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada PackingModel.');
@@ -139,9 +139,9 @@ export class ListPackingComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            console.log('====================================');
-            console.log(output, this.packing.id);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output, this.packing.id);
+            // console.log('====================================');
             if (this.packing.id) {
               this.delete(this.packing.id);
             }

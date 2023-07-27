@@ -41,6 +41,24 @@ export class ListProductComponent {
         packing: {packing:'hola'},
         sales: [{ id: 1 }, {id:2}],
       },
+      {
+        id: 30,
+        code: '001',
+        productName: 'Manzana',
+        totalQuantity: 10,
+        totalWeight: 20,
+        packing: {},
+        sales: [ {id:2}],
+      },
+      {
+        id: 30,
+        code: '001',
+        productName: 'Manzana',
+        totalQuantity: 10,
+        totalWeight: 20,
+        packing: {},
+        sales: [],
+      },
     ]
     this.dataSourceProducts.init(this.products);
   }
@@ -85,11 +103,11 @@ export class ListProductComponent {
   // }
 
   update(product: ProductModel) {
-    this.dataSourceProducts.update(product.id, { productName: product.productName });
+    this.dataSourceProducts.update(product.id, { code: product.code, productName: product.productName, totalQuantity: product.totalQuantity, totalWeight:product.totalWeight });
   }
 
   create(product: ProductModel) {
-    this.dataSourceProducts.create( { id: product.id, productName: product.productName, sales: product.sales});
+    this.dataSourceProducts.create( { id: product.id, code: product.code, productName: product.productName, totalQuantity: product.totalQuantity, totalWeight:product.totalWeight});
   }
 
   view(product: ProductModel) {
@@ -113,9 +131,9 @@ export class ListProductComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isProductModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ProductModel.');
@@ -132,9 +150,9 @@ export class ListProductComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isProductModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ProductModel.');
@@ -149,9 +167,9 @@ export class ListProductComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            console.log('====================================');
-            console.log(output, this.product.id);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output, this.product.id);
+            // console.log('====================================');
             if (this.product.id) {
               this.delete(this.product.id);
             }
