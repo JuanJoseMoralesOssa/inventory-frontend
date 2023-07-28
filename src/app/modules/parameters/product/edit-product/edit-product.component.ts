@@ -45,8 +45,8 @@ export class EditProductComponent {
     this.fGroup = this.fb.group({
       productName: ['', [Validators.required]],
       code: ['', [Validators.required]],
-      totalQuantity: [0, [Validators.required]],
-      totalWeight: [0, [Validators.required]],
+      totalQuantity: ['', [Validators.required]],
+      totalWeight: ['', [Validators.required]],
     });
   }
 

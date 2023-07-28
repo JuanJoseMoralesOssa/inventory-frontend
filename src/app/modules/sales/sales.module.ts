@@ -21,8 +21,13 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { ViewBillComponent } from './bill/view-bill/view-bill.component';
 import { ViewRemissionComponent } from './remission/view-remission/view-remission.component';
 import { ViewSaleComponent } from './sale/view-sale/view-sale.component';
-
-
+import { SharedModule } from 'src/app/public/components/shared/shared.module';
+import { CreateProductSaleComponent } from './product-sale/create-product-sale/create-product-sale.component';
+import { DeleteProductSaleComponent } from './product-sale/delete-product-sale/delete-product-sale.component';
+import { EditProductSaleComponent } from './product-sale/edit-product-sale/edit-product-sale.component';
+import { ListProductSaleComponent } from './product-sale/list-product-sale/list-product-sale.component';
+import { ViewProductSaleComponent } from './product-sale/view-product-sale/view-product-sale.component';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
 @NgModule({
   declarations: [
     CreateSaleComponent,
@@ -39,7 +44,12 @@ import { ViewSaleComponent } from './sale/view-sale/view-sale.component';
     DeleteRemissionComponent,
     ViewBillComponent,
     ViewRemissionComponent,
-    ViewSaleComponent
+    ViewSaleComponent,
+    CreateProductSaleComponent,
+    DeleteProductSaleComponent,
+    EditProductSaleComponent,
+    ListProductSaleComponent,
+    ViewProductSaleComponent
   ],
   imports: [
     CommonModule,
@@ -48,6 +58,8 @@ import { ViewSaleComponent } from './sale/view-sale/view-sale.component';
     CdkTableModule,
     FontAwesomeModule,
     DialogModule,
+    SharedModule,
+    CdkAccordionModule,
   ]
 })
 export class SalesModule { }

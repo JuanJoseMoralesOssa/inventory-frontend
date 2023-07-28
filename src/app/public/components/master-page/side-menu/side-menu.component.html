@@ -13,9 +13,9 @@
     </button>
   </div>
   <ul class="list-none px-4 py-2 w-full flex flex-wrap justify-around items-center cursor-pointer" *ngIf="collapsed">
-    <li class="shrink w-40 border-y-2 my-1 border-yellow-50 mx-2 rounded-xl hover:bg-white"
+    <li class="shrink w-40 border-y-2 my-1 border-yellow-50 mx-2 rounded-xl hover:bg-white text-white hover:text-black p-2"
       *ngFor="let option of options">
-      <a class="w-full flex justify-between items-center h-10 text-white hover:text-black text-center transition-all"
+      <a class="w-full flex justify-between items-center h-10 text-inherit text-center transition-all p-1"
         (click)="chooseOption(option.text)">
         <i class="text-xl w-8 ml-2">
           <fa-icon [icon]="option.icon"></fa-icon>

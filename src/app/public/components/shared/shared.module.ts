@@ -5,6 +5,7 @@ import { LogoIconComponent } from './logo-icon/logo-icon.component';
 import { BtnComponent } from './btn/btn.component';
 import { TodoDialogComponent } from './todo-dialog/todo-dialog.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { FilterPipe } from './filter/filter-pipe.component';
 
 
 
@@ -14,11 +15,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     LogoIconComponent,
     BtnComponent,
     TodoDialogComponent,
+    // FilterPipe,
   ],
   exports: [
     CartIconComponent,
     LogoIconComponent,
     BtnComponent,
+    // FilterPipe
   ],
   imports: [
     CommonModule,

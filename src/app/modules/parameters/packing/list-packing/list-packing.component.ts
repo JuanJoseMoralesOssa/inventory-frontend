@@ -6,7 +6,7 @@ import { CreatePackingComponent } from '../create-packing/create-packing.compone
 import { Dialog } from '@angular/cdk/dialog';
 import { FormControl } from '@angular/forms';
 import { DataSourcePacking } from 'src/app/data-sources/packing-data-source';
-import { faEye, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faPenToSquare, faSuitcase, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { BusinessLogicService } from 'src/app/services/business-logic.service';
 import { debounceTime } from 'rxjs';
 
@@ -16,6 +16,7 @@ import { debounceTime } from 'rxjs';
   styleUrls: ['./list-packing.component.css']
 })
 export class ListPackingComponent {
+  faSuitcase = faSuitcase;
   faEye = faEye;
   faPenToSquare = faPenToSquare;
   faTrashCan = faTrashCan;

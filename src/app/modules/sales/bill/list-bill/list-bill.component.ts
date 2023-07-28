@@ -1,7 +1,7 @@
 import { Dialog } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { faEye, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faMoneyBill, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime } from 'rxjs';
 import { DataSourceBill } from 'src/app/data-sources/bill-data-source';
 import { BillModel } from 'src/app/models/bill.model';
@@ -16,6 +16,7 @@ import { DeleteBillComponent } from '../delete-bill/delete-bill.component';
   styleUrls: ['./list-bill.component.css']
 })
 export class ListBillComponent {
+  faMoneyBill = faMoneyBill;
   faEye = faEye;
   faPenToSquare = faPenToSquare;
   faTrashCan = faTrashCan;

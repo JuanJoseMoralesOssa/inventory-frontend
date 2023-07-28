@@ -1,4 +1,4 @@
-import { faDollarSign, faMoneyBill, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import { faDollarSign, faFileInvoiceDollar, faMoneyBill, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { faBoxesPacking } from '@fortawesome/free-solid-svg-icons';
 import { faSuitcase } from '@fortawesome/free-solid-svg-icons';
 import { faBookJournalWhills } from '@fortawesome/free-solid-svg-icons';
@@ -47,12 +47,13 @@ export namespace ConfigSideMenu {
       text: "Ventas",
       component: () => import('../modules/sales/sale/list-sale/list-sale.component').then(it => it.ListSaleComponent),
     },
-    // {
-    //   id: "6483f3acb23165de1973d155",
-    //   route: "/params/city-list",
-    //   icon:"<i class='material-icons'>cloudCiudades</i>",
-    //   text:"Ciudades"
-    // },
+    {
+      id: "6483f3acb23165de1973d155",
+      route: "/sales/list-product-sale",
+      icon: faFileInvoiceDollar,
+      text: "Producto por Venta",
+      component: () => import('../modules/sales/product-sale/list-product-sale/list-product-sale.component').then(it => it.ListProductSaleComponent),
+    },
     // {
     //   id: "6483f3c6b23165de1973d156",
     //   route: "/params/department-list",

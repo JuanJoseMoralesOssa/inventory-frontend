@@ -1,7 +1,7 @@
 import { Dialog } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { faEye, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faDollarSign, faEye, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime } from 'rxjs';
 import { DataSourceSale } from 'src/app/data-sources/sale-data-source';
 import { SaleModel } from 'src/app/models/sale.model';
@@ -16,12 +16,13 @@ import { CreateSaleComponent } from '../create-sale/create-sale.component';
   styleUrls: ['./list-sale.component.css']
 })
 export class ListSaleComponent {
+  faDollarSign = faDollarSign;
   faEye = faEye;
   faPenToSquare = faPenToSquare;
   faTrashCan = faTrashCan;
   dataSourceSales = new DataSourceSale();
   sales: SaleModel[] = [];
-  columns: string[] = ['id', 'saleDate', 'remission', 'sale', 'products', 'bill', 'actions' ];
+  columns: string[] = ['id', 'saleDate', 'remissionNum', 'clientName', 'products', 'document', 'actions' ];
   input = new FormControl('', { nonNullable: true })
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
 
@@ -34,12 +35,27 @@ export class ListSaleComponent {
     this.sales = [
       {
         id: 30,
+        saleDate: new Date(),
+        remissionNumModel: { id: 1,remission: 2 },
+        products: [{ id: 1, productName: 'lecosin' }, { id: 2, productName: 'Lecosin Kj' }],
+        client: { id: 1, clientName: 'Perez Martinez' },
+        remission: { id: 1, remission: 2 },
       },
       {
-        id: 40,
+        id: 30,
+        saleDate: new Date(),
+        remissionNumModel: { id: 1,remission: 3 },
+        products: [{ id: 1, productName: 'Impecryl' }, { id: 2, productName: 'Acido Formico' }, { id: 3, productName: 'Formiato' }],
+        client: { id: 1, clientName: 'Martinez Juarez' },
+        bill: {id: 1, bill: 3}
       },
       {
-        id: 50,
+        id: 30,
+        saleDate: new Date(),
+        remissionNumModel: { id: 1,remission: 4 },
+        products: [],
+        client: { id: 1, clientName: 'Ana Suñiga' },
+        bill: { id: 1, bill: 3 },
       },
     ]
     this.dataSourceSales.init(this.sales);
@@ -113,9 +129,9 @@ export class ListSaleComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isSaleModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada SaleModel.');
@@ -132,9 +148,9 @@ export class ListSaleComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isSaleModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada SaleModel.');
@@ -149,9 +165,9 @@ export class ListSaleComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            console.log('====================================');
-            console.log(output, this.sale.id);
-            console.log('====================================');
+            // console.log('====================================');
+            // console.log(output, this.sale.id);
+            // console.log('====================================');
             if (this.sale.id) {
               this.delete(this.sale.id);
             }
@@ -168,13 +184,15 @@ export class ListSaleComponent {
     typeof obj === 'object' &&
     'id' in obj &&
     'saleDate' in obj &&
-    'remission' in obj &&
-    'saleId' in obj &&
+    'remissionNumModel' in obj &&
+    'remissionNumId' in obj &&
+    'clientId' in obj &&
+    'client' in obj &&
     'products' in obj &&
     'billId' in obj &&
+    'bill' in obj &&
     'remissionId' in obj &&
-    'sale' in obj &&
-    'bill' in obj
+    'remission' in obj
     );
   }
 

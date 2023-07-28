@@ -1,7 +1,7 @@
 import { Dialog } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { faEye, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faBoxesPacking, faEye, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime } from 'rxjs';
 import { DataSourceProduct } from 'src/app/data-sources/product-data-source';
 import { ProductModel } from 'src/app/models/product.model';
@@ -16,6 +16,7 @@ import { DeleteProductComponent } from '../delete-product/delete-product.compone
   styleUrls: ['./list-product.component.css']
 })
 export class ListProductComponent {
+  faBoxesPacking = faBoxesPacking;
   faEye = faEye;
   faPenToSquare = faPenToSquare;
   faTrashCan = faTrashCan;

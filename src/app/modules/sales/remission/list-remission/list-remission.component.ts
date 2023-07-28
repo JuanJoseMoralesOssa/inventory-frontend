@@ -1,7 +1,7 @@
 import { Dialog } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { faEye, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faBookJournalWhills, faEye, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime } from 'rxjs';
 import { DataSourceRemission } from 'src/app/data-sources/remission-data-source';
 import { RemissionModel } from 'src/app/models/remission.model';
@@ -16,6 +16,7 @@ import { DeleteRemissionComponent } from '../delete-remission/delete-remission.c
   styleUrls: ['./list-remission.component.css']
 })
 export class ListRemissionComponent {
+  faBookJournalWhills = faBookJournalWhills;
   faEye = faEye;
   faPenToSquare = faPenToSquare;
   faTrashCan = faTrashCan;

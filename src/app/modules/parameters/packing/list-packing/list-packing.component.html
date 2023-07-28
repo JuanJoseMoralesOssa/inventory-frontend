@@ -1,8 +1,10 @@
 <div class="w-full p-2">
   <div class="flex px-4 py-2 w-full border-b-2 border-amber-800">
     <div class="flex items-center">
-      <div class="bg-yellow-500 rounded-xl p-2 flex items-center justify-center">
-        <img loading="lazy" class="w-8 h-8 rounded-xl" src="/assets/svg/people.svg" alt="people icon">
+      <div class="bg-yellow-500 rounded-xl p-2">
+        <div class="w-8 h-8 rounded-xl text-2xl text-white flex items-center justify-center">
+          <fa-icon [icon]="faSuitcase"></fa-icon>
+        </div>
       </div>
     </div>
     <div class="mx-4">
@@ -21,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="overflow-x-auto md:overflow-x-hidden overflow-y-auto">
+  <div class="overflow-x-auto overflow-y-auto">
     <div class="flex flex-col h-screen">
       <div class="w-full grow bg-white-600 p-2">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" cdk-table

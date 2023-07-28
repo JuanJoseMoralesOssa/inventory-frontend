@@ -15,6 +15,11 @@ import { DeleteBillComponent } from './bill/delete-bill/delete-bill.component';
 import { ViewSaleComponent } from './sale/view-sale/view-sale.component';
 import { ViewRemissionComponent } from './remission/view-remission/view-remission.component';
 import { ViewBillComponent } from './bill/view-bill/view-bill.component';
+import { ViewProductSaleComponent } from './product-sale/view-product-sale/view-product-sale.component';
+import { CreateProductSaleComponent } from './product-sale/create-product-sale/create-product-sale.component';
+import { DeleteProductSaleComponent } from './product-sale/delete-product-sale/delete-product-sale.component';
+import { EditProductSaleComponent } from './product-sale/edit-product-sale/edit-product-sale.component';
+import { ListProductSaleComponent } from './product-sale/list-product-sale/list-product-sale.component';
 
 const routes: Routes = [
   {
@@ -76,6 +81,26 @@ const routes: Routes = [
   {
     path: "view-bill",
     component: ViewBillComponent,
+  },
+  {
+    path: "list-product-sale",
+    component: ListProductSaleComponent,
+  },
+  {
+    path: "edit-product-sale/:id",
+    component: EditProductSaleComponent,
+  },
+  {
+    path: "delete-product-sale",
+    component: DeleteProductSaleComponent,
+  },
+  {
+    path: "save-product-sale",
+    component: CreateProductSaleComponent,
+  },
+  {
+    path: "view-product-sale",
+    component: ViewProductSaleComponent,
   },
 ];
 
