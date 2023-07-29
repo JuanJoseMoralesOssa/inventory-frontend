@@ -1,1 +1,130 @@
-<p>list-product-sale works!</p>
+<div class="w-full p-2">
+  <div class="flex px-4 py-2 w-full border-b-2 border-amber-800">
+    <div class="flex items-center">
+      <div class="bg-yellow-500 rounded-xl p-2">
+        <div class="w-8 h-8 rounded-xl text-2xl text-white flex items-center justify-center">
+          <fa-icon [icon]="faFileInvoiceDollar"></fa-icon>
+        </div>
+      </div>
+    </div>
+    <div class="mx-4">
+      <h2 class="text-2xl font-semibold">Agrega un nuevo producto a una venta</h2>
+      <p class="text-sm font-bold text-yellow-700 italic">Registro de los productos por las ventas</p>
+    </div>
+  </div>
+  <div class="p-2">
+    <div class="p-2 flex flex-wrap justify-between items-center bg-yellow-50 rounded">
+      <div class="m-2 w-full sm:w-1/3">
+        <input type="search" class="w-full" [formControl]="input">
+      </div>
+      <div class="w-full sm:w-24 flex justify-center items-center m-2 sm:m-0 sm:py-2">
+        <button (click)="openDialog('create')"
+          class="w-full sm:w-min bg-amber-900 hover:bg-amber-500 border-amber-900 border-2 py-3 px-4 rounded-md text-white hover:text-amber-900 font-bold text-base">Nuevo</button>
+      </div>
+    </div>
+  </div>
+  <div class="overflow-x-auto overflow-y-auto">
+    <div class="flex flex-col h-screen">
+      <div class="w-full grow bg-white-600 p-2">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" cdk-table
+          [dataSource]="dataSourceProductSales">
+          <tr cdk-header-row class="text-xs text-gray-700 uppercase bg-amber-50 dark:bg-gray-700 dark:text-gray-400"
+            *cdkHeaderRowDef="columns"></tr>
+          <tr cdk-row class="border-b-2 dark:bg-gray-800 dark:border-gray-700" *cdkRowDef="let row; columns: columns">
+          </tr>
+          <tr cdk-footer-row class="text-xl text-gray-700 uppercase bg-amber-200 dark:bg-gray-700 dark:text-gray-400"
+            *cdkFooterRowDef="columns"></tr>
+
+          <!-- Id column -->
+          <ng-container cdkColumnDef="id">
+            <th cdk-header-cell class="py-3 px-8 w-6" *cdkHeaderCellDef>Id</th>
+            <td cdk-cell class="py-3 px-8 w-6" *cdkCellDef="let row">{{row.id}}</td>
+            <td cdk-footer-cell class="py-3 px-8 w-6" *cdkFooterCellDef></td>
+          </ng-container>
+
+          <!-- Product Sale Quantity column -->
+          <ng-container cdkColumnDef="quantity">
+            <th cdk-header-cell class="py-3 px-8 w-6" *cdkHeaderCellDef>Cantidad</th>
+            <td cdk-cell class="py-3 px-3 w-12" *cdkCellDef="let row">
+              <div class="text-center">
+                <p class="text-center">
+                  {{row.quantity}}
+                </p>
+              </div>
+            </td>
+            <td cdk-footer-cell class="py-3 px-8 w-6" *cdkFooterCellDef></td>
+          </ng-container>
+
+          <!-- Product-sale Sale column -->
+          <ng-container cdkColumnDef="sale">
+            <th cdk-header-cell class="py-3 px-8 w-6" *cdkHeaderCellDef>Venta</th>
+            <td cdk-cell class="py-3 px-8 w-6" *cdkCellDef="let row">
+              <p class="text-center" *ngIf="row.sale.id">{{row.sale.id}}</p>
+            </td>
+            <td cdk-footer-cell class="py-3 px-8 w-6" *cdkFooterCellDef></td>
+          </ng-container>
+
+
+          <!-- Product-sale Product column -->
+          <ng-container cdkColumnDef="product">
+            <th cdk-header-cell class="py-3 px-6 w-24" *cdkHeaderCellDef>Producto</th>
+            <td cdk-cell class="px-6 py-3 w-40 md:w-1/3" *cdkCellDef="let row">
+              <div class="w-full sm:w-56 flex">
+                <p *ngIf="row.product.productName" class="truncate hover:whitespace-normal flex-1 ">
+                  {{row.product.productName}} </p>
+              </div>
+            </td>
+            <td cdk-footer-cell class="py-3 px-6 w-24" *cdkFooterCellDef></td>
+          </ng-container>
+
+          <!-- Product-sale weight column -->
+          <ng-container cdkColumnDef="weight">
+            <th cdk-header-cell class="py-3 px-6 w-6" *cdkHeaderCellDef>Peso</th>
+            <td cdk-cell class="px-6 py-3 w-6" *cdkCellDef="let row">
+              <p class="text-center" *ngIf="row.weight">{{row.weight}}</p>
+            </td>
+            <td cdk-footer-cell class="py-3 px-6 w-6" *cdkFooterCellDef></td>
+          </ng-container>
+
+          <!-- Product-sale IsBorrowed column -->
+          <ng-container cdkColumnDef="IsBorrowed">
+            <th cdk-header-cell class="py-3 px-2 w-1" *cdkHeaderCellDef>Prestado</th>
+            <td cdk-cell class="px-2 py-3 w-1" *cdkCellDef="let row">
+              <p *ngIf="row.IsBorrowed"
+                [ngClass]=" row.IsBorrowed? 'bg-lime-500 text-white text-lg p-1 flex justify-center rounded':'' ">
+                {{row.IsBorrowed? 'Si': ''}}</p>
+            </td>
+            <td cdk-footer-cell class="py-3 px-2 w-1" *cdkFooterCellDef></td>
+          </ng-container>
+
+          <!-- Actions column -->
+          <ng-container cdkColumnDef="actions">
+            <th cdk-header-cell class="py-3 px-6 w-28" *cdkHeaderCellDef>Acciones</th>
+            <td cdk-cell class="px-6 py-3 space-x-2 flex items-center justify-center text-white text-lg"
+              *cdkCellDef="let row">
+              <span
+                class="bg-blue-500 hover:bg-blue-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center "
+                (click)="openDialog('view'); view(row)">
+                <!-- <img src="/assets/svg/eye.svg" alt="View icon"> -->
+                <fa-icon [icon]="faEye"></fa-icon>
+              </span>
+              <span
+                class="bg-yellow-500 hover:bg-yellow-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center"
+                (click)="getProductSaleValue(row);openDialog('edit')"> <!-- update(row) -->
+                <fa-icon [icon]="faPenToSquare"></fa-icon>
+                <!-- <img src="/assets/svg/edit.svg" alt="update icon"> -->
+              </span>
+              <span
+                class="bg-red-500 hover:bg-red-700 hover:border-red-500 hover:border-1 w-10 h-10 flex items-center justify-center"
+                (click)="getProductSaleValue(row);openDialog('remove')"> <!-- remove(row) -->
+                <fa-icon [icon]="faTrashCan"></fa-icon>
+                <!-- <img src="/assets/svg/trash.svg" alt="delete icon"> -->
+              </span>
+            </td>
+            <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
+          </ng-container>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

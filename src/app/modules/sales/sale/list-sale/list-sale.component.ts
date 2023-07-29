@@ -9,6 +9,7 @@ import { BusinessLogicService } from 'src/app/services/business-logic.service';
 import { DeleteSaleComponent } from '../delete-sale/delete-sale.component';
 import { EditSaleComponent } from '../edit-sale/edit-sale.component';
 import { CreateSaleComponent } from '../create-sale/create-sale.component';
+import { CreateProductSaleComponent } from '../../product-sale/create-product-sale/create-product-sale.component';
 
 @Component({
   selector: 'app-list-sale',
@@ -101,11 +102,11 @@ export class ListSaleComponent {
   // }
 
   update(p_sale: SaleModel) {
-    this.dataSourceSales.update(p_sale.id, { id: p_sale.id });
+    this.dataSourceSales.update(p_sale.id, { id: p_sale.id, saleDate: p_sale.saleDate, remissionNumModel: p_sale.remissionNumModel, client: p_sale.client, remission: p_sale.remission, bill: p_sale.bill });
   }
 
   create(p_sale: SaleModel) {
-    this.dataSourceSales.create( { id: p_sale.id });
+    this.dataSourceSales.create( { id: p_sale.id, saleDate: p_sale.saleDate, remissionNumModel: p_sale.remissionNumModel, client: p_sale.client, remission: p_sale.remission, bill: p_sale.bill});
   }
 
   view(sale: SaleModel) {
@@ -118,6 +119,23 @@ export class ListSaleComponent {
 
   getSaleValue(sale: SaleModel) {
     this.sale = sale;
+  }
+
+  openCreateProductSale(): void {
+    const dialogRefCreate = this.dialog.open(CreateProductSaleComponent, {
+          minWidth: '300px',
+          maxWidth: '50%',
+        });
+    dialogRefCreate.closed.subscribe(output => {
+      if (this.isSaleModel(output)) {
+            // console.log('====================================');
+            // console.log(output);
+            // console.log('====================================');
+            this.create(output);
+        } else {
+          console.error('Tipo de salida Invalida. Se esperada SaleModel.');
+        }
+      });
   }
 
   openDialog(action: 'edit' | 'view' | 'remove' | 'create') {
@@ -148,9 +166,9 @@ export class ListSaleComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isSaleModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
+            console.log('====================================');
+            console.log(output);
+            console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada SaleModel.');

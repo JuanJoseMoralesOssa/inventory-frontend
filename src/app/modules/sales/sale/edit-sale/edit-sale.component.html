@@ -2,7 +2,7 @@
   class="flex flex-col justify-center items-center bg-amber-700 rounded-xl overflow-y-auto overflow-x-hidden w-full md:h-full">
   <div class="relative p-2 bg-amber-800 rounded-lg shadow dark:bg-gray-800 sm:p-5 w-full max-w-2xl h-full md:h-auto">
     <div class="flex items-center justify-between border-b-2 border-amber-200 h-fit w-full pb-2 mb-2 sm:mb-3">
-      <p class="m-3 font-semibold text-lg text-white mr-10">Actualizar producto</p>
+      <p class="m-3 font-semibold text-lg text-white mr-10">Actualizar venta</p>
       <button (click)="closeDialog()" class="hover:text-red-500 text-red-300 text-3xl m-3 rounded-md
       bg-transparent hover:bg-gray-200 p-1 ml-10 inline-flex items-center">
         <fa-icon [icon]="faCircleXmark"></fa-icon>
@@ -46,10 +46,10 @@
             </div>
 
             <div
-              class="relative z-20 w-full mb-3 py-3 px-1 sm:px-2 h-fit shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block">
+              class="relative z-20 w-full mb-3 py-2 px-1 sm:px-2 h-fit shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block">
               <cdk-accordion>
                 <cdk-accordion-item #accordionMenu="cdkAccordionItem">
-                  <button class="relative z-0 w-full py-1 px-2 flex justify-between items-center" type="button"
+                  <button class="relative z-0 w-full py-1 flex justify-between items-center" type="button"
                     (click)="accordionMenu.toggle()">
                     <input type="text" name="clientName" id="clientName" formControlName="clientName"
                       class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-emerald-700 peer rounded-b-md"

@@ -88,11 +88,12 @@
           <ng-container cdkColumnDef="packing">
             <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Empaque</th>
             <td cdk-cell class="px-6 py-3 overflow-y-auto" *cdkCellDef="let row">
-              <p
-                *ngIf="row.packing.packing"
-                class="bg-neutral-50 hover:bg-neutral-100 py-1 px-2 h-8 text-black rounded-full text-center flex justify-center items-center">
-                <span>{{row.packing.packing}}</span>
-              </p>
+              <div *ngIf="row.packing">
+                <p *ngIf="row.packing.packing"
+                  class="bg-neutral-50 hover:bg-neutral-100 py-1 px-2 h-8 text-black rounded-full text-center flex justify-center items-center">
+                  <span>{{row.packing.packing}}</span>
+                </p>
+              </div>
             </td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
           </ng-container>
