@@ -47,7 +47,7 @@
             <th cdk-header-cell class="py-3 px-8 w-6" *cdkHeaderCellDef>Fecha</th>
             <td cdk-cell class="py-3 px-3 w-12" *cdkCellDef="let row">
               <p class="flex justify-center items-center">
-                {{row.saleDate.getDate() + '/' + (row.saleDate.getMonth()+1) + '/' + row.saleDate.getFullYear() }}
+                {{row.saleDate.getDate() + '-' + (row.saleDate.getMonth()+1) + '-' + row.saleDate.getFullYear() }}
               </p>
             </td>
             <td cdk-footer-cell class="py-3 px-8 w-6" *cdkFooterCellDef></td>

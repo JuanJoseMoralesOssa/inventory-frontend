@@ -1,7 +1,7 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faAngleDown, faAngleUp, faCircleXmark, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp, faBookJournalWhills, faCircleXmark, faMoneyBill, faUser } from '@fortawesome/free-solid-svg-icons';
 import { BillModel } from 'src/app/models/bill.model';
 import { ClientModel } from 'src/app/models/client.model';
 import { RemissionModel } from 'src/app/models/remission.model';
@@ -13,13 +13,15 @@ import { SaleModel } from 'src/app/models/sale.model';
   styleUrls: ['./edit-sale.component.css']
 })
 export class EditSaleComponent {
+  faMoneyBill = faMoneyBill;
+  faBookJournalWhills = faBookJournalWhills;
   faAngleUp = faAngleUp;
   faAngleDown = faAngleDown;
   faUser = faUser;
   faCircleXmark = faCircleXmark;
   fGroup: FormGroup = new FormGroup({});
 
-  selectedOption: string = 'option1';
+  selectedToggle: string = 'bill';
 
   sale: SaleModel;
   remissionNum_remission: number | undefined;
@@ -56,6 +58,11 @@ export class EditSaleComponent {
     this.bill_bill = updateSale.bill?.bill;
     this.remission = updateSale.remission;
     this.remission_remission = updateSale.remission?.remission;
+    if (this.bill_bill && !this.remission_remission) {
+      this.selectedToggle = 'bill';
+    } else if (!this.bill_bill && this.remission_remission){
+      this.selectedToggle = 'remission';
+    }
   }
 
   ngOnInit() {
@@ -74,6 +81,10 @@ export class EditSaleComponent {
 
   get GetFormGroup() {
     return this.fGroup.controls;
+  }
+
+  selectToggle(value: string) {
+    this.selectedToggle = value;
   }
 
   chooseClient(client: ClientModel): void {
@@ -157,4 +168,5 @@ export class EditSaleComponent {
     }
     this.dialogRef.close(this.sale);
   }
+
 }

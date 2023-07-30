@@ -1,6 +1,6 @@
 <div
-  class="flex flex-col justify-center items-center bg-amber-700 rounded-xl overflow-y-auto overflow-x-hidden w-full md:h-full">
-  <div class="relative p-2 bg-amber-800 rounded-lg shadow dark:bg-gray-800 sm:p-5 w-full max-w-2xl h-full md:h-auto">
+  class="flex flex-col justify-center items-center bg-amber-700 rounded-xl overflow-y-auto overflow-x-hidden w-full h-fit">
+  <div class="relative p-2 bg-amber-800 rounded-lg shadow dark:bg-gray-800 sm:p-5 w-full max-w-2xl h-fit md:h-auto">
     <div class="flex items-center justify-between border-b-2 border-amber-200 h-fit w-full pb-2 mb-2 sm:mb-3">
       <p class="m-3 font-semibold text-lg text-white mr-10">Agregar venta</p>
       <button (click)="closeDialog()" class="hover:text-red-500 text-red-300 text-3xl m-3 rounded-md
@@ -9,7 +9,7 @@
       </button>
     </div>
     <div class="flex-1">
-      <div class="flex flex-row mt-3 h-96">
+      <div class="flex flex-row mt-3 h-fit">
         <form [formGroup]="fGroup" class="flex flex-col justify-between mx-auto w-full m-1" action="#">
           <div class="flex-1 h-full w-full">
 
@@ -19,6 +19,7 @@
               <input type="date" name="saleDate" id="saleDate" formControlName="saleDate"
                 class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-emerald-700 peer rounded-b-md"
                 placeholder=" " required autofocus />
+              <!-- pattern="\d{4}-\d{2}-\d{2}" -->
               <label for="saleDate"
                 class="block px-2 pt-3 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-2 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-emerald-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-2">
                 Nueva Fecha</label>
@@ -70,7 +71,7 @@
                     <ul
                       class="p-2 flex flex-col text-sm text-gray-700 absolute top-0 left-0 z-20 bg-yellow-50 w-full rounded-b-lg">
                       <li *ngFor="let client of clients">
-                        <a class="block py-1 px-3 truncate hover:whitespace-normal"
+                        <a class="block py-1 px-3 truncate hover:whitespace-normal hover:bg-gray-800 hover:text-white"
                           (click)="chooseClient(client); accordionMenu.expanded = false"><fa-icon
                             [icon]="faUser"></fa-icon>&nbsp;
                           {{client.clientName}}</a>
@@ -82,17 +83,29 @@
             </div>
 
             <div
-              class="relative z-0 w-full mb-3 py-3 px-1 sm:px-2 h-fit shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block">
-              <input type="number" name="document" id="document" formControlName="document"
-                class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-emerald-700 peer rounded-b-md"
-                placeholder=" " required autofocus />
-              <label for="document"
-                class="block px-2 pt-3 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-2 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-emerald-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-2">
-                Nuevo documento</label>
-              <div class="text-red-400 text-center italic text-sm"
-                *ngIf="GetFormGroup['document'].errors
-                                                  && (GetFormGroup['document'].dirty || GetFormGroup['document'].touched)">
-                <strong>Este campo es requerido</strong>
+              class="w-full mb-1 py-3 px-1 sm:px-2 h-fit shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block">
+              <div class="mb-2">
+                <div class="inline-flex rounded-md shadow-sm m-1 p-1">
+                  <button
+                    [class]="selectedToggle === 'bill' ? ' inline-flex items-center px-4 py-2 text-sm font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white' : 'text-gray-900 bg-transparent'"
+                    (click)="selectToggle('bill')" class="px-4 py-2 border border-gray-900 rounded-l-lg">
+                    Factura
+                  </button>
+                  <button
+                    [class]="selectedToggle === 'remission' ? 'inline-flex items-center px-4 py-2 text-sm font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white' : 'text-gray-900 bg-transparent'"
+                    (click)="selectToggle('remission')" class="px-4 py-2 border border-gray-900 rounded-r-md">
+                    Remisión
+                  </button>
+                </div>
+              </div>
+              <div
+                class="relative z-0 w-full mb-1 py-3 px-1 sm:px-2 h-fit shadow-sm bg-yellow-50 border text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block">
+                <input type="number" name="document" id="document" formControlName="document"
+                  class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-emerald-700 peer rounded-b-md"
+                  placeholder=" " required autofocus />
+                <label for="document"
+                  class="block px-2 pt-3 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-2 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-emerald-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-2">
+                  Nuevo documento</label>
               </div>
             </div>
 
@@ -106,7 +119,7 @@
               </button>
               <button type="submit" (click)="closeWithRes()" class="px-5 py-2.5 bg-blue-400 rounded-lg hover:bg-blue-500 hover:border-2 hover:border-white text-white hover:text-gray-300
                 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm w-full sm:w-auto text-center">
-                Crear
+                Editar
               </button>
             </div>
           </div>

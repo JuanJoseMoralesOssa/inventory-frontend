@@ -17,6 +17,8 @@ export class CreateSaleComponent {
   faCircleXmark = faCircleXmark;
   fGroup: FormGroup = new FormGroup({});
 
+  selectedToggle: string = 'bill';
+
   sale: SaleModel = {};
   clients = [
     { clientName: 'Cliente 1' },
@@ -54,6 +56,10 @@ export class CreateSaleComponent {
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  selectToggle(value: string) {
+    this.selectedToggle = value;
   }
 
   getSaleDate(): Date {

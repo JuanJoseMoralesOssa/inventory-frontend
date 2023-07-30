@@ -9,7 +9,7 @@
     </div>
     <div class="mx-4">
       <h2 class="text-2xl font-semibold">Agrega un nuevo producto a una venta</h2>
-      <p class="text-sm font-bold text-yellow-700 italic">Registro de los productos por las ventas</p>
+      <p class="text-sm font-bold text-yellow-700 italic">Registro de los productos por ventas</p>
     </div>
   </div>
   <div class="p-2">
@@ -44,22 +44,22 @@
 
           <!-- Product Sale Quantity column -->
           <ng-container cdkColumnDef="quantity">
-            <th cdk-header-cell class="py-3 px-8 w-6" *cdkHeaderCellDef>Cantidad</th>
-            <td cdk-cell class="py-3 px-3 w-12" *cdkCellDef="let row">
-              <div class="text-center">
-                <p class="text-center">
+            <th cdk-header-cell class="py-3 px-3 w-6" *cdkHeaderCellDef>Cantidad</th>
+            <td cdk-cell class="py-3 px-4 w-12" *cdkCellDef="let row">
+              <div>
+                <p>
                   {{row.quantity}}
                 </p>
               </div>
             </td>
-            <td cdk-footer-cell class="py-3 px-8 w-6" *cdkFooterCellDef></td>
+            <td cdk-footer-cell class="py-3 px-3 w-6" *cdkFooterCellDef></td>
           </ng-container>
 
           <!-- Product-sale Sale column -->
           <ng-container cdkColumnDef="sale">
             <th cdk-header-cell class="py-3 px-8 w-6" *cdkHeaderCellDef>Venta</th>
             <td cdk-cell class="py-3 px-8 w-6" *cdkCellDef="let row">
-              <p class="text-center" *ngIf="row.sale.id">{{row.sale.id}}</p>
+              <p *ngIf="row.sale.id">{{row.sale.id}}</p>
             </td>
             <td cdk-footer-cell class="py-3 px-8 w-6" *cdkFooterCellDef></td>
           </ng-container>
@@ -81,7 +81,7 @@
           <ng-container cdkColumnDef="weight">
             <th cdk-header-cell class="py-3 px-6 w-6" *cdkHeaderCellDef>Peso</th>
             <td cdk-cell class="px-6 py-3 w-6" *cdkCellDef="let row">
-              <p class="text-center" *ngIf="row.weight">{{row.weight}}</p>
+              <p *ngIf="row.weight">{{row.weight}}</p>
             </td>
             <td cdk-footer-cell class="py-3 px-6 w-6" *cdkFooterCellDef></td>
           </ng-container>
