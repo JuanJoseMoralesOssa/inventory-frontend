@@ -5,10 +5,10 @@ import { faEye, faMoneyBill, faPenToSquare, faTrashCan } from '@fortawesome/free
 import { debounceTime } from 'rxjs';
 import { DataSourceBill } from 'src/app/data-sources/bill-data-source';
 import { BillModel } from 'src/app/models/bill.model';
-import { BusinessLogicService } from 'src/app/services/business-logic.service';
 import { CreateBillComponent } from '../create-bill/create-bill.component';
 import { EditBillComponent } from '../edit-bill/edit-bill.component';
 import { DeleteBillComponent } from '../delete-bill/delete-bill.component';
+import { DataSourceService } from 'src/app/services/data-source/data-source.service';
 
 @Component({
   selector: 'app-list-bill',
@@ -29,31 +29,19 @@ export class ListBillComponent {
   bill: BillModel = {};
 
   constructor(
-    private businessLogicService: BusinessLogicService,
+    private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.bills = [
-      {
-        id: 30,
-        bill: 1,
-        sale: { id: 1 },
-      },
-      {
-        id: 40,
-        bill: 2,
-        sale: {id:2},
-      },
-      {
-        id: 50,
-        bill: 3,
-        sale: {},
-      },
-    ]
-    this.dataSourceBills.init(this.bills);
+    this.dataSourceService.getBillsData().loadBills();
+    this.dataSourceService.getBillsData().initBills();
+    this.dataSourceBills = this.dataSourceService.getBillsData().getDataSourceBill();
   }
 
   ngOnInit(): void {
-    // this.getBillsData();
+    if (this.dataSourceService.getBillsData().getError()) {
+      this.loadDefaultBills();
+      alert('Error al cargar las facturas');
+    }
 
     this.input.valueChanges
       .pipe(
@@ -62,17 +50,6 @@ export class ListBillComponent {
       .subscribe(value => {
         this.dataSourceBills.find(value);
       });
-  }
-
-  getBillsData(): void {
-    this.businessLogicService.listBills().subscribe({
-      next: (billsData) => {
-        this.bills = billsData;
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
   }
 
   update(p_bill: BillModel) {
@@ -167,4 +144,24 @@ export class ListBillComponent {
     return typeof value === 'number';
   }
 
+  loadDefaultBills(): void{
+    this.bills = [
+      {
+        id: 30,
+        bill: 1,
+        sale: { id: 1 },
+      },
+      {
+        id: 40,
+        bill: 2,
+        sale: {id:2},
+      },
+      {
+        id: 50,
+        bill: 3,
+        sale: {},
+      },
+    ]
+    this.dataSourceBills.init(this.bills);
+  }
 }

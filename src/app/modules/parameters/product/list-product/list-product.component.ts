@@ -5,10 +5,10 @@ import { faBoxesPacking, faEye, faPenToSquare, faTrashCan } from '@fortawesome/f
 import { debounceTime } from 'rxjs';
 import { DataSourceProduct } from 'src/app/data-sources/product-data-source';
 import { ProductModel } from 'src/app/models/product.model';
-import { BusinessLogicService } from 'src/app/services/business-logic.service';
 import { CreateProductComponent } from '../create-product/create-product.component';
 import { EditProductComponent } from '../edit-product/edit-product.component';
 import { DeleteProductComponent } from '../delete-product/delete-product.component';
+import { DataSourceService } from 'src/app/services/data-source/data-source.service';
 
 @Component({
   selector: 'app-list-product',
@@ -29,43 +29,19 @@ export class ListProductComponent {
   product: ProductModel = {};
 
   constructor(
-    private businessLogicService: BusinessLogicService,
+    private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.products = [
-      {
-        id: 30,
-        code: '001',
-        productName: 'Manzana',
-        totalQuantity: 10,
-        totalWeight: 20,
-        packing: {packing:'hola'},
-        sales: [{ id: 1 }, {id:2}],
-      },
-      {
-        id: 40,
-        code: '001',
-        productName: 'Manzana',
-        totalQuantity: 10,
-        totalWeight: 20,
-        packing: {},
-        sales: [ {id:2}],
-      },
-      {
-        id: 50,
-        code: '001',
-        productName: 'Manzana',
-        totalQuantity: 10,
-        totalWeight: 20,
-        packing: {},
-        sales: [],
-      },
-    ]
-    this.dataSourceProducts.init(this.products);
+    this.dataSourceService.getProductsData().loadProducts();
+    this.dataSourceService.getProductsData().initProducts();
+    this.dataSourceProducts = this.dataSourceService.getProductsData().getDataSourceProduct();
   }
 
   ngOnInit(): void {
-    // this.getProductsData();
+    if (this.dataSourceService.getProductsData().getError()) {
+      this.loadDefaultProducts();
+      alert('Error al cargar los productos');
+    }
 
     this.input.valueChanges
       .pipe(
@@ -74,17 +50,6 @@ export class ListProductComponent {
       .subscribe(value => {
         this.dataSourceProducts.find(value);
       });
-  }
-
-  getProductsData(): void {
-    this.businessLogicService.listProducts().subscribe({
-      next: (productsData) => {
-        this.products = productsData;
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
   }
 
   // ngOnInit(): void {
@@ -198,6 +163,39 @@ export class ListProductComponent {
 
   isNumber(value: any): boolean {
     return typeof value === 'number';
+  }
+
+  loadDefaultProducts(): void{
+    this.products = [
+      {
+        id: 30,
+        code: '001',
+        productName: 'Manzana',
+        totalQuantity: 10,
+        totalWeight: 20,
+        packing: {packing:'hola'},
+        sales: [{ id: 1 }, {id:2}],
+      },
+      {
+        id: 40,
+        code: '001',
+        productName: 'Manzana',
+        totalQuantity: 10,
+        totalWeight: 20,
+        packing: {},
+        sales: [ {id:2}],
+      },
+      {
+        id: 50,
+        code: '001',
+        productName: 'Manzana',
+        totalQuantity: 10,
+        totalWeight: 20,
+        packing: {},
+        sales: [],
+      },
+    ]
+    this.dataSourceProducts.init(this.products);
   }
 
 }

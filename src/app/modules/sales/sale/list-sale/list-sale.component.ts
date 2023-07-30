@@ -5,12 +5,12 @@ import { faDollarSign, faEye, faPenToSquare, faTrashCan } from '@fortawesome/fre
 import { debounceTime } from 'rxjs';
 import { DataSourceSale } from 'src/app/data-sources/sale-data-source';
 import { SaleModel } from 'src/app/models/sale.model';
-import { BusinessLogicService } from 'src/app/services/business-logic.service';
 import { DeleteSaleComponent } from '../delete-sale/delete-sale.component';
 import { EditSaleComponent } from '../edit-sale/edit-sale.component';
 import { CreateSaleComponent } from '../create-sale/create-sale.component';
 import { CreateProductSaleComponent } from '../../product-sale/create-product-sale/create-product-sale.component';
 import { ProductSaleModel } from 'src/app/models/product-sale.model';
+import { DataSourceService } from 'src/app/services/data-source/data-source.service';
 
 @Component({
   selector: 'app-list-sale',
@@ -22,7 +22,7 @@ export class ListSaleComponent {
   faEye = faEye;
   faPenToSquare = faPenToSquare;
   faTrashCan = faTrashCan;
-  dataSourceSales = new DataSourceSale();
+  dataSourceSales: DataSourceSale;
   sales: SaleModel[] = [];
   columns: string[] = ['id', 'saleDate', 'remissionNum', 'clientName', 'products', 'document', 'actions' ];
   input = new FormControl('', { nonNullable: true })
@@ -31,40 +31,19 @@ export class ListSaleComponent {
   sale: SaleModel = {};
 
   constructor(
-    private businessLogicService: BusinessLogicService,
+    private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.sales = [
-      {
-        id: 30,
-        saleDate: new Date(),
-        remissionNumModel: { id: 1,remission: 2 },
-        products: [{ id: 1, productName: 'lecosin' }, { id: 2, productName: 'Lecosin Kj' }],
-        client: { id: 1, clientName: 'Perez Martinez' },
-        remission: { id: 1, remission: 2 },
-      },
-      {
-        id: 40,
-        saleDate: new Date(),
-        remissionNumModel: { id: 1,remission: 3 },
-        products: [{ id: 1, productName: 'Impecryl' }, { id: 2, productName: 'Acido Formico' }, { id: 3, productName: 'Formiato' }],
-        client: { id: 1, clientName: 'Martinez Juarez' },
-        bill: {id: 1, bill: 3}
-      },
-      {
-        id: 50,
-        saleDate: new Date(),
-        remissionNumModel: { id: 1,remission: 4 },
-        products: [],
-        client: { id: 1, clientName: 'Ana Suñiga' },
-        bill: { id: 1, bill: 5 }
-      },
-    ]
-    this.dataSourceSales.init(this.sales);
+    this.dataSourceService.getSaleData().loadSales();
+    this.dataSourceService.getSaleData().initSales();
+    this.dataSourceSales = this.dataSourceService.getSaleData().getDataSourceSale();
   }
 
   ngOnInit(): void {
-    // this.getSalesData();
+    if (this.dataSourceService.getSaleData().getError()) {
+      this.loadDefaultSales();
+      alert('Error al cargar las ventas');
+    }
 
     this.input.valueChanges
       .pipe(
@@ -73,17 +52,6 @@ export class ListSaleComponent {
       .subscribe(value => {
         this.dataSourceSales.find(value);
       });
-  }
-
-  getSalesData(): void {
-    this.businessLogicService.listSales().subscribe({
-      next: (salesData) => {
-        this.sales = salesData;
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
   }
 
   // ngOnInit(): void {
@@ -232,6 +200,36 @@ export class ListSaleComponent {
     'weight' in obj &&
     'isBorrowed' in obj
     );
+  }
+
+  loadDefaultSales(): void {
+    this.sales = [
+      {
+        id: 30,
+        saleDate: new Date(),
+        remissionNumModel: { id: 1,remission: 2 },
+        products: [{ id: 1, productName: 'lecosin' }, { id: 2, productName: 'Lecosin Kj' }],
+        client: { id: 1, clientName: 'Perez Martinez' },
+        remission: { id: 1, remission: 2 },
+      },
+      {
+        id: 40,
+        saleDate: new Date(),
+        remissionNumModel: { id: 1,remission: 3 },
+        products: [{ id: 1, productName: 'Impecryl' }, { id: 2, productName: 'Acido Formico' }, { id: 3, productName: 'Formiato' }],
+        client: { id: 1, clientName: 'Martinez Juarez' },
+        bill: {id: 1, bill: 3}
+      },
+      {
+        id: 50,
+        saleDate: new Date(),
+        remissionNumModel: { id: 1,remission: 4 },
+        products: [],
+        client: { id: 1, clientName: 'Ana Suñiga' },
+        bill: { id: 1, bill: 5 }
+      },
+    ]
+    this.dataSourceSales.init(this.sales);
   }
 
 }

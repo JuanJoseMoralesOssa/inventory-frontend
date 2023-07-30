@@ -2,12 +2,13 @@ import { Dialog } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { faEye, faFileInvoiceDollar, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { ProductSaleModel } from 'src/app/models/product-sale.model';
-import { BusinessLogicService } from 'src/app/services/business-logic.service';
 import { CreateProductSaleComponent } from '../create-product-sale/create-product-sale.component';
 import { EditProductSaleComponent } from '../edit-product-sale/edit-product-sale.component';
 import { DeleteProductSaleComponent } from '../delete-product-sale/delete-product-sale.component';
 import { DataSourceProductSale } from 'src/app/data-sources/product-sale-data-source';
 import { FormControl } from '@angular/forms';
+import { DataSourceService } from 'src/app/services/data-source/data-source.service';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-list-product-sale',
@@ -28,53 +29,28 @@ export class ListProductSaleComponent {
   productSale: ProductSaleModel = {};
 
   constructor(
-    private businessLogicService: BusinessLogicService,
+    private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.productSales = [
-      {
-        id: 30,
-        quantity: 1,
-        sale: { id: 20 },
-        product: { productName: 'Lecosin' },
-        weight: 20.1,
-        isBorrowed: true,
-      },
-      {
-        id: 31,
-        quantity: 1,
-        sale: { id: 20 },
-        product: { productName: 'Lecosin' },
-        weight: 20.1,
-        isBorrowed: false,
-      },
-      {
-        id: 32,
-        quantity: 1,
-        sale: { id: 20 },
-        product: { productName: 'Lecosin' },
-        weight: 20.1,
-      },
-    ]
-    this.dataSourceProductSales.init(this.productSales);
+    this.dataSourceService.getProductsSaleData().loadProductsSales();
+    this.dataSourceService.getProductsSaleData().initProductSales();
+    this.dataSourceProductSales = this.dataSourceService.getProductsSaleData().getDataSourceProductSale();
   }
 
   ngOnInit(): void {
-    // this.getProductSalesData();
+    if (this.dataSourceService.getProductsSaleData().getError()) {
+      this.loadDefaultProductsSales();
+      alert('Error al cargar los productos de las ventas');
+    }
 
-
+    this.input.valueChanges
+      .pipe(
+        debounceTime(300)
+      )
+      .subscribe(value => {
+        this.dataSourceProductSales.find(value);
+      });
   }
-
-  // getProductSalesData(): void {
-  //   this.businessLogicService.listProductSales().subscribe({
-  //     next: (productSalesData) => {
-  //       this.productSales = productSalesData;
-  //     },
-  //     error: (err) => {
-  //       console.error(err);
-  //     }
-  //   });
-  // }
 
   // ngOnInit(): void {
   //   this.http.get<ProductSaleModel[]>('https://api.escuelajs.co/api/v1/products')
@@ -187,5 +163,34 @@ export class ListProductSaleComponent {
 
   isNumber(value: any): boolean {
     return typeof value === 'number';
+  }
+
+  loadDefaultProductsSales(): void {
+    this.productSales = [
+      {
+        id: 30,
+        quantity: 1,
+        sale: { id: 20 },
+        product: { productName: 'Lecosin' },
+        weight: 20.1,
+        isBorrowed: true,
+      },
+      {
+        id: 31,
+        quantity: 1,
+        sale: { id: 20 },
+        product: { productName: 'Lecosin' },
+        weight: 20.1,
+        isBorrowed: false,
+      },
+      {
+        id: 32,
+        quantity: 1,
+        sale: { id: 20 },
+        product: { productName: 'Lecosin' },
+        weight: 20.1,
+      },
+    ]
+    this.dataSourceProductSales.init(this.productSales);
   }
 }

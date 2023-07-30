@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ClientModel } from 'src/app/models/client.model';
-import { BusinessLogicService } from 'src/app/services/business-logic.service';
 
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs';
@@ -10,6 +9,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { CreateClientComponent } from '../create-client/create-client.component';
 import { EditClientComponent } from '../edit-client/edit-client.component';
 import { DeleteClientComponent } from '../delete-client/delete-client.component';
+import { DataSourceService } from 'src/app/services/data-source/data-source.service';
 
 @Component({
   selector: 'app-list-client',
@@ -30,32 +30,19 @@ export class ListClientComponent {
   client: ClientModel = {};
 
   constructor(
-    private businessLogicService: BusinessLogicService,
+    private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.clients = [
-      {
-        id: 30,
-        clientName: 'Juana',
-        sales: [{ id: 1 }, {id:2}],
-      },
-      {
-        id: 40,
-        clientName: 'Maria',
-        sales: [ {id:2}],
-      },
-      {
-        id: 50,
-        clientName: 'Pepe',
-        sales: [],
-      },
-    ]
-    this.dataSourceClients.init(this.clients);
+    this.dataSourceService.getClientsData().loadClients();
+    this.dataSourceService.getClientsData().initClients();
+    this.dataSourceClients = this.dataSourceService.getClientsData().getDataSourceClient();
   }
 
   ngOnInit(): void {
-    // this.getClientsData();
-
+    if (this.dataSourceService.getClientsData().getError()) {
+      this.loadDefaultClients();
+      alert('Error al cargar los empaques');
+    }
     this.input.valueChanges
       .pipe(
         debounceTime(300)
@@ -63,17 +50,6 @@ export class ListClientComponent {
       .subscribe(value => {
         this.dataSourceClients.find(value);
       });
-  }
-
-  getClientsData(): void {
-    this.businessLogicService.listClients().subscribe({
-      next: (clientsData) => {
-        this.clients = clientsData;
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
   }
 
   // ngOnInit(): void {
@@ -182,6 +158,27 @@ export class ListClientComponent {
 
   isNumber(value: any): boolean {
     return typeof value === 'number';
+  }
+
+  loadDefaultClients(): void {
+    this.clients = [
+      {
+        id: 30,
+        clientName: 'Juana',
+        sales: [{ id: 1 }, {id:2}],
+      },
+      {
+        id: 40,
+        clientName: 'Maria',
+        sales: [ {id:2}],
+      },
+      {
+        id: 50,
+        clientName: 'Pepe',
+        sales: [],
+      },
+    ]
+    this.dataSourceClients.init(this.clients);
   }
 
 }

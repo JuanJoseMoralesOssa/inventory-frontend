@@ -5,10 +5,10 @@ import { faBookJournalWhills, faEye, faPenToSquare, faTrashCan } from '@fortawes
 import { debounceTime } from 'rxjs';
 import { DataSourceRemission } from 'src/app/data-sources/remission-data-source';
 import { RemissionModel } from 'src/app/models/remission.model';
-import { BusinessLogicService } from 'src/app/services/business-logic.service';
 import { CreateRemissionComponent } from '../create-remission/create-remission.component';
 import { EditRemissionComponent } from '../edit-remission/edit-remission.component';
 import { DeleteRemissionComponent } from '../delete-remission/delete-remission.component';
+import { DataSourceService } from 'src/app/services/data-source/data-source.service';
 
 @Component({
   selector: 'app-list-remission',
@@ -29,31 +29,19 @@ export class ListRemissionComponent {
   remission: RemissionModel = {};
 
   constructor(
-    private businessLogicService: BusinessLogicService,
+    private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.remissions = [
-      {
-        id: 30,
-        remission: 1,
-        sale: { id: 1 },
-      },
-      {
-        id: 40,
-        remission: 2,
-        sale: {id:2},
-      },
-      {
-        id: 50,
-        remission: 3,
-        sale: {},
-      },
-    ]
-    this.dataSourceRemissions.init(this.remissions);
+    this.dataSourceService.getRemissionsData().loadRemissions();
+    this.dataSourceService.getRemissionsData().initRemission();
+    this.dataSourceRemissions = this.dataSourceService.getRemissionsData().getDataSourceRemission();
   }
 
   ngOnInit(): void {
-    // this.getRemissionsData();
+    if (this.dataSourceService.getRemissionsData().getError()) {
+      this.loadDefaultRemissions();
+      alert('Error al cargar las remisiones');
+    }
 
     this.input.valueChanges
       .pipe(
@@ -62,17 +50,6 @@ export class ListRemissionComponent {
       .subscribe(value => {
         this.dataSourceRemissions.find(value);
       });
-  }
-
-  getRemissionsData(): void {
-    this.businessLogicService.listRemissions().subscribe({
-      next: (remissionsData) => {
-        this.remissions = remissionsData;
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
   }
 
   // ngOnInit(): void {
@@ -181,6 +158,27 @@ export class ListRemissionComponent {
 
   isNumber(value: any): boolean {
     return typeof value === 'number';
+  }
+
+  loadDefaultRemissions(): void {
+        this.remissions = [
+      {
+        id: 30,
+        remission: 1,
+        sale: { id: 1 },
+      },
+      {
+        id: 40,
+        remission: 2,
+        sale: {id:2},
+      },
+      {
+        id: 50,
+        remission: 3,
+        sale: {},
+      },
+    ]
+    this.dataSourceRemissions.init(this.remissions);
   }
 
 }

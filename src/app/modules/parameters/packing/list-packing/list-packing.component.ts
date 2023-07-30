@@ -7,8 +7,8 @@ import { Dialog } from '@angular/cdk/dialog';
 import { FormControl } from '@angular/forms';
 import { DataSourcePacking } from 'src/app/data-sources/packing-data-source';
 import { faEye, faPenToSquare, faSuitcase, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { BusinessLogicService } from 'src/app/services/business-logic.service';
 import { debounceTime } from 'rxjs';
+import { DataSourceService } from 'src/app/services/data-source/data-source.service';
 
 @Component({
   selector: 'app-list-packing',
@@ -29,31 +29,19 @@ export class ListPackingComponent {
   packing: PackingModel = {};
 
   constructor(
-    private businessLogicService: BusinessLogicService,
+    private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.packings = [
-      {
-        id: 30,
-        packing: 'Juana',
-        products: [{ id: 1 }, {id:2}],
-      },
-      {
-        id: 40,
-        packing: 'Maria',
-        products: [ {id:2}],
-      },
-      {
-        id: 50,
-        packing: 'Pepe',
-        products: [],
-      },
-    ]
-    this.dataSourcePackings.init(this.packings);
+    this.dataSourceService.getPackingsData().loadPackings();
+    this.dataSourceService.getPackingsData().initPackings();
+    this.dataSourcePackings = this.dataSourceService.getPackingsData().getDataSourcePacking();
   }
 
   ngOnInit(): void {
-    // this.getPackingsData();
+    if (this.dataSourceService.getPackingsData().getError()) {
+      this.loadDefaultPackings();
+      alert('Error al cargar los empaques');
+    }
 
     this.input.valueChanges
       .pipe(
@@ -62,17 +50,6 @@ export class ListPackingComponent {
       .subscribe(value => {
         this.dataSourcePackings.find(value);
       });
-  }
-
-  getPackingsData(): void {
-    this.businessLogicService.listPackings().subscribe({
-      next: (packingsData) => {
-        this.packings = packingsData;
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
   }
 
   update(p_packing: PackingModel) {
@@ -165,5 +142,26 @@ export class ListPackingComponent {
 
   isNumber(value: any): boolean {
     return typeof value === 'number';
+  }
+
+  loadDefaultPackings(): void {
+        this.packings = [
+      {
+        id: 30,
+        packing: 'Juana',
+        products: [{ id: 1 }, {id:2}],
+      },
+      {
+        id: 40,
+        packing: 'Maria',
+        products: [ {id:2}],
+      },
+      {
+        id: 50,
+        packing: 'Pepe',
+        products: [],
+      },
+    ]
+    this.dataSourcePackings.init(this.packings);
   }
 }
