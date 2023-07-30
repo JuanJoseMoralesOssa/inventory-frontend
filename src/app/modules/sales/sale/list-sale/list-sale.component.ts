@@ -10,6 +10,7 @@ import { DeleteSaleComponent } from '../delete-sale/delete-sale.component';
 import { EditSaleComponent } from '../edit-sale/edit-sale.component';
 import { CreateSaleComponent } from '../create-sale/create-sale.component';
 import { CreateProductSaleComponent } from '../../product-sale/create-product-sale/create-product-sale.component';
+import { ProductSaleModel } from 'src/app/models/product-sale.model';
 
 @Component({
   selector: 'app-list-sale',
@@ -43,7 +44,7 @@ export class ListSaleComponent {
         remission: { id: 1, remission: 2 },
       },
       {
-        id: 30,
+        id: 40,
         saleDate: new Date(),
         remissionNumModel: { id: 1,remission: 3 },
         products: [{ id: 1, productName: 'Impecryl' }, { id: 2, productName: 'Acido Formico' }, { id: 3, productName: 'Formiato' }],
@@ -51,12 +52,12 @@ export class ListSaleComponent {
         bill: {id: 1, bill: 3}
       },
       {
-        id: 30,
+        id: 50,
         saleDate: new Date(),
         remissionNumModel: { id: 1,remission: 4 },
         products: [],
         client: { id: 1, clientName: 'Ana Suñiga' },
-        bill: { id: 1, bill: 3 },
+        bill: { id: 1, bill: 5 }
       },
     ]
     this.dataSourceSales.init(this.sales);
@@ -123,17 +124,18 @@ export class ListSaleComponent {
 
   openCreateProductSale(): void {
     const dialogRefCreate = this.dialog.open(CreateProductSaleComponent, {
-          minWidth: '300px',
-          maxWidth: '50%',
-        });
+      minWidth: '300px',
+      maxWidth: '50%',
+      data: this.sale.id,
+    });
     dialogRefCreate.closed.subscribe(output => {
-      if (this.isSaleModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
+      if (this.isProductSaleModel(output)) {
+            console.log('====================================');
+            console.log(output, 'falttaaaaaaaaaa arreglar el create pero de product sale no de sale');
+            console.log('====================================');
             this.create(output);
         } else {
-          console.error('Tipo de salida Invalida. Se esperada SaleModel.');
+          console.error('Tipo de salida Invalida. Se esperada ProductSaleModel.');
         }
       });
   }
@@ -217,4 +219,19 @@ export class ListSaleComponent {
   isNumber(value: any): boolean {
     return typeof value === 'number';
   }
+
+  isProductSaleModel(obj: any): obj is ProductSaleModel {
+  return (
+    typeof obj === 'object' &&
+    'id' in obj &&
+    'saleId' in obj &&
+    'sale' in obj &&
+    'productId' in obj &&
+    'product' in obj &&
+    'quantity' in obj &&
+    'weight' in obj &&
+    'isBorrowed' in obj
+    );
+  }
+
 }

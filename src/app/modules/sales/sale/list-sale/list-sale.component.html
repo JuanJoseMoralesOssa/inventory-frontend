@@ -2,8 +2,8 @@
   <div class="flex px-4 py-2 w-full border-b-2 border-amber-800">
     <div class="flex items-center">
       <div class="bg-yellow-500 rounded-xl p-2">
-        <div class="w-8 h-8 rounded-xl text-2xl text-white flex items-center justify-center" >
-        <fa-icon [icon]="faDollarSign"></fa-icon>
+        <div class="w-8 h-8 rounded-xl text-2xl text-white flex items-center justify-center">
+          <fa-icon [icon]="faDollarSign"></fa-icon>
         </div>
       </div>
     </div>
@@ -79,8 +79,9 @@
                   <span class="col-span-1 w-12 text-end">{{product}}</span>
                 </p>
                 <div class="flex justify-center items-center m-2 col-span-3 mb-4">
-                  <button (click)="openCreateProductSale()"
-                    class="w-full block bg-lime-900 hover:bg-lime-500 border-lime-900 border-2 p-1 rounded-md text-white hover:text-lime-900 font-semibold ">Agregar Producto</button>
+                  <button (click)="getSaleValue(row);openCreateProductSale()"
+                    class="w-full block bg-lime-900 hover:bg-lime-500 border-lime-900 border-2 p-1 rounded-md text-white hover:text-lime-900 font-semibold ">Agregar
+                    Producto</button>
                 </div>
                 <div class="col-span-3 h-2">
                 </div>
@@ -93,16 +94,15 @@
           <ng-container cdkColumnDef="document">
             <th cdk-header-cell class="py-3 px-6 w-1/5 md:w-2/5" *cdkHeaderCellDef>Documento</th>
             <td cdk-cell class="px-6 py-3" *cdkCellDef="let row">
-              <span *ngIf="row.bill && !row.remission">FACT {{row.bill.bill}}</span>
-              <span *ngIf="row.remission && !row.bill">REM {{row.remission.remission}}</span>
-              <span *ngIf="row.remission && row.bill">
-                <span *ngIf="row.remission.remision && row.bill.bill">
-                  Dos documentos para una misma venta
-                  {{row.bill.bill}}
-                  -
-                  {{row.remission.remission}}
-                </span>
+              <span *ngIf="row.bill? row.bill.bill: false">
+                FACT {{row.bill.bill}}
               </span>
+              <span *ngIf="row.remission? row.remission.remission: false">REM {{row.remission.remission}}</span>
+              <p *ngIf="row.remission && row.bill">
+                <span *ngIf="row.remission.remission && row.bill.bill">
+                  <span class="text-red-500 text-lg">Dos documentos para una misma venta</span>
+                </span>
+              </p>
             </td>
             <td cdk-footer-cell class="py-3 px-6" *cdkFooterCellDef></td>
           </ng-container>

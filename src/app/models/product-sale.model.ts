@@ -9,5 +9,5 @@ export interface ProductSaleModel {
   product?: ProductModel;
   quantity?: number;
   weight?: number;
-  IsBorrowed?: boolean;
+  isBorrowed?: boolean;
 }

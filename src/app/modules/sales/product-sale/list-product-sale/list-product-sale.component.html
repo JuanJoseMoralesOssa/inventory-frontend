@@ -59,7 +59,7 @@
           <ng-container cdkColumnDef="sale">
             <th cdk-header-cell class="py-3 px-8 w-6" *cdkHeaderCellDef>Venta</th>
             <td cdk-cell class="py-3 px-8 w-6" *cdkCellDef="let row">
-              <p *ngIf="row.sale.id">{{row.sale.id}}</p>
+              <p *ngIf="row.sale">{{row.sale.id}}</p>
             </td>
             <td cdk-footer-cell class="py-3 px-8 w-6" *cdkFooterCellDef></td>
           </ng-container>
@@ -70,7 +70,7 @@
             <th cdk-header-cell class="py-3 px-6 w-24" *cdkHeaderCellDef>Producto</th>
             <td cdk-cell class="px-6 py-3 w-40 md:w-1/3" *cdkCellDef="let row">
               <div class="w-full sm:w-56 flex">
-                <p *ngIf="row.product.productName" class="truncate hover:whitespace-normal flex-1 ">
+                <p *ngIf="row.product" class="truncate hover:whitespace-normal flex-1 ">
                   {{row.product.productName}} </p>
               </div>
             </td>
@@ -87,12 +87,12 @@
           </ng-container>
 
           <!-- Product-sale IsBorrowed column -->
-          <ng-container cdkColumnDef="IsBorrowed">
+          <ng-container cdkColumnDef="isBorrowed">
             <th cdk-header-cell class="py-3 px-2 w-1" *cdkHeaderCellDef>Prestado</th>
             <td cdk-cell class="px-2 py-3 w-1" *cdkCellDef="let row">
-              <p *ngIf="row.IsBorrowed"
-                [ngClass]=" row.IsBorrowed? 'bg-lime-500 text-white text-lg p-1 flex justify-center rounded':'' ">
-                {{row.IsBorrowed? 'Si': ''}}</p>
+              <p *ngIf="row.isBorrowed"
+                [ngClass]=" row.isBorrowed? 'bg-lime-500 text-white text-lg p-1 flex justify-center rounded':'' ">
+                {{row.isBorrowed? 'Si': ''}}</p>
             </td>
             <td cdk-footer-cell class="py-3 px-2 w-1" *cdkFooterCellDef></td>
           </ng-container>

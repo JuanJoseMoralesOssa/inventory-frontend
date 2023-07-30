@@ -1,1 +1,157 @@
-<p>create-product-sale works!</p>
+<div
+  class="flex flex-col justify-center items-center bg-amber-700 rounded-xl overflow-y-auto overflow-x-hidden w-full max-h-screen">
+  <div class="relative p-2 bg-amber-800 rounded-lg shadow dark:bg-gray-800 sm:p-5 w-full max-w-2xl h-fit md:h-auto">
+    <div class="flex items-center justify-between border-b-2 border-amber-200 h-fit w-full pb-2 mb-2 sm:mb-3">
+      <p class="m-3 font-semibold text-lg text-white mr-10">Agregar producto por venta</p>
+      <button (click)="closeDialog()" class="hover:text-red-500 text-red-300 text-3xl m-3 rounded-md
+      bg-transparent hover:bg-gray-200 p-1 ml-10 inline-flex items-center">
+        <fa-icon [icon]="faCircleXmark"></fa-icon>
+      </button>
+    </div>
+    <div class="flex-1">
+      <div class="flex flex-row mt-3 h-fit">
+        <form [formGroup]="fGroup" class="flex flex-col justify-between mx-auto w-full m-1" action="#">
+          <div class="flex-1 h-full w-full">
+
+            <div
+              class="relative z-0 w-full mb-3 py-3 px-1 sm:px-2 h-fit shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block">
+              <input type="number" name="quantity" id="quantity" formControlName="quantity"
+                class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-emerald-700 peer rounded-b-md"
+                placeholder=" " required autofocus />
+              <label for="quantity"
+                class="block px-2 pt-3 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-2 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-emerald-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-2">
+                Nueva cantidad</label>
+              <div class="text-red-400 text-center italic text-sm"
+                *ngIf="GetFormGroup['quantity'].errors
+                                                                                      && (GetFormGroup['quantity'].dirty || GetFormGroup['quantity'].touched)">
+                <strong>Este campo es requerido</strong>
+              </div>
+            </div>
+
+            <div
+              class="relative z-30 w-full mb-3 py-2 px-1 sm:px-2 h-fit shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block">
+              <cdk-accordion>
+                <cdk-accordion-item #accordionMenu1="cdkAccordionItem">
+                  <button class="relative z-0 w-full py-1 flex justify-between items-center" type="button"
+                    (click)="accordionMenu1.toggle()">
+                    <input type="number" name="saleId" id="saleId" formControlName="saleId"
+                      class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-emerald-700 peer rounded-b-md"
+                      placeholder=" " required autofocus />
+                    <label for="saleId"
+                      class="block px-2 pt-3 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-emerald-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                      Nueva venta
+                    </label>
+                    <div class="p-3 rounded-full hover:bg-yellow-200">
+                      <fa-icon [icon]="accordionMenu1.expanded ? faAngleUp: faAngleDown "></fa-icon>
+                    </div>
+                    <div class="text-red-400 text-center italic text-sm mx-2"
+                      *ngIf="GetFormGroup['saleId'].errors && (GetFormGroup['saleId'].dirty || GetFormGroup['saleId'].touched)">
+                      <strong>Este campo es requerido</strong>
+                    </div>
+                  </button>
+                  <div [style.display]="accordionMenu1.expanded ? '': 'none' " class="relative">
+                    <ul
+                      class="p-2 flex flex-col text-sm text-gray-700 absolute top-0 left-0 z-20 bg-yellow-50 w-full rounded-b-lg">
+                      <li *ngFor="let sale of sales">
+                        <a class="block py-1 px-3 truncate hover:whitespace-normal hover:bg-gray-800 hover:text-white"
+                          (click)="chooseSale(sale); accordionMenu1.expanded = false"><fa-icon
+                            [icon]="faBoxesPacking"></fa-icon>&nbsp;
+                          {{sale.id}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </cdk-accordion-item>
+              </cdk-accordion>
+            </div>
+
+            <div
+              class="relative z-20 w-full mb-3 py-2 px-1 sm:px-2 h-fit shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block">
+              <cdk-accordion>
+                <cdk-accordion-item #accordionMenu="cdkAccordionItem">
+                  <button class="relative z-0 w-full py-1 flex justify-between items-center" type="button"
+                    (click)="accordionMenu.toggle()">
+                    <input type="text" name="productName" id="productName" formControlName="productName"
+                      class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-emerald-700 peer rounded-b-md"
+                      placeholder=" " required autofocus />
+                    <label for="productName"
+                      class="block px-2 pt-3 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-emerald-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                      Nuevo producto
+                    </label>
+                    <div class="p-3 rounded-full hover:bg-yellow-200">
+                      <fa-icon [icon]="accordionMenu.expanded ? faAngleUp: faAngleDown "></fa-icon>
+                    </div>
+                    <div class="text-red-400 text-center italic text-sm mx-2"
+                      *ngIf="GetFormGroup['productName'].errors && (GetFormGroup['productName'].dirty || GetFormGroup['productName'].touched)">
+                      <strong>Este campo es requerido</strong>
+                    </div>
+                  </button>
+                  <div [style.display]="accordionMenu.expanded ? '': 'none' " class="relative">
+                    <ul
+                      class="p-2 flex flex-col text-sm text-gray-700 absolute top-0 left-0 z-20 bg-yellow-50 w-full rounded-b-lg">
+                      <li *ngFor="let product of products">
+                        <a class="block py-1 px-3 truncate hover:whitespace-normal hover:bg-gray-800 hover:text-white"
+                          (click)="chooseProduct(product); accordionMenu.expanded = false"><fa-icon
+                            [icon]="faBoxesPacking"></fa-icon>&nbsp;
+                          {{product.productName}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </cdk-accordion-item>
+              </cdk-accordion>
+            </div>
+
+
+
+
+            <div
+              class="relative z-0 w-full mb-3 py-3 px-1 sm:px-2 h-fit
+                                                                  shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block">
+              <input type="number" name="weight" id="weight" formControlName="weight"
+                class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-emerald-700 peer rounded-b-md"
+                placeholder=" " required autofocus />
+              <label for="weight"
+                class="block px-2 pt-3 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-2 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-emerald-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-2">
+                Nuevo peso</label>
+              <div class="text-red-400 text-center italic text-sm"
+                *ngIf="GetFormGroup['weight'].errors
+                                                                          && (GetFormGroup['weight'].dirty || GetFormGroup['weight'].touched)">
+                <strong>Este campo es requerido</strong>
+              </div>
+            </div>
+
+            <div
+              class="w-full mb-1 py-3 px-1 sm:px-2 h-fit space-y-2 shadow-sm bg-yellow-50 border border-yellow-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block">
+              <p class="text-gray-500">¿ Es prestado ?</p>
+              <div class="inline-flex rounded-md shadow-sm pl-1">
+                <button
+                  [class]="selectedToggle === 'yes' ? ' inline-flex items-center px-4 py-2 text-sm font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white' : 'text-gray-900 bg-transparent'"
+                  (click)="selectToggle('yes')" class="px-4 py-2 border border-gray-900 rounded-l-lg">
+                  Si
+                </button>
+                <button
+                  [class]="selectedToggle === 'no' ? 'inline-flex items-center px-4 py-2 text-sm font-medium bg-gray-800 text-white hover:bg-gray-900 hover:text-white focus:z-10 focus:ring-2 focus:ring-gray-500 focus:bg-gray-900 focus:text-white' : 'text-gray-900 bg-transparent'"
+                  (click)="selectToggle('no')" class="px-4 py-2 border border-gray-900 rounded-r-md">
+                  No
+                </button>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="block border-t-2 border-yellow-50 p-2">
+            <div class="flex justify-between items-center h-10 space-x-1 space-y-1 mt-1">
+              <button (click)="closeDialog()" class="px-5 py-2.5 bg-gray-400 rounded-lg hover:bg-gray-500 hover:border-2 hover:border-white text-white hover:text-gray-300
+                focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium text-sm w-full sm:w-auto text-center">
+                Cancelar
+              </button>
+              <button type="submit" (click)="closeWithRes()" class="px-5 py-2.5 bg-blue-400 rounded-lg hover:bg-blue-500 hover:border-2 hover:border-white text-white hover:text-gray-300
+                focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm w-full sm:w-auto text-center">
+                Crear
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

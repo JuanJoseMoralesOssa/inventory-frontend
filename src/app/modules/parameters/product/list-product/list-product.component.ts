@@ -43,7 +43,7 @@ export class ListProductComponent {
         sales: [{ id: 1 }, {id:2}],
       },
       {
-        id: 30,
+        id: 40,
         code: '001',
         productName: 'Manzana',
         totalQuantity: 10,
@@ -52,7 +52,7 @@ export class ListProductComponent {
         sales: [ {id:2}],
       },
       {
-        id: 30,
+        id: 50,
         code: '001',
         productName: 'Manzana',
         totalQuantity: 10,

@@ -21,7 +21,7 @@ export class ListProductSaleComponent {
   faTrashCan = faTrashCan;
   dataSourceProductSales = new DataSourceProductSale();
   productSales: ProductSaleModel[] = [];
-  columns: string[] = ['id', 'quantity','sale', 'product', 'weight', 'IsBorrowed', 'actions' ];
+  columns: string[] = ['id', 'quantity','sale', 'product', 'weight', 'isBorrowed', 'actions' ];
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
   input = new FormControl('', { nonNullable: true })
 
@@ -38,7 +38,7 @@ export class ListProductSaleComponent {
         sale: { id: 20 },
         product: { productName: 'Lecosin' },
         weight: 20.1,
-        IsBorrowed: true,
+        isBorrowed: true,
       },
       {
         id: 31,
@@ -46,7 +46,7 @@ export class ListProductSaleComponent {
         sale: { id: 20 },
         product: { productName: 'Lecosin' },
         weight: 20.1,
-        IsBorrowed: false,
+        isBorrowed: false,
       },
       {
         id: 32,
@@ -93,11 +93,11 @@ export class ListProductSaleComponent {
   // }
 
   update(p_productSale: ProductSaleModel) {
-    this.dataSourceProductSales.update(p_productSale.id, { id: p_productSale.id });
+    this.dataSourceProductSales.update(p_productSale.id, { id: p_productSale.id, quantity: p_productSale.quantity, sale: p_productSale.sale, product: p_productSale.product, weight: p_productSale.weight, isBorrowed: p_productSale.isBorrowed });
   }
 
   create(p_productSale: ProductSaleModel) {
-    this.dataSourceProductSales.create( { id: p_productSale.id });
+    this.dataSourceProductSales.create( { id: p_productSale.id, quantity: p_productSale.quantity, sale: p_productSale.sale, product: p_productSale.product, weight: p_productSale.weight, isBorrowed: p_productSale.isBorrowed });
   }
 
   view(productSale: ProductSaleModel) {
@@ -121,9 +121,9 @@ export class ListProductSaleComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isProductSaleModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
+            console.log('====================================');
+            console.log(output);
+            console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ProductSaleModel.');
@@ -181,7 +181,7 @@ export class ListProductSaleComponent {
     'product' in obj &&
     'quantity' in obj &&
     'weight' in obj &&
-    'IsBorrowed' in obj
+    'isBorrowed' in obj
     );
   }
 

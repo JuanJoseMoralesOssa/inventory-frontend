@@ -46,9 +46,9 @@ export class EditSaleComponent {
     @Inject(DIALOG_DATA) updateSale: SaleModel,
   ) {
     this.sale = updateSale;
-    console.log('====================================');
-    console.log(this.sale);
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log(this.sale);
+    // console.log('====================================');
     this.saleDate = updateSale.saleDate;
     this.remissionNum = updateSale.remissionNumModel;
     this.remissionNum_remission = updateSale.remissionNumModel?.remission;
@@ -134,18 +134,10 @@ export class EditSaleComponent {
 
     let bill = this.bill;
     let remission = this.remission;
-    if (bill && !remission) {
-      if (bill?.bill != this.GetFormGroup['document'].value) {
+    if (this.selectedToggle == 'bill') {
       bill = {bill: this.GetFormGroup['document'].value}
-      }
-    } else if (!bill && remission) {
-      if (remission?.remission != this.GetFormGroup['document'].value) {
+    } else if (this.selectedToggle == 'remission') {
       remission = {remission: this.GetFormGroup['document'].value}
-      }
-    } else if (bill && remission) {
-      if (bill?.bill != this.GetFormGroup['document'].value) {
-      bill = {bill: this.GetFormGroup['document'].value}
-      }
     }
 
     let remissionNumModel = this.remissionNum;
