@@ -32,16 +32,11 @@ export class ListProductSaleComponent {
     private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.dataSourceService.getProductsSaleData().loadProductsSales();
-    this.dataSourceService.getProductsSaleData().initProductSales();
     this.dataSourceProductSales = this.dataSourceService.getProductsSaleData().getDataSourceProductSale();
   }
 
   ngOnInit(): void {
-    if (this.dataSourceService.getProductsSaleData().getError()) {
-      this.loadDefaultProductsSales();
-      alert('Error al cargar los productos de las ventas');
-    }
+    this.dataSourceService.getProductsSaleData().loadProductsSales();
 
     this.input.valueChanges
       .pipe(
@@ -165,32 +160,4 @@ export class ListProductSaleComponent {
     return typeof value === 'number';
   }
 
-  loadDefaultProductsSales(): void {
-    this.productSales = [
-      {
-        id: 30,
-        quantity: 1,
-        sale: { id: 20 },
-        product: { productName: 'Lecosin' },
-        weight: 20.1,
-        isBorrowed: true,
-      },
-      {
-        id: 31,
-        quantity: 1,
-        sale: { id: 20 },
-        product: { productName: 'Lecosin' },
-        weight: 20.1,
-        isBorrowed: false,
-      },
-      {
-        id: 32,
-        quantity: 1,
-        sale: { id: 20 },
-        product: { productName: 'Lecosin' },
-        weight: 20.1,
-      },
-    ]
-    this.dataSourceProductSales.init(this.productSales);
-  }
 }

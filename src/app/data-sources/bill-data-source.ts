@@ -4,7 +4,7 @@ import { BillModel } from "../models/bill.model";
 
 export class DataSourceBill extends DataSource<BillModel> {
 
-  data = new BehaviorSubject<BillModel[]>([]);
+  data: BehaviorSubject<BillModel[]> = new BehaviorSubject<BillModel[]>([]);
   originalData : BillModel[] =  [];
 
   connect(): Observable<BillModel[]>{

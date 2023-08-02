@@ -29,7 +29,7 @@
           <tr cdk-header-row class="text-xs text-gray-700 uppercase bg-amber-50 dark:bg-gray-700 dark:text-gray-400"
             *cdkHeaderRowDef="columns"></tr>
           <tr cdk-row class="border-b dark:bg-gray-800 dark:border-gray-700"
-            [ngClass]="{'bg-green-50':row.sales.length > 4}" *cdkRowDef="let row; columns: columns"></tr>
+            [ngClass]="{'bg-green-50':row.sales?.length > 4}" *cdkRowDef="let row; columns: columns"></tr>
           <tr cdk-footer-row class="text-xl text-gray-700 uppercase bg-amber-200 dark:bg-gray-700 dark:text-gray-400"
             *cdkFooterRowDef="columns"></tr>
 

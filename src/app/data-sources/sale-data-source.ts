@@ -4,7 +4,7 @@ import { SaleModel } from "../models/sale.model";
 
 export class DataSourceSale extends DataSource<SaleModel> {
 
-  data = new BehaviorSubject<SaleModel[]>([]);
+  data: BehaviorSubject<SaleModel[]> = new BehaviorSubject<SaleModel[]>([]);
   originalData : SaleModel[] =  [];
 
   connect(): Observable<SaleModel[]>{

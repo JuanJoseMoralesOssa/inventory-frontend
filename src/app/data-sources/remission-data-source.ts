@@ -4,7 +4,7 @@ import { RemissionModel } from "../models/remission.model";
 
 export class DataSourceRemission extends DataSource<RemissionModel> {
 
-  data = new BehaviorSubject<RemissionModel[]>([]);
+  data: BehaviorSubject<RemissionModel[]> = new BehaviorSubject<RemissionModel[]>([]);
   originalData : RemissionModel[] =  [];
 
   connect(): Observable<RemissionModel[]>{

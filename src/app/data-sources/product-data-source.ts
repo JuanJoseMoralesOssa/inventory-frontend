@@ -4,8 +4,8 @@ import { ProductModel } from "../models/product.model";
 
 export class DataSourceProduct extends DataSource<ProductModel> {
 
-  data = new BehaviorSubject<ProductModel[]>([]);
-  originalData : ProductModel[] =  [];
+  data: BehaviorSubject<ProductModel[]> = new BehaviorSubject<ProductModel[]>([]);
+  originalData: ProductModel[] = [];
 
   connect(): Observable<ProductModel[]>{
     return this.data

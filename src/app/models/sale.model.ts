@@ -5,7 +5,7 @@ import { RemissionModel } from "./remission.model";
 
 export interface SaleModel {
   id?: number;
-  saleDate?: Date;
+  saleDate?: string;
   remissionNumId?: number;
   remissionNumModel?: RemissionModel;
   clientId?: number;

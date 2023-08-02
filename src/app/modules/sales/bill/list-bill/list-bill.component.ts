@@ -32,16 +32,11 @@ export class ListBillComponent {
     private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.dataSourceService.getBillsData().loadBills();
-    this.dataSourceService.getBillsData().initBills();
     this.dataSourceBills = this.dataSourceService.getBillsData().getDataSourceBill();
   }
 
   ngOnInit(): void {
-    if (this.dataSourceService.getBillsData().getError()) {
-      this.loadDefaultBills();
-      alert('Error al cargar las facturas');
-    }
+    this.dataSourceService.getBillsData().loadBills();
 
     this.input.valueChanges
       .pipe(
@@ -144,24 +139,4 @@ export class ListBillComponent {
     return typeof value === 'number';
   }
 
-  loadDefaultBills(): void{
-    this.bills = [
-      {
-        id: 30,
-        bill: 1,
-        sale: { id: 1 },
-      },
-      {
-        id: 40,
-        bill: 2,
-        sale: {id:2},
-      },
-      {
-        id: 50,
-        bill: 3,
-        sale: {},
-      },
-    ]
-    this.dataSourceBills.init(this.bills);
-  }
 }

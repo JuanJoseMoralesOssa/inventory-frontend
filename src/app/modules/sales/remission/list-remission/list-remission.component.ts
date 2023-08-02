@@ -32,17 +32,11 @@ export class ListRemissionComponent {
     private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.dataSourceService.getRemissionsData().loadRemissions();
-    this.dataSourceService.getRemissionsData().initRemission();
     this.dataSourceRemissions = this.dataSourceService.getRemissionsData().getDataSourceRemission();
   }
 
   ngOnInit(): void {
-    if (this.dataSourceService.getRemissionsData().getError()) {
-      this.loadDefaultRemissions();
-      alert('Error al cargar las remisiones');
-    }
-
+    this.dataSourceService.getRemissionsData().loadRemissions();
     this.input.valueChanges
       .pipe(
         debounceTime(300)
@@ -158,27 +152,6 @@ export class ListRemissionComponent {
 
   isNumber(value: any): boolean {
     return typeof value === 'number';
-  }
-
-  loadDefaultRemissions(): void {
-        this.remissions = [
-      {
-        id: 30,
-        remission: 1,
-        sale: { id: 1 },
-      },
-      {
-        id: 40,
-        remission: 2,
-        sale: {id:2},
-      },
-      {
-        id: 50,
-        remission: 3,
-        sale: {},
-      },
-    ]
-    this.dataSourceRemissions.init(this.remissions);
   }
 
 }

@@ -54,8 +54,8 @@
           <ng-container cdkColumnDef="sale">
             <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Venta</th>
             <td cdk-cell class="px-6 py-3 overflow-y-auto" *cdkCellDef="let row">
-              <div class="flex w-full items-center justify-center md:justify-start" *ngIf="row.sale.id">
-                <p
+              <div class="flex w-full items-center justify-center md:justify-start" *ngIf="row.sale">
+                <p *ngIf="row.sale.id"
                   class="bg-green-500 hover:bg-green-700 py-1 px-2 h-8 text-white rounded-full text-center flex justify-center items-center">
                   <span>{{ row.sale.id }}</span>
                 </p>

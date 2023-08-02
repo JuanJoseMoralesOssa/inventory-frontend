@@ -4,7 +4,7 @@ import { PackingModel } from "../models/packing.model";
 
 export class DataSourcePacking extends DataSource<PackingModel> {
 
-  data = new BehaviorSubject<PackingModel[]>([]);
+  data: BehaviorSubject<PackingModel[]> = new BehaviorSubject<PackingModel[]>([]);
   originalData : PackingModel[] =  [];
 
   connect(): Observable<PackingModel[]>{

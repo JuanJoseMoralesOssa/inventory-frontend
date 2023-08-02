@@ -34,16 +34,11 @@ export class ListSaleComponent {
     private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.dataSourceService.getSaleData().loadSales();
-    this.dataSourceService.getSaleData().initSales();
     this.dataSourceSales = this.dataSourceService.getSaleData().getDataSourceSale();
   }
 
   ngOnInit(): void {
-    if (this.dataSourceService.getSaleData().getError()) {
-      this.loadDefaultSales();
-      alert('Error al cargar las ventas');
-    }
+    this.dataSourceService.getSaleData().loadSales();
 
     this.input.valueChanges
       .pipe(
@@ -88,6 +83,10 @@ export class ListSaleComponent {
 
   getSaleValue(sale: SaleModel) {
     this.sale = sale;
+  }
+
+  getDateFromString(dateString: string) {
+    return new Date(dateString);
   }
 
   openCreateProductSale(): void {
@@ -200,36 +199,6 @@ export class ListSaleComponent {
     'weight' in obj &&
     'isBorrowed' in obj
     );
-  }
-
-  loadDefaultSales(): void {
-    this.sales = [
-      {
-        id: 30,
-        saleDate: new Date(),
-        remissionNumModel: { id: 1,remission: 2 },
-        products: [{ id: 1, productName: 'lecosin' }, { id: 2, productName: 'Lecosin Kj' }],
-        client: { id: 1, clientName: 'Perez Martinez' },
-        remission: { id: 1, remission: 2 },
-      },
-      {
-        id: 40,
-        saleDate: new Date(),
-        remissionNumModel: { id: 1,remission: 3 },
-        products: [{ id: 1, productName: 'Impecryl' }, { id: 2, productName: 'Acido Formico' }, { id: 3, productName: 'Formiato' }],
-        client: { id: 1, clientName: 'Martinez Juarez' },
-        bill: {id: 1, bill: 3}
-      },
-      {
-        id: 50,
-        saleDate: new Date(),
-        remissionNumModel: { id: 1,remission: 4 },
-        products: [],
-        client: { id: 1, clientName: 'Ana Suñiga' },
-        bill: { id: 1, bill: 5 }
-      },
-    ]
-    this.dataSourceSales.init(this.sales);
   }
 
 }

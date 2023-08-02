@@ -33,16 +33,12 @@ export class ListClientComponent {
     private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.dataSourceService.getClientsData().loadClients();
-    this.dataSourceService.getClientsData().initClients();
     this.dataSourceClients = this.dataSourceService.getClientsData().getDataSourceClient();
   }
 
   ngOnInit(): void {
-    if (this.dataSourceService.getClientsData().getError()) {
-      this.loadDefaultClients();
-      alert('Error al cargar los empaques');
-    }
+    this.dataSourceService.getClientsData().loadClients();
+
     this.input.valueChanges
       .pipe(
         debounceTime(300)
@@ -158,27 +154,6 @@ export class ListClientComponent {
 
   isNumber(value: any): boolean {
     return typeof value === 'number';
-  }
-
-  loadDefaultClients(): void {
-    this.clients = [
-      {
-        id: 30,
-        clientName: 'Juana',
-        sales: [{ id: 1 }, {id:2}],
-      },
-      {
-        id: 40,
-        clientName: 'Maria',
-        sales: [ {id:2}],
-      },
-      {
-        id: 50,
-        clientName: 'Pepe',
-        sales: [],
-      },
-    ]
-    this.dataSourceClients.init(this.clients);
   }
 
 }

@@ -26,7 +26,7 @@ export class EditSaleComponent {
   sale: SaleModel;
   remissionNum_remission: number | undefined;
   remissionNum: RemissionModel | undefined;
-  saleDate: Date | undefined;
+  saleDate: string | undefined;
   clientName: string | undefined;
   bill_bill: number | undefined;
   remission_remission: number | undefined;
@@ -94,9 +94,9 @@ export class EditSaleComponent {
   }
 
   getFormattedDate(): string {
-    const year = this.saleDate!.getFullYear();
-    const month = String(this.saleDate!.getMonth() + 1).padStart(2, '0');
-    const day = String(this.saleDate!.getDate()).padStart(2, '0');
+    const year = new Date(this.saleDate!).getFullYear();
+    const month = String(new Date(this.saleDate!).getMonth() + 1).padStart(2, '0');
+    const day = String(new Date(this.saleDate!).getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
     return formattedDate
   }
@@ -116,14 +116,14 @@ export class EditSaleComponent {
   }
 
 
-  getSaleDate(): Date {
+  getSaleDate(): string {
     const dateString = this.GetFormGroup['saleDate'].value;
     const dateParts = dateString.split("-");
     const day = parseInt(dateParts[2], 10);
     const month = parseInt(dateParts[1], 10);
     const year = parseInt(dateParts[0], 10);
     const dateObject = new Date(year, month - 1, day);
-    return dateObject
+    return dateObject.toString();
   }
 
   closeWithRes() {

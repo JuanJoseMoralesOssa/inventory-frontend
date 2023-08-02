@@ -4,7 +4,7 @@ import { ClientModel } from "../models/client.model";
 
 export class DataSourceClient extends DataSource<ClientModel> {
 
-  data = new BehaviorSubject<ClientModel[]>([]);
+  data: BehaviorSubject<ClientModel[]> = new BehaviorSubject<ClientModel[]>([]);
   originalData : ClientModel[] =  [];
 
   connect(): Observable<ClientModel[]>{

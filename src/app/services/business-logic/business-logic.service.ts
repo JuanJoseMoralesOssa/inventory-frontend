@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ConfigRoutesBackend } from '../../config/config.routes.backend';
 import { ClientService } from './client.service';
 import { ProductService } from './product.service';
 import { ProductSaleService } from './product-sale.service';
@@ -12,8 +11,6 @@ import { SaleService } from './sale.service';
   providedIn: 'root'
 })
 export class BusinessLogicService {
-
-  urlBase: string = ConfigRoutesBackend.urlBusinessLogic;
 
   constructor(
     private clientService: ClientService,

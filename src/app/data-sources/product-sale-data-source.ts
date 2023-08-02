@@ -5,7 +5,7 @@ import { ProductSaleModel } from "../models/product-sale.model";
 
 export class DataSourceProductSale extends DataSource<ProductSaleModel> {
 
-  data = new BehaviorSubject<ProductSaleModel[]>([]);
+  data: BehaviorSubject<ProductSaleModel[]> = new BehaviorSubject<ProductSaleModel[]>([]);
   originalData : ProductSaleModel[] =  [];
 
   connect(): Observable<ProductSaleModel[]>{

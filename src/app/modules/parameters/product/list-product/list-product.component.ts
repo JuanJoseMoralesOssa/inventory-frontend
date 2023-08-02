@@ -32,16 +32,11 @@ export class ListProductComponent {
     private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.dataSourceService.getProductsData().loadProducts();
-    this.dataSourceService.getProductsData().initProducts();
     this.dataSourceProducts = this.dataSourceService.getProductsData().getDataSourceProduct();
   }
 
   ngOnInit(): void {
-    if (this.dataSourceService.getProductsData().getError()) {
-      this.loadDefaultProducts();
-      alert('Error al cargar los productos');
-    }
+    this.dataSourceService.getProductsData().loadProducts();
 
     this.input.valueChanges
       .pipe(
@@ -163,39 +158,6 @@ export class ListProductComponent {
 
   isNumber(value: any): boolean {
     return typeof value === 'number';
-  }
-
-  loadDefaultProducts(): void{
-    this.products = [
-      {
-        id: 30,
-        code: '001',
-        productName: 'Manzana',
-        totalQuantity: 10,
-        totalWeight: 20,
-        packing: {packing:'hola'},
-        sales: [{ id: 1 }, {id:2}],
-      },
-      {
-        id: 40,
-        code: '001',
-        productName: 'Manzana',
-        totalQuantity: 10,
-        totalWeight: 20,
-        packing: {},
-        sales: [ {id:2}],
-      },
-      {
-        id: 50,
-        code: '001',
-        productName: 'Manzana',
-        totalQuantity: 10,
-        totalWeight: 20,
-        packing: {},
-        sales: [],
-      },
-    ]
-    this.dataSourceProducts.init(this.products);
   }
 
 }

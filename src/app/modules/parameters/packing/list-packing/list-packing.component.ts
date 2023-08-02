@@ -32,16 +32,11 @@ export class ListPackingComponent {
     private dataSourceService: DataSourceService,
     private dialog: Dialog,
   ) {
-    this.dataSourceService.getPackingsData().loadPackings();
-    this.dataSourceService.getPackingsData().initPackings();
     this.dataSourcePackings = this.dataSourceService.getPackingsData().getDataSourcePacking();
   }
 
   ngOnInit(): void {
-    if (this.dataSourceService.getPackingsData().getError()) {
-      this.loadDefaultPackings();
-      alert('Error al cargar los empaques');
-    }
+    this.dataSourceService.getPackingsData().loadPackings();
 
     this.input.valueChanges
       .pipe(
@@ -144,24 +139,4 @@ export class ListPackingComponent {
     return typeof value === 'number';
   }
 
-  loadDefaultPackings(): void {
-        this.packings = [
-      {
-        id: 30,
-        packing: 'Juana',
-        products: [{ id: 1 }, {id:2}],
-      },
-      {
-        id: 40,
-        packing: 'Maria',
-        products: [ {id:2}],
-      },
-      {
-        id: 50,
-        packing: 'Pepe',
-        products: [],
-      },
-    ]
-    this.dataSourcePackings.init(this.packings);
-  }
 }
