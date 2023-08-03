@@ -10,8 +10,6 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 export class ClientDataSourceService {
 
   dataSourceClients = new DataSourceClient();
-  load = false;
-  init = false;
   error = false;
   clients: ClientModel[] = []
   private dataSubject$: BehaviorSubject<ClientModel[]> | undefined;
@@ -22,30 +20,24 @@ export class ClientDataSourceService {
   ) { }
 
   loadClients(): void{
-    if (!this.load) {
       this.businessLogicService
         .getClientService()
-        .listClients()
+        .listClientsWithRelations()
         .subscribe({
           next: (clientData) => {
             this.clients = clientData;
             this.initClients();
             this.dataSubject$ = this.getDataFromDataSource();
-            this.init = true;
-            this.load = true;
           },
           error: (err) => {
             console.log(err);
             this.loadDefaultClients();
           }
         });
-    }
   }
 
   initClients(): void {
-    if (!this.init) {
-      this.dataSourceClients.init(this.clients);
-    }
+    this.dataSourceClients.init(this.clients);
   }
 
   getDataSourceClient(): DataSourceClient{
@@ -63,7 +55,7 @@ export class ClientDataSourceService {
     } else {
       return this.businessLogicService
         .getClientService()
-        .listClients().pipe(
+        .listClientsWithRelations().pipe(
         tap((clientData: ClientModel[]) => {
           this.clients = clientData; // Cache the fetched products
           this.dataSubject$!.next(clientData); // Emit the products using the BehaviorSubject

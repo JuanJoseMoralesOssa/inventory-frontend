@@ -22,4 +22,20 @@ export class BillService {
   listBills(): Observable<BillModel[]> {
     return this.http.get<BillModel[]>(`${this.urlBase}bill`);
   }
+
+  listBillsWithRelations(): Observable<BillModel[]> {
+    return this.http.get<BillModel[]>(`${this.urlBase}bill-relations`);
+  }
+
+  createBill(data: BillModel): Observable<BillModel>{
+    return this.http.post<BillModel>(`${this.urlBase}bill`, data);
+  }
+
+  updateBill(data: BillModel): Observable<BillModel>{
+    return this.http.put<BillModel>(`${this.urlBase}bill/${data.id}`, data);
+  }
+
+  deleteBill(billId: number): Observable<any>{
+    return this.http.delete<any>(`${this.urlBase}bill/${billId}`);
+  }
 }

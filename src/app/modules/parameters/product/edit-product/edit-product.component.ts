@@ -74,9 +74,8 @@ export class EditProductComponent {
       code: this.GetFormGroup['code'].value,
       totalQuantity: this.GetFormGroup['totalQuantity'].value,
       totalWeight: this.GetFormGroup['totalWeight'].value,
-      sales: this.product.sales,
-      packingId: this.product.packingId,
-      packing: this.product.packing,
+      // packingId: this.product.packingId,
+      // packing: this.product.packing,
     }
     this.dialogRef.close(this.product);
   }

@@ -1,4 +1,5 @@
 import { PackingModel } from "./packing.model";
+import { ProductSaleModel } from "./product-sale.model";
 import { SaleModel } from "./sale.model";
 
 export interface ProductModel {
@@ -10,4 +11,5 @@ export interface ProductModel {
   sales?: SaleModel[];
   packingId?: number;
   packing?: PackingModel;
+  productSales?: ProductSaleModel[];
 }

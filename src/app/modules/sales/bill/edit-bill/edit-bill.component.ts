@@ -54,7 +54,6 @@ export class EditBillComponent {
     this.bill = {
       id: this.bill.id,
       bill: this.GetFormGroup['billNum'].value,
-      sale: this.bill.sale,
     }
     this.dialogRef.close(this.bill);
   }

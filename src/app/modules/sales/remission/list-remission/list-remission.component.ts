@@ -9,6 +9,7 @@ import { CreateRemissionComponent } from '../create-remission/create-remission.c
 import { EditRemissionComponent } from '../edit-remission/edit-remission.component';
 import { DeleteRemissionComponent } from '../delete-remission/delete-remission.component';
 import { DataSourceService } from 'src/app/services/data-source/data-source.service';
+import { BusinessLogicService } from 'src/app/services/business-logic/business-logic.service';
 
 @Component({
   selector: 'app-list-remission',
@@ -30,6 +31,7 @@ export class ListRemissionComponent {
 
   constructor(
     private dataSourceService: DataSourceService,
+    private businessLogic: BusinessLogicService,
     private dialog: Dialog,
   ) {
     this.dataSourceRemissions = this.dataSourceService.getRemissionsData().getDataSourceRemission();
@@ -63,11 +65,31 @@ export class ListRemissionComponent {
   // }
 
   update(p_remission: RemissionModel) {
-    this.dataSourceRemissions.update(p_remission.id, { remission: p_remission.remission });
+    this.businessLogic.getRemissionService().updateRemission(p_remission).subscribe({
+      next: () => {
+        this.dataSourceRemissions.update(p_remission.id, { remission: p_remission.remission });
+      },
+      error: () => {
+        alert('No se actualizo la remision')
+        console.log('====================================');
+        console.log('Error al actualizar la remision');
+        console.log('====================================');
+      }
+    });
   }
 
   create(p_remission: RemissionModel) {
-    this.dataSourceRemissions.create( { id: p_remission.id, remission: p_remission.remission, sale: p_remission.sale});
+    this.businessLogic.getRemissionService().createRemission(p_remission).subscribe({
+      next: () => {
+        this.dataSourceRemissions.create( { id: p_remission.id, remission: p_remission.remission, sale: p_remission.sale});
+      },
+      error: () => {
+        alert('No se creo la remision')
+        console.log('====================================');
+        console.log('Error al crear la remision');
+        console.log('====================================');
+      }
+    });
   }
 
   view(remission: RemissionModel) {
@@ -75,7 +97,17 @@ export class ListRemissionComponent {
   }
 
   delete(id: number) {
-    this.dataSourceRemissions.delete(id);
+    this.businessLogic.getRemissionService().deleteRemission(id).subscribe({
+      next: () => {
+        this.dataSourceRemissions.delete(id);
+      },
+      error: () => {
+        alert('No se borro la remision. Por favor verifica que la remision no se encuentre en una venta en los campos de documento o remision')
+        console.log('====================================');
+        console.log('Error al borrar la remision');
+        console.log('====================================');
+      }
+    });
   }
 
   getRemissionValue(remission: RemissionModel) {
@@ -91,9 +123,6 @@ export class ListRemissionComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isRemissionModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada RemissionModel.');
@@ -110,9 +139,6 @@ export class ListRemissionComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isRemissionModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada RemissionModel.');
@@ -127,9 +153,6 @@ export class ListRemissionComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            // console.log('====================================');
-            // console.log(output, this.remission.id);
-            // console.log('====================================');
             if (this.remission.id) {
               this.delete(this.remission.id);
             }
@@ -145,8 +168,7 @@ export class ListRemissionComponent {
   return (
     typeof obj === 'object' &&
     'id' in obj &&
-    'remission' in obj &&
-    'sale' in obj
+    'remission' in obj
     );
   }
 

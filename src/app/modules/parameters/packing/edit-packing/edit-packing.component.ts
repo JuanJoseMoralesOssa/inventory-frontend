@@ -55,7 +55,6 @@ export class EditPackingComponent {
     this.packing = {
       id: this.packing.id,
       packing: this.GetFormGroup['packingName'].value,
-      products: this.packing.products,
     }
     this.dialogRef.close(this.packing);
   }

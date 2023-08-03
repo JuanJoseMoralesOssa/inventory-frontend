@@ -11,6 +11,7 @@ import { CreateSaleComponent } from '../create-sale/create-sale.component';
 import { CreateProductSaleComponent } from '../../product-sale/create-product-sale/create-product-sale.component';
 import { ProductSaleModel } from 'src/app/models/product-sale.model';
 import { DataSourceService } from 'src/app/services/data-source/data-source.service';
+import { BusinessLogicService } from 'src/app/services/business-logic/business-logic.service';
 
 @Component({
   selector: 'app-list-sale',
@@ -32,6 +33,7 @@ export class ListSaleComponent {
 
   constructor(
     private dataSourceService: DataSourceService,
+    private businessLogic: BusinessLogicService,
     private dialog: Dialog,
   ) {
     this.dataSourceSales = this.dataSourceService.getSaleData().getDataSourceSale();
@@ -66,11 +68,34 @@ export class ListSaleComponent {
   // }
 
   update(p_sale: SaleModel) {
-    this.dataSourceSales.update(p_sale.id, { id: p_sale.id, saleDate: p_sale.saleDate, remissionNumModel: p_sale.remissionNumModel, client: p_sale.client, remission: p_sale.remission, bill: p_sale.bill });
+    this.businessLogic.getSaleService().updateSale(p_sale).subscribe({
+      next: () => {
+        this.dataSourceSales.update(p_sale.id, { id: p_sale.id, saleDate: p_sale.saleDate, remissionNum: p_sale.remissionNum, client: p_sale.client, remission: p_sale.remission, bill: p_sale.bill });
+      },
+      error: () => {
+        alert('No se actualizo la venta')
+        console.log('====================================');
+        console.log('Error al actualizar la venta');
+        console.log('====================================');
+      }
+    });
   }
 
   create(p_sale: SaleModel) {
-    this.dataSourceSales.create( { id: p_sale.id, saleDate: p_sale.saleDate, remissionNumModel: p_sale.remissionNumModel, client: p_sale.client, remission: p_sale.remission, bill: p_sale.bill});
+    console.log('====================================');
+    console.log(p_sale);
+    console.log('====================================');
+    this.businessLogic.getSaleService().createSale(p_sale).subscribe({
+      next: () => {
+        this.dataSourceSales.create({ id: p_sale.id, saleDate: p_sale.saleDate, remissionNum: p_sale.remissionNum, client: p_sale.client, remission: p_sale.remission, bill: p_sale.bill });
+      },
+      error: () => {
+        alert('No se creo la venta')
+        console.log('====================================');
+        console.log('Error al crear la venta');
+        console.log('====================================');
+      }
+    });
   }
 
   view(sale: SaleModel) {
@@ -78,7 +103,17 @@ export class ListSaleComponent {
   }
 
   delete(id: number) {
-    this.dataSourceSales.delete(id);
+    this.businessLogic.getSaleService().deleteSale(id).subscribe({
+      next: () => {
+        this.dataSourceSales.delete(id);
+      },
+      error: () => {
+        alert('No se borro la venta')
+        console.log('====================================');
+        console.log('Error al borrar la venta');
+        console.log('====================================');
+      }
+    });
   }
 
   getSaleValue(sale: SaleModel) {
@@ -116,9 +151,6 @@ export class ListSaleComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isSaleModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada SaleModel.');
@@ -135,9 +167,6 @@ export class ListSaleComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isSaleModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada SaleModel.');
@@ -152,9 +181,6 @@ export class ListSaleComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            // console.log('====================================');
-            // console.log(output, this.sale.id);
-            // console.log('====================================');
             if (this.sale.id) {
               this.delete(this.sale.id);
             }
@@ -171,15 +197,8 @@ export class ListSaleComponent {
     typeof obj === 'object' &&
     'id' in obj &&
     'saleDate' in obj &&
-    'remissionNumModel' in obj &&
     'remissionNumId' in obj &&
-    'clientId' in obj &&
-    'client' in obj &&
-    'products' in obj &&
-    'billId' in obj &&
-    'bill' in obj &&
-    'remissionId' in obj &&
-    'remission' in obj
+    'clientId' in obj
     );
   }
 
@@ -192,9 +211,7 @@ export class ListSaleComponent {
     typeof obj === 'object' &&
     'id' in obj &&
     'saleId' in obj &&
-    'sale' in obj &&
     'productId' in obj &&
-    'product' in obj &&
     'quantity' in obj &&
     'weight' in obj &&
     'isBorrowed' in obj

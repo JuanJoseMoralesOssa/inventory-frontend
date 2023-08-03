@@ -50,9 +50,8 @@ export class CreateProductComponent {
       code: this.GetFormGroup['code'].value,
       totalQuantity: this.GetFormGroup['totalQuantity'].value,
       totalWeight: this.GetFormGroup['totalWeight'].value,
-      sales: [],
-      packingId: 0,
-      packing: {},
+      // packingId: 0,
+      // packing: {},
     }
     this.dialogRef.close(this.product);
   }

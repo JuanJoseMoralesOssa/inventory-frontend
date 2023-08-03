@@ -10,8 +10,6 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 export class PackingDataSourceService {
 
   dataSourcePackings = new DataSourcePacking();
-  load = false;
-  init = false;
   packings: PackingModel[] = []
   private dataSubject$: BehaviorSubject<PackingModel[]> | undefined;
 
@@ -20,30 +18,24 @@ export class PackingDataSourceService {
   ) { }
 
   loadPackings(): void{
-    if (!this.load) {
       this.businessLogicService
         .getPackingService()
-        .listPackings()
+        .listPackingsWithRelations()
         .subscribe({
           next: (packingData) => {
             this.packings = packingData;
             this.initPackings();
             this.dataSubject$ = this.getDataFromDataSource();
-            this.init = true;
-            this.load = true;
           },
           error: (err) => {
             console.log(err);
             this.loadDefaultPackings();
           }
         });
-    }
   }
 
   initPackings(): void {
-    if (!this.init) {
       this.dataSourcePackings.init(this.packings);
-    }
   }
 
   getDataSourcePacking(): DataSourcePacking{
@@ -61,7 +53,7 @@ export class PackingDataSourceService {
     } else {
       return this.businessLogicService
         .getPackingService()
-        .listPackings().pipe(
+        .listPackingsWithRelations().pipe(
         tap((packingsData: PackingModel[]) => {
           this.packings = packingsData; // Cache the fetched products
           this.dataSubject$!.next(packingsData); // Emit the products using the BehaviorSubject

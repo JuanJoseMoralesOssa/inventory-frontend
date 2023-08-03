@@ -22,4 +22,21 @@ export class ClientService {
   listClients(): Observable<ClientModel[]> {
     return this.http.get<ClientModel[]>(`${this.urlBase}client`);
   }
+
+  listClientsWithRelations(): Observable<ClientModel[]> {
+    return this.http.get<ClientModel[]>(`${this.urlBase}client-relations`);
+  }
+
+  createClient(data: ClientModel): Observable<ClientModel>{
+    return this.http.post<ClientModel>(`${this.urlBase}client`, data);
+  }
+
+  updateClient(data: ClientModel): Observable<ClientModel>{
+    return this.http.put<ClientModel>(`${this.urlBase}client/${data.id}`, data);
+  }
+
+  deleteClient(clientId: number): Observable<any>{
+    return this.http.delete<any>(`${this.urlBase}client/${clientId}`);
+  }
+
 }

@@ -9,6 +9,7 @@ import { CreateBillComponent } from '../create-bill/create-bill.component';
 import { EditBillComponent } from '../edit-bill/edit-bill.component';
 import { DeleteBillComponent } from '../delete-bill/delete-bill.component';
 import { DataSourceService } from 'src/app/services/data-source/data-source.service';
+import { BusinessLogicService } from 'src/app/services/business-logic/business-logic.service';
 
 @Component({
   selector: 'app-list-bill',
@@ -30,6 +31,7 @@ export class ListBillComponent {
 
   constructor(
     private dataSourceService: DataSourceService,
+    private businessLogic: BusinessLogicService,
     private dialog: Dialog,
   ) {
     this.dataSourceBills = this.dataSourceService.getBillsData().getDataSourceBill();
@@ -48,11 +50,31 @@ export class ListBillComponent {
   }
 
   update(p_bill: BillModel) {
-    this.dataSourceBills.update(p_bill.id, { bill: p_bill.bill });
+    this.businessLogic.getBillService().updateBill(p_bill).subscribe({
+      next: () => {
+        this.dataSourceBills.update(p_bill.id, { bill: p_bill.bill });
+      },
+      error: () => {
+        alert('No se actualizo la factura')
+        console.log('====================================');
+        console.log('Error al actualizar la factura');
+        console.log('====================================');
+      }
+    });
   }
 
   create(p_bill: BillModel) {
-    this.dataSourceBills.create( { id: p_bill.id, bill: p_bill.bill});
+    this.businessLogic.getBillService().createBill(p_bill).subscribe({
+      next: () => {
+        this.dataSourceBills.create( { id: p_bill.id, bill: p_bill.bill});
+      },
+      error: () => {
+        alert('No se creo la factura')
+        console.log('====================================');
+        console.log('Error al crear la factura');
+        console.log('====================================');
+      }
+    });
   }
 
   view(bill: BillModel) {
@@ -60,7 +82,17 @@ export class ListBillComponent {
   }
 
   delete(id: number) {
-    this.dataSourceBills.delete(id);
+    this.businessLogic.getBillService().deleteBill(id).subscribe({
+      next: () => {
+        this.dataSourceBills.delete(id);
+      },
+      error: () => {
+        alert('No se borro la factura. Por favor verifica que la factura no se encuentre en una venta')
+        console.log('====================================');
+        console.log('Error al borrar la factura');
+        console.log('====================================');
+      }
+    });
   }
 
   getBillValue(bill: BillModel) {
@@ -76,9 +108,6 @@ export class ListBillComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isBillModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada BillModel.');
@@ -95,9 +124,6 @@ export class ListBillComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isBillModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada BillModel.');
@@ -112,9 +138,6 @@ export class ListBillComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            // console.log('====================================');
-            // console.log(output, this.bill.id);
-            // console.log('====================================');
             if (this.bill.id) {
               this.delete(this.bill.id);
             }
@@ -130,8 +153,7 @@ export class ListBillComponent {
   return (
     typeof obj === 'object' &&
     'id' in obj &&
-    'bill' in obj &&
-    'sale' in obj
+    'bill' in obj
     );
   }
 

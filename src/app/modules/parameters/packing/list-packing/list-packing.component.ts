@@ -9,6 +9,7 @@ import { DataSourcePacking } from 'src/app/data-sources/packing-data-source';
 import { faEye, faPenToSquare, faSuitcase, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime } from 'rxjs';
 import { DataSourceService } from 'src/app/services/data-source/data-source.service';
+import { BusinessLogicService } from 'src/app/services/business-logic/business-logic.service';
 
 @Component({
   selector: 'app-list-packing',
@@ -30,6 +31,7 @@ export class ListPackingComponent {
 
   constructor(
     private dataSourceService: DataSourceService,
+    private businessLogic: BusinessLogicService,
     private dialog: Dialog,
   ) {
     this.dataSourcePackings = this.dataSourceService.getPackingsData().getDataSourcePacking();
@@ -48,11 +50,31 @@ export class ListPackingComponent {
   }
 
   update(p_packing: PackingModel) {
-    this.dataSourcePackings.update(p_packing.id, { packing: p_packing.packing });
+    this.businessLogic.getPackingService().updatePacking(p_packing).subscribe({
+      next: () => {
+        this.dataSourcePackings.update(p_packing.id, { packing: p_packing.packing });
+      },
+      error: () => {
+        alert('No se actualizo el empaque')
+        console.log('====================================');
+        console.log('Error al actualizar el empaque');
+        console.log('====================================');
+      }
+    });
   }
 
   create(p_packing: PackingModel) {
-    this.dataSourcePackings.create( { id: p_packing.id, packing: p_packing.packing, products:p_packing.products} );
+    this.businessLogic.getPackingService().createPacking(p_packing).subscribe({
+      next: () => {
+        this.dataSourcePackings.create( { id: p_packing.id, packing: p_packing.packing, products:p_packing.products} );
+      },
+      error: () => {
+        alert('No se creo el empaque')
+        console.log('====================================');
+        console.log('Error al crear el empaque');
+        console.log('====================================');
+      }
+    });
   }
 
   view(packing: PackingModel) {
@@ -60,7 +82,17 @@ export class ListPackingComponent {
   }
 
   delete(id: number) {
-    this.dataSourcePackings.delete(id);
+    this.businessLogic.getPackingService().deletePacking(id).subscribe({
+      next: () => {
+        this.dataSourcePackings.delete(id);
+      },
+      error: () => {
+        alert('No se borro el empaque, porfavor verifica que no se encuentre en un producto')
+        console.log('====================================');
+        console.log('Error al borrar el empaque');
+        console.log('====================================');
+      }
+    });
   }
 
   getPackingValue(packing: PackingModel) {
@@ -76,9 +108,6 @@ export class ListPackingComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isPackingModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada PackingModel.');
@@ -95,9 +124,6 @@ export class ListPackingComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isPackingModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada PackingModel.');
@@ -112,9 +138,6 @@ export class ListPackingComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            // console.log('====================================');
-            // console.log(output, this.packing.id);
-            // console.log('====================================');
             if (this.packing.id) {
               this.delete(this.packing.id);
             }
@@ -130,8 +153,7 @@ export class ListPackingComponent {
   return (
     typeof obj === 'object' &&
     'id' in obj &&
-    'packing' in obj &&
-    'products' in obj
+    'packing' in obj
     );
   }
 

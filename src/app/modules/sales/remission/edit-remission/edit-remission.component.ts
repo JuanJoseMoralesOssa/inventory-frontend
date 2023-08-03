@@ -54,7 +54,6 @@ export class EditRemissionComponent {
     this.remission = {
       id: this.remission.id,
       remission: this.GetFormGroup['remissionNum'].value,
-      sale: this.remission.sale,
     }
     this.dialogRef.close(this.remission);
   }

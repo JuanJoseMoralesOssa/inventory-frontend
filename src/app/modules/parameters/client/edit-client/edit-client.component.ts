@@ -55,7 +55,6 @@ export class EditClientComponent {
     this.client = {
       id: this.client.id,
       clientName: this.GetFormGroup['clientName'].value,
-      sales: this.client.sales,
     }
     this.dialogRef.close(this.client);
   }

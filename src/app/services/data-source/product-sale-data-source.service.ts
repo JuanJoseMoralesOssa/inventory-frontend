@@ -10,8 +10,8 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 export class ProductSaleDataSourceService {
 
   dataSourceProductSales = new DataSourceProductSale();
-  load = false;
-  init = false;
+  // load = false;
+  // init = false;
   error = false;
   productSales: ProductSaleModel[] = []
   private dataSubject$: BehaviorSubject<ProductSaleModel[]> | undefined;
@@ -22,30 +22,30 @@ export class ProductSaleDataSourceService {
   ) { }
 
   loadProductsSales(): void{
-    if (!this.load) {
+    // if (!this.load) {
       this.businessLogicService
         .getProductsSaleService()
-        .listProductsSales()
+        .listProductsSalesWithRelations()
         .subscribe({
           next: (productSalesData) => {
             this.productSales = productSalesData;
             this.initProductSales();
             this.dataSubject$ = this.getDataFromDataSource();
-            this.init = true;
-            this.load = true;
+            // this.init = true;
+            // this.load = true;
           },
           error: (err) => {
             console.log(err);
             this.loadDefaultProductsSales();
           }
         });
-    }
+    // }
   }
 
   initProductSales(): void {
-    if (!this.init) {
+    // if (!this.init) {
       this.dataSourceProductSales.init(this.productSales);
-    }
+    // }
   }
 
   getDataSourceProductSale(): DataSourceProductSale{
@@ -63,7 +63,7 @@ export class ProductSaleDataSourceService {
     } else {
       return this.businessLogicService
         .getProductsSaleService()
-        .listProductsSales().pipe(
+        .listProductsSalesWithRelations().pipe(
         tap((productSalesData: ProductSaleModel[]) => {
           this.productSales = productSalesData; // Cache the fetched products
           this.dataSubject$!.next(productSalesData); // Emit the products using the BehaviorSubject

@@ -22,4 +22,21 @@ export class PackingService {
   listPackings(): Observable<PackingModel[]> {
     return this.http.get<PackingModel[]>(`${this.urlBase}packing`);
   }
+
+  listPackingsWithRelations(): Observable<PackingModel[]> {
+    return this.http.get<PackingModel[]>(`${this.urlBase}packing-relations`);
+  }
+
+  createPacking(data: PackingModel): Observable<PackingModel>{
+    return this.http.post<PackingModel>(`${this.urlBase}packing`, data);
+  }
+
+  updatePacking(data: PackingModel): Observable<PackingModel>{
+    return this.http.put<PackingModel>(`${this.urlBase}packing/${data.id}`, data);
+  }
+
+  deletePacking(packingId: number): Observable<any>{
+    return this.http.delete<any>(`${this.urlBase}packing/${packingId}`);
+  }
+
 }

@@ -20,6 +20,23 @@ export class ProductSaleService {
    * @returns
    */
   listProductsSales(): Observable<ProductSaleModel[]> {
-    return this.http.get<ProductSaleModel[]>(`${this.urlBase}product`);
+    return this.http.get<ProductSaleModel[]>(`${this.urlBase}product-sales`);
   }
+
+  listProductsSalesWithRelations(): Observable<ProductSaleModel[]> {
+    return this.http.get<ProductSaleModel[]>(`${this.urlBase}product-sales-relations`);
+  }
+
+  createProductSale(data: ProductSaleModel): Observable<ProductSaleModel>{
+    return this.http.post<ProductSaleModel>(`${this.urlBase}product-sale`, data);
+  }
+
+  updateProductSale(data: ProductSaleModel): Observable<ProductSaleModel>{
+    return this.http.put<ProductSaleModel>(`${this.urlBase}product-sale/${data.id}`, data);
+  }
+
+  deleteProductSale(productSaleId: number): Observable<any>{
+    return this.http.delete<any>(`${this.urlBase}product-sale/${productSaleId}`);
+  }
+
 }

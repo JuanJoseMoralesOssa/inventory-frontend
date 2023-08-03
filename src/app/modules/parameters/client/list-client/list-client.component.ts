@@ -10,6 +10,7 @@ import { CreateClientComponent } from '../create-client/create-client.component'
 import { EditClientComponent } from '../edit-client/edit-client.component';
 import { DeleteClientComponent } from '../delete-client/delete-client.component';
 import { DataSourceService } from 'src/app/services/data-source/data-source.service';
+import { BusinessLogicService } from 'src/app/services/business-logic/business-logic.service';
 
 @Component({
   selector: 'app-list-client',
@@ -31,6 +32,7 @@ export class ListClientComponent {
 
   constructor(
     private dataSourceService: DataSourceService,
+    private businessLogic: BusinessLogicService,
     private dialog: Dialog,
   ) {
     this.dataSourceClients = this.dataSourceService.getClientsData().getDataSourceClient();
@@ -65,11 +67,31 @@ export class ListClientComponent {
   // }
 
   update(client: ClientModel) {
-    this.dataSourceClients.update(client.id, { clientName: client.clientName });
+    this.businessLogic.getClientService().updateClient(client).subscribe({
+      next: () => {
+        this.dataSourceClients.update(client.id, { clientName: client.clientName });
+      },
+      error: () => {
+        alert('No se acutalizo el cliente')
+        console.log('====================================');
+        console.log('Error al acutalizar el cliente');
+        console.log('====================================');
+      }
+    });
   }
 
   create(client: ClientModel) {
-    this.dataSourceClients.create( { id: client.id, clientName: client.clientName, sales: client.sales});
+    this.businessLogic.getClientService().createClient(client).subscribe({
+      next: () => {
+        this.dataSourceClients.create( { id: client.id, clientName: client.clientName, sales: client.sales});
+      },
+      error: () => {
+        alert('No se creo el cliente')
+        console.log('====================================');
+        console.log('Error al crear el cliente');
+        console.log('====================================');
+      }
+    });
   }
 
   view(client: ClientModel) {
@@ -77,7 +99,17 @@ export class ListClientComponent {
   }
 
   delete(id: number) {
-    this.dataSourceClients.delete(id);
+    this.businessLogic.getClientService().deleteClient(id).subscribe({
+      next: () => {
+        this.dataSourceClients.delete(id);
+      },
+      error: () => {
+        alert('No se borro el cliente, porfavor verifica que no se encuentre en una venta')
+        console.log('====================================');
+        console.log('Error al borrar el cliente');
+        console.log('====================================');
+      }
+    });
   }
 
   getClientValue(client: ClientModel) {
@@ -93,9 +125,6 @@ export class ListClientComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isClientModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ClientModel.');
@@ -112,9 +141,6 @@ export class ListClientComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isClientModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ClientModel.');
@@ -129,9 +155,6 @@ export class ListClientComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            // console.log('====================================');
-            // console.log(output, this.client.id);
-            // console.log('====================================');
             if (this.client.id) {
               this.delete(this.client.id);
             }
@@ -147,8 +170,7 @@ export class ListClientComponent {
   return (
     typeof obj === 'object' &&
     'id' in obj &&
-    'clientName' in obj &&
-    'sales' in obj
+    'clientName' in obj
     );
   }
 

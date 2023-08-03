@@ -9,6 +9,7 @@ import { CreateProductComponent } from '../create-product/create-product.compone
 import { EditProductComponent } from '../edit-product/edit-product.component';
 import { DeleteProductComponent } from '../delete-product/delete-product.component';
 import { DataSourceService } from 'src/app/services/data-source/data-source.service';
+import { BusinessLogicService } from 'src/app/services/business-logic/business-logic.service';
 
 @Component({
   selector: 'app-list-product',
@@ -22,7 +23,7 @@ export class ListProductComponent {
   faTrashCan = faTrashCan;
   dataSourceProducts = new DataSourceProduct();
   products: ProductModel[] = [];
-  columns: string[] = ['id', 'code', 'productName','totalQuantity','totalWeight','sales','packing', 'actions'];
+  columns: string[] = ['id', 'code', 'productName','totalQuantity','totalWeight', 'actions']; //'sales','packing'
   input = new FormControl('', { nonNullable: true })
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
 
@@ -30,6 +31,7 @@ export class ListProductComponent {
 
   constructor(
     private dataSourceService: DataSourceService,
+    private businessLogic: BusinessLogicService,
     private dialog: Dialog,
   ) {
     this.dataSourceProducts = this.dataSourceService.getProductsData().getDataSourceProduct();
@@ -64,11 +66,31 @@ export class ListProductComponent {
   // }
 
   update(product: ProductModel) {
-    this.dataSourceProducts.update(product.id, { code: product.code, productName: product.productName, totalQuantity: product.totalQuantity, totalWeight:product.totalWeight });
+    this.businessLogic.getProductService().updateProduct(product).subscribe({
+      next: () => {
+        this.dataSourceProducts.update(product.id, { code: product.code, productName: product.productName, totalQuantity: product.totalQuantity, totalWeight:product.totalWeight });
+      },
+      error: () => {
+        alert('No se actualizo el producto')
+        console.log('====================================');
+        console.log('Error al actualizar el producto');
+        console.log('====================================');
+      }
+    });
   }
 
   create(product: ProductModel) {
-    this.dataSourceProducts.create( { id: product.id, code: product.code, productName: product.productName, totalQuantity: product.totalQuantity, totalWeight:product.totalWeight});
+    this.businessLogic.getProductService().createProduct(product).subscribe({
+      next: () => {
+        this.dataSourceProducts.create( { id: product.id, code: product.code, productName: product.productName, totalQuantity: product.totalQuantity, totalWeight:product.totalWeight});
+      },
+      error: () => {
+        alert('No se creo el producto')
+        console.log('====================================');
+        console.log('Error al crear el producto');
+        console.log('====================================');
+      }
+    });
   }
 
   view(product: ProductModel) {
@@ -76,7 +98,17 @@ export class ListProductComponent {
   }
 
   delete(id: number) {
-    this.dataSourceProducts.delete(id);
+    this.businessLogic.getProductService().deleteProduct(id).subscribe({
+      next: () => {
+        this.dataSourceProducts.delete(id);
+      },
+      error: () => {
+        alert('No se borro el producto, porfavor verifica que no se encuentre en una venta')
+        console.log('====================================');
+        console.log('Error al borrar el producto');
+        console.log('====================================');
+      }
+    });
   }
 
   getProductValue(product: ProductModel) {
@@ -92,9 +124,6 @@ export class ListProductComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isProductModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ProductModel.');
@@ -111,9 +140,6 @@ export class ListProductComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isProductModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ProductModel.');
@@ -128,9 +154,6 @@ export class ListProductComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            // console.log('====================================');
-            // console.log(output, this.product.id);
-            // console.log('====================================');
             if (this.product.id) {
               this.delete(this.product.id);
             }
@@ -149,10 +172,7 @@ export class ListProductComponent {
     'code' in obj &&
     'productName' in obj &&
     'totalQuantity' in obj &&
-    'totalWeight' in obj &&
-    'sales' in obj &&
-    'packingId' in obj &&
-    'packing' in obj
+    'totalWeight' in obj
     );
   }
 

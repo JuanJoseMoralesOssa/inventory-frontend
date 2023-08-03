@@ -22,4 +22,21 @@ export class RemissionService {
   listRemissions(): Observable<RemissionModel[]> {
     return this.http.get<RemissionModel[]>(`${this.urlBase}remission`);
   }
+
+  listRemissionsWithRelations(): Observable<RemissionModel[]> {
+    return this.http.get<RemissionModel[]>(`${this.urlBase}remission-relations`);
+  }
+
+  createRemission(data: RemissionModel): Observable<RemissionModel>{
+    return this.http.post<RemissionModel>(`${this.urlBase}remission`, data);
+  }
+
+  updateRemission(data: RemissionModel): Observable<RemissionModel>{
+    return this.http.put<RemissionModel>(`${this.urlBase}remission/${data.id}`, data);
+  }
+
+  deleteRemission(remissionId: number): Observable<any>{
+    return this.http.delete<any>(`${this.urlBase}remission/${remissionId}`);
+  }
+
 }

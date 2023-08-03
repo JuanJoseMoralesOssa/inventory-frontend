@@ -21,30 +21,24 @@ export class BillDataSourceService {
   ) { }
 
   loadBills(): void{
-    if (!this.load) {
-      this.businessLogicService
+    this.businessLogicService
         .getBillService()
-        .listBills()
+        .listBillsWithRelations()
         .subscribe({
           next: (billData) => {
             this.bills = billData;
             this.initBills();
             this.dataSubject$ = this.getDataFromDataSource();
-            this.init = true;
-            this.load = true;
           },
           error: (err) => {
             console.log(err);
             this.loadDefaultBills();
           }
         });
-    }
   }
 
   initBills(): void {
-    if (!this.init) {
-      this.dataSourceBills.init(this.bills);
-    }
+    this.dataSourceBills.init(this.bills);
   }
 
   getDataSourceBill(): DataSourceBill{
@@ -61,8 +55,8 @@ export class BillDataSourceService {
       return this.dataSubject$.asObservable(); // Return cached products as an observable
     } else {
       return this.businessLogicService
-        .getClientService()
-        .listClients().pipe(
+        .getBillService()
+        .listBillsWithRelations().pipe(
         tap((billData: BillModel[]) => {
           this.bills = billData; // Cache the fetched products
           this.dataSubject$!.next(billData); // Emit the products using the BehaviorSubject

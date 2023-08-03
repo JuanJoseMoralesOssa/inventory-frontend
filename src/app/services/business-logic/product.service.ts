@@ -22,4 +22,21 @@ export class ProductService {
   listProducts(): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(`${this.urlBase}product`);
   }
+
+  listProductsWithRelations(): Observable<ProductModel[]> {
+    return this.http.get<ProductModel[]>(`${this.urlBase}product-relations`);
+  }
+
+  createProduct(data: ProductModel): Observable<ProductModel>{
+    return this.http.post<ProductModel>(`${this.urlBase}product`, data);
+  }
+
+  updateProduct(data: ProductModel): Observable<ProductModel>{
+    return this.http.put<ProductModel>(`${this.urlBase}product/${data.id}`, data);
+  }
+
+  deleteProduct(productId: number): Observable<any>{
+    return this.http.delete<any>(`${this.urlBase}product/${productId}`);
+  }
+
 }

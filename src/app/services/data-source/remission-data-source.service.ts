@@ -10,8 +10,8 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 export class RemissionDataSourceService {
 
   dataSourceRemissions = new DataSourceRemission();
-  load = false;
-  init = false;
+  // load = false;
+  // init = false;
   remissions: RemissionModel[] = []
   private dataSubject$: BehaviorSubject<RemissionModel[]> | undefined;
 
@@ -21,30 +21,30 @@ export class RemissionDataSourceService {
   ) { }
 
   loadRemissions(): void{
-    if (!this.load) {
+    // if (!this.load) {
       this.businessLogicService
         .getRemissionService()
-        .listRemissions()
+        .listRemissionsWithRelations()
         .subscribe({
           next: (remissionsData) => {
             this.remissions = remissionsData;
             this.initRemission();
             this.dataSubject$ = this.getDataFromDataSource();
-            this.init = true;
-            this.load = true;
+            // this.init = true;
+            // this.load = true;
           },
           error: (err) => {
             console.log(err);
             this.loadDefaultRemissions();
           }
         });
-    }
+    // }
   }
 
   initRemission(): void {
-    if (!this.init) {
+    // if (!this.init) {
       this.dataSourceRemissions.init(this.remissions);
-    }
+    // }
   }
 
   getDataSourceRemission(): DataSourceRemission{
@@ -62,7 +62,7 @@ export class RemissionDataSourceService {
     } else {
       return this.businessLogicService
         .getRemissionService()
-        .listRemissions().pipe(
+        .listRemissionsWithRelations().pipe(
         tap((remissionsData: RemissionModel[]) => {
           this.remissions = remissionsData; // Cache the fetched products
           this.dataSubject$!.next(remissionsData); // Emit the products using the BehaviorSubject

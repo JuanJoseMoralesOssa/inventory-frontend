@@ -56,7 +56,7 @@
           <!-- Remission Num column -->
           <ng-container cdkColumnDef="remissionNum">
             <th cdk-header-cell class="py-3 px-8 w-6" *cdkHeaderCellDef>Remission</th>
-            <td cdk-cell class="py-3 px-8 w-6" *cdkCellDef="let row">{{row.remissionNumModel.remission}}</td>
+            <td cdk-cell class="py-3 px-8 w-6" *cdkCellDef="let row">{{row.remissionNum.remission}}</td>
             <td cdk-footer-cell class="py-3 px-8 w-6" *cdkFooterCellDef></td>
           </ng-container>
 
@@ -71,12 +71,12 @@
           <!-- Products column -->
           <ng-container cdkColumnDef="products">
             <th cdk-header-cell class="py-3 px-6" *cdkHeaderCellDef>Productos</th>
-            <td cdk-cell class="px-6 py-3 overflow-y-auto" *cdkCellDef="let row">
-              <div class="space-y-1 w-56 h-16 items-center justify-center md:justify-start grid grid-cols-3 gap-1">
+            <td cdk-cell class="px-6 py-3 overflow-y-auto overflow-x-hidden" *cdkCellDef="let row">
+              <div class="space-y-1 w-52 h-16 items-center justify-center md:justify-start grid grid-cols-3 gap-1">
                 <p class="bg-sky-200 hover:bg-sky-300 p-2 text-gray-900 rounded-md text-start items-center grid col-span-3 grid-cols-3"
-                  *ngFor="let product of row.products">
-                  <span class="truncate hover:whitespace-normal flex-1 col-span-2">{{ product.productName }}</span>
-                  <span class="col-span-1 w-12 text-end">{{product}}</span>
+                  *ngFor="let productSales of row.productSales">
+                  <span class="truncate hover:whitespace-normal flex-1 col-span-2">{{ productSales.product.productName }}</span>
+                  <span class="col-span-1 w-12 text-end">{{productSales.weight}}</span>
                 </p>
                 <div class="flex justify-center items-center m-2 col-span-3 mb-4">
                   <button (click)="getSaleValue(row);openCreateProductSale()"
