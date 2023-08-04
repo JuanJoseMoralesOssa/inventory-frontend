@@ -28,15 +28,29 @@ export class ProductSaleService {
   }
 
   createProductSale(data: ProductSaleModel): Observable<ProductSaleModel>{
-    return this.http.post<ProductSaleModel>(`${this.urlBase}product-sale`, data);
+    const newData: ProductSaleModel = {
+      isBorrowed: data.isBorrowed,
+      productId: data.productId,
+      quantity: data.quantity,
+      saleId: data.saleId,
+      weight: data.weight,
+    }
+    return this.http.post<ProductSaleModel>(`${this.urlBase}product-sales`, newData);
   }
 
   updateProductSale(data: ProductSaleModel): Observable<ProductSaleModel>{
-    return this.http.put<ProductSaleModel>(`${this.urlBase}product-sale/${data.id}`, data);
+    const newData: ProductSaleModel = {
+      isBorrowed: data.isBorrowed,
+      productId: data.productId,
+      quantity: data.quantity,
+      saleId: data.saleId,
+      weight: data.weight,
+    }
+    return this.http.put<ProductSaleModel>(`${this.urlBase}product-sales/${data.id}`, newData);
   }
 
   deleteProductSale(productSaleId: number): Observable<any>{
-    return this.http.delete<any>(`${this.urlBase}product-sale/${productSaleId}`);
+    return this.http.delete<any>(`${this.urlBase}product-sales/${productSaleId}`);
   }
 
 }

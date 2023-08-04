@@ -21,6 +21,7 @@ export class EditSaleComponent {
   faAngleDown = faAngleDown;
   faUser = faUser;
   faCircleXmark = faCircleXmark;
+
   fGroup: FormGroup = new FormGroup({});
 
   selectedToggle: string = 'bill';

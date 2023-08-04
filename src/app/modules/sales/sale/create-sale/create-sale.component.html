@@ -57,7 +57,7 @@
                       <li *ngFor="let remission of remissions">
                         <a class="block py-1 px-3 truncate hover:whitespace-normal hover:bg-gray-800 hover:text-white"
                           (click)="chooseRem(remission); accordionMenu1.expanded = false"><fa-icon
-                            [icon]="faUser"></fa-icon>&nbsp;
+                            [icon]="faBookJournalWhills"></fa-icon>&nbsp;
                           <span>{{remission.remission}}</span>
                         </a>
                       </li>
@@ -145,8 +145,10 @@
                         class="p-2 border-2 border-t-0 border-gray-300 flex flex-col text-sm text-gray-700 absolute top-0 left-0 z-20 bg-yellow-50 w-full rounded-b-lg overflow-y-auto max-h-56 h-fit">
                         <li *ngFor="let document of documents">
                           <a class="block py-1 px-3 truncate hover:whitespace-normal hover:bg-gray-800 hover:text-white"
-                            (click)="chooseDocument(document); accordionMenu3.expanded = false"><fa-icon
-                              [icon]="faUser"></fa-icon>&nbsp;
+                            (click)="chooseDocument(document); accordionMenu3.expanded = false">
+                            <fa-icon *ngIf="document.bill" [icon]="faMoneyBill"></fa-icon>
+                            <fa-icon *ngIf="document.remission" [icon]="faBookJournalWhills"></fa-icon>
+                            &nbsp;
                             <span *ngIf="document.bill"> {{document.bill}}</span>
                             <span *ngIf="document.remission"> {{document.remission}}</span>
                           </a>

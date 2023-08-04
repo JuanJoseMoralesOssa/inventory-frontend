@@ -82,9 +82,6 @@ export class ListSaleComponent {
   }
 
   create(p_sale: SaleModel) {
-    console.log('====================================');
-    console.log(p_sale);
-    console.log('====================================');
     this.businessLogic.getSaleService().createSale(p_sale).subscribe({
       next: () => {
         this.dataSourceSales.create({ id: p_sale.id, saleDate: p_sale.saleDate, remissionNum: p_sale.remissionNum, client: p_sale.client, remission: p_sale.remission, bill: p_sale.bill });
@@ -116,6 +113,21 @@ export class ListSaleComponent {
     });
   }
 
+    createProductSale(product_sale: ProductSaleModel) {
+    this.businessLogic.getProductsSaleService().createProductSale(product_sale).subscribe({
+      next: () => {
+        this.sale.productSales!.push({ weight: product_sale.weight, product: product_sale.product })
+        this.dataSourceSales.update(this.sale.id, { products: this.sale.productSales});
+      },
+      error: () => {
+        alert('No se agrego el producto a la venta')
+        console.log('====================================');
+        console.log('Error al agregar el producto a la venta');
+        console.log('====================================');
+      }
+    });
+  }
+
   getSaleValue(sale: SaleModel) {
     this.sale = sale;
   }
@@ -132,10 +144,7 @@ export class ListSaleComponent {
     });
     dialogRefCreate.closed.subscribe(output => {
       if (this.isProductSaleModel(output)) {
-            console.log('====================================');
-            console.log(output, 'falttaaaaaaaaaa arreglar el create pero de product sale no de sale');
-            console.log('====================================');
-            this.create(output);
+            this.createProductSale(output);
         } else {
           console.error('Tipo de salida Invalida. Se esperada ProductSaleModel.');
         }
@@ -212,6 +221,7 @@ export class ListSaleComponent {
     'id' in obj &&
     'saleId' in obj &&
     'productId' in obj &&
+    'product' in obj &&
     'quantity' in obj &&
     'weight' in obj &&
     'isBorrowed' in obj

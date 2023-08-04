@@ -9,6 +9,7 @@ import { DataSourceProductSale } from 'src/app/data-sources/product-sale-data-so
 import { FormControl } from '@angular/forms';
 import { DataSourceService } from 'src/app/services/data-source/data-source.service';
 import { debounceTime } from 'rxjs';
+import { BusinessLogicService } from 'src/app/services/business-logic/business-logic.service';
 
 @Component({
   selector: 'app-list-product-sale',
@@ -30,6 +31,7 @@ export class ListProductSaleComponent {
 
   constructor(
     private dataSourceService: DataSourceService,
+    private businessLogic: BusinessLogicService,
     private dialog: Dialog,
   ) {
     this.dataSourceProductSales = this.dataSourceService.getProductsSaleData().getDataSourceProductSale();
@@ -64,11 +66,31 @@ export class ListProductSaleComponent {
   // }
 
   update(p_productSale: ProductSaleModel) {
-    this.dataSourceProductSales.update(p_productSale.id, { id: p_productSale.id, quantity: p_productSale.quantity, sale: p_productSale.sale, product: p_productSale.product, weight: p_productSale.weight, isBorrowed: p_productSale.isBorrowed });
+    this.businessLogic.getProductsSaleService().updateProductSale(p_productSale).subscribe({
+      next: () => {
+        this.dataSourceProductSales.update(p_productSale.id, { id: p_productSale.id, quantity: p_productSale.quantity, sale: p_productSale.sale, product: p_productSale.product, weight: p_productSale.weight, isBorrowed: p_productSale.isBorrowed });
+      },
+      error: () => {
+        alert('No se actualizo el producto por venta')
+        console.log('====================================');
+        console.log('Error al actualizar el producto por venta');
+        console.log('====================================');
+      }
+    });
   }
 
   create(p_productSale: ProductSaleModel) {
-    this.dataSourceProductSales.create( { id: p_productSale.id, quantity: p_productSale.quantity, sale: p_productSale.sale, product: p_productSale.product, weight: p_productSale.weight, isBorrowed: p_productSale.isBorrowed });
+    this.businessLogic.getProductsSaleService().createProductSale(p_productSale).subscribe({
+      next: () => {
+        this.dataSourceProductSales.create( { id: p_productSale.id, quantity: p_productSale.quantity, sale: p_productSale.sale, product: p_productSale.product, weight: p_productSale.weight, isBorrowed: p_productSale.isBorrowed });
+      },
+      error: () => {
+        alert('No se creo el producto por venta')
+        console.log('====================================');
+        console.log('Error al crear el producto por venta');
+        console.log('====================================');
+      }
+    });
   }
 
   view(productSale: ProductSaleModel) {
@@ -76,7 +98,17 @@ export class ListProductSaleComponent {
   }
 
   delete(id: number) {
-    this.dataSourceProductSales.delete(id);
+    this.businessLogic.getProductsSaleService().deleteProductSale(id).subscribe({
+      next: () => {
+        this.dataSourceProductSales.delete(id);
+      },
+      error: () => {
+        alert('No se elimino el producto por venta')
+        console.log('====================================');
+        console.log('Error al eliminar el producto por venta');
+        console.log('====================================');
+      }
+    });
   }
 
   getProductSaleValue(productSale: ProductSaleModel) {
@@ -92,9 +124,6 @@ export class ListProductSaleComponent {
         });
         dialogRefCreate.closed.subscribe(output => {
           if (this.isProductSaleModel(output)) {
-            console.log('====================================');
-            console.log(output);
-            console.log('====================================');
             this.create(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ProductSaleModel.');
@@ -111,9 +140,6 @@ export class ListProductSaleComponent {
         });
         dialogRefEdit.closed.subscribe(output => {
           if (this.isProductSaleModel(output)) {
-            // console.log('====================================');
-            // console.log(output);
-            // console.log('====================================');
             this.update(output);
           } else {
             console.error('Tipo de salida Invalida. Se esperada ProductSaleModel.');
@@ -128,9 +154,6 @@ export class ListProductSaleComponent {
         });
         dialogRefRemove.closed.subscribe(output => {
           if (this.isNumber(output)) {
-            // console.log('====================================');
-            // console.log(output, this.productSale.id);
-            // console.log('====================================');
             if (this.productSale.id) {
               this.delete(this.productSale.id);
             }
@@ -147,9 +170,7 @@ export class ListProductSaleComponent {
     typeof obj === 'object' &&
     'id' in obj &&
     'saleId' in obj &&
-    'sale' in obj &&
     'productId' in obj &&
-    'product' in obj &&
     'quantity' in obj &&
     'weight' in obj &&
     'isBorrowed' in obj

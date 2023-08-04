@@ -1,7 +1,7 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faAngleDown, faAngleUp, faCircleXmark, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp, faBookJournalWhills, faCircleXmark, faMoneyBill, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { BillModel } from 'src/app/models/bill.model';
 import { ClientModel } from 'src/app/models/client.model';
@@ -17,8 +17,11 @@ import { BusinessLogicService } from 'src/app/services/business-logic/business-l
 export class CreateSaleComponent {
   faAngleUp = faAngleUp;
   faAngleDown = faAngleDown;
+  faMoneyBill = faMoneyBill;
   faUser = faUser;
   faCircleXmark = faCircleXmark;
+  faBookJournalWhills = faBookJournalWhills;
+
   fGroup: FormGroup = new FormGroup({});
 
   selectedToggle: string = 'bill';
