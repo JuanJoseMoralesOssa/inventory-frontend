@@ -47,6 +47,9 @@ export class ListSaleComponent {
         debounceTime(300)
       )
       .subscribe(value => {
+        console.log('====================================');
+        console.log(value);
+        console.log('====================================');
         this.dataSourceSales.find(value);
       });
   }
@@ -58,19 +61,10 @@ export class ListSaleComponent {
   //       this.total = this.dataSourceProducts.getTotal();
   //     });
 
-  //   this.input.valueChanges
-  //     .pipe(
-  //       debounceTime(300)
-  //     )
-  //     .subscribe(value => {
-  //       this.dataSourceProducts.find(value);
-  //     });
-  // }
-
   update(p_sale: SaleModel) {
     this.businessLogic.getSaleService().updateSale(p_sale).subscribe({
       next: () => {
-        this.dataSourceSales.update(p_sale.id, { id: p_sale.id, saleDate: p_sale.saleDate, remissionNum: p_sale.remissionNum, client: p_sale.client, remission: p_sale.remission, bill: p_sale.bill });
+        this.dataSourceSales.update(p_sale.id, { id: p_sale.id, saleDate: p_sale.saleDate, remissionNum: p_sale.remissionNum, client: p_sale.client, remission: p_sale?.remission, bill: p_sale?.bill });
       },
       error: () => {
         alert('No se actualizo la venta')
@@ -105,7 +99,7 @@ export class ListSaleComponent {
         this.dataSourceSales.delete(id);
       },
       error: () => {
-        alert('No se borro la venta')
+        alert('No se borro la venta. Porfavor verifica que la venta no tenga productos por venta asociados')
         console.log('====================================');
         console.log('Error al borrar la venta');
         console.log('====================================');
@@ -113,10 +107,14 @@ export class ListSaleComponent {
     });
   }
 
-    createProductSale(product_sale: ProductSaleModel) {
+  createProductSale(product_sale: ProductSaleModel) {
     this.businessLogic.getProductsSaleService().createProductSale(product_sale).subscribe({
       next: () => {
-        this.sale.productSales!.push({ weight: product_sale.weight, product: product_sale.product })
+        if (this.sale.productSales?.length) {
+          this.sale.productSales.push({ weight: product_sale.weight, product: product_sale.product })
+          this.dataSourceSales.update(this.sale.id, { products: this.sale.productSales});
+        }
+        this.sale.productSales = [ { weight: product_sale.weight, product: product_sale.product } ]
         this.dataSourceSales.update(this.sale.id, { products: this.sale.productSales});
       },
       error: () => {

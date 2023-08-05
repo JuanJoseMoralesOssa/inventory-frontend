@@ -2,7 +2,7 @@ import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faAngleDown, faAngleUp, faBoxesPacking, faCircleXmark, faDollarSign, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
-import { Subscription } from 'rxjs';
+import { Subscription, debounceTime } from 'rxjs';
 import { ProductSaleModel } from 'src/app/models/product-sale.model';
 import { ProductModel } from 'src/app/models/product.model';
 import { SaleModel } from 'src/app/models/sale.model';
@@ -28,10 +28,12 @@ export class CreateProductSaleComponent {
   productId: number | undefined;
   product: ProductModel | undefined;
   products: ProductModel[] | undefined;
+  filteredProducts: ProductModel[] | undefined;
 
   saleId: number | undefined;
   sale: SaleModel | undefined;
   sales: SaleModel[] | undefined;
+  filteredSales: SaleModel[] | undefined;
 
   productSubscription: Subscription | undefined;
   salesSubscription: Subscription | undefined;
@@ -51,12 +53,13 @@ export class CreateProductSaleComponent {
     this.BuildForm();
     this.loadSales();
     this.loadProducts();
+    this.filterSale();
+    this.filterProduct();
     if (this.saleId) {
       this.fGroup.patchValue({
         saleId: this.saleId,
       });
     }
-
   }
 
   BuildForm() {
@@ -69,10 +72,57 @@ export class CreateProductSaleComponent {
     });
   }
 
+  filterSale() {
+    this.GetFormGroup['saleId'].valueChanges
+      .pipe(
+        debounceTime(300)
+      )
+      .subscribe(value => {
+        if (value === null) {
+          this.filteredSales = this.sales;
+        }
+        else {
+          if (this.sales?.length) {
+            this.filteredSales = this.sales.filter(item => {
+            const filter = `${item.id}`;
+              if (item.id == value) {
+                this.saleId = item.id;
+              }
+            return filter.includes(value);
+          });
+        }
+      }
+    });
+  }
+
+  filterProduct() {
+    this.GetFormGroup['productName'].valueChanges
+      .pipe(
+        debounceTime(300)
+      )
+      .subscribe(value => {
+        if (value === null) {
+          this.filteredProducts = this.products;
+        }
+        else {
+          if (this.products?.length) {
+            this.filteredProducts = this.products.filter(item => {
+            const filter = `${item.productName}`;
+              if (item.productName?.toLowerCase() === value.toLowerCase()) {
+                this.productId = item.id;
+              }
+            return filter.toLowerCase().includes(value.toLowerCase());
+          });
+        }
+      }
+    });
+  }
+
   loadProducts() {
     this.salesSubscription = this.businessLogic.getProductService().listProducts().subscribe({
         next: (productsData: SaleModel[]) => {
-          this.products = productsData;
+        this.products = productsData;
+        this.filteredProducts = this.products;
         },
         error: () => {
           alert('No se cargaron los productos')
@@ -86,7 +136,8 @@ export class CreateProductSaleComponent {
   loadSales() {
     this.salesSubscription = this.businessLogic.getSaleService().listSales().subscribe({
         next: (salesData: SaleModel[]) => {
-          this.sales = salesData;
+        this.sales = salesData;
+        this.filteredSales = this.sales;
         },
         error: () => {
           alert('No se cargaron las ventas')

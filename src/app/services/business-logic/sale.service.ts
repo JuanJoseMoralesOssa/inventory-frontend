@@ -32,16 +32,22 @@ export class SaleService {
     if (data.billId) {
       newSale = {
         saleDate: data.saleDate,
-        billId: data.billId,
-        clientId: data.clientId,
         remissionNumId: data.remissionNumId,
+        clientId: data.clientId,
+        billId: data.billId,
       }
     } else if (data.remissionId) {
       newSale = {
         saleDate: data.saleDate,
-        remissionId: data.remissionId,
-        clientId: data.clientId,
         remissionNumId: data.remissionNumId,
+        clientId: data.clientId,
+        remissionId: data.remissionId,
+      }
+    } else {
+      newSale = {
+        saleDate: data.saleDate,
+        remissionNumId: data.remissionNumId,
+        clientId: data.clientId,
       }
     }
     return this.http.post<SaleModel>(`${this.urlBase}sale`, newSale!);
@@ -49,21 +55,27 @@ export class SaleService {
 
   updateSale(data: SaleModel): Observable<SaleModel>{
     let newSale: SaleModel;
-    if (data.billId) {
-      newSale = {
+        if (data.billId) {
+          newSale = {
         id: data.id,
         saleDate: data.saleDate,
+        remissionNumId: data.remissionNumId,
+        clientId: data.clientId,
         billId: data.billId,
-        clientId: data.clientId,
-        remissionNumId: data.remissionNumId,
       }
-    } else if (data.remissionId){
+    } else if (data.remissionId) {
       newSale = {
         id: data.id,
         saleDate: data.saleDate,
-        remissionId: data.remissionId,
-        clientId: data.clientId,
         remissionNumId: data.remissionNumId,
+        clientId: data.clientId,
+        remissionId: data.remissionId,
+      }
+    } else {
+      newSale = {
+        saleDate: data.saleDate,
+        remissionNumId: data.remissionNumId,
+        clientId: data.clientId,
       }
     }
     return this.http.put<SaleModel>(`${this.urlBase}sale/${data.id}`, newSale!);

@@ -2,7 +2,7 @@ import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faAngleDown, faAngleUp, faBookJournalWhills, faCircleXmark, faMoneyBill, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Subscription } from 'rxjs';
+import { Subscription, debounceTime, pipe } from 'rxjs';
 import { BillModel } from 'src/app/models/bill.model';
 import { ClientModel } from 'src/app/models/client.model';
 import { RemissionModel } from 'src/app/models/remission.model';
@@ -43,7 +43,11 @@ export class EditSaleComponent {
 
   clients: ClientModel[] | undefined;
   remissions: RemissionModel[] | undefined;
-  documents: any | undefined;
+  documents: (RemissionModel | BillModel)[] | undefined;
+
+  filteredRemissions: RemissionModel[] | undefined;
+  filteredClients: ClientModel[] | undefined;
+  filteredDocuments: any | undefined;
 
   remissionsSubscription: Subscription | undefined;
   clientsSubscription: Subscription | undefined;
@@ -85,6 +89,9 @@ export class EditSaleComponent {
     this.loadRemissions();
     this.BuildForm();
     this.updateFormValues();
+    this.filterRemission();
+    this.filterClient();
+    this.filterDocument();
   }
 
   BuildForm() {
@@ -115,10 +122,92 @@ export class EditSaleComponent {
     }
   }
 
+  filterRemission() {
+    this.GetFormGroup['remissionNum'].valueChanges
+      .pipe(
+        debounceTime(300)
+      )
+      .subscribe(value => {
+        if (value === null) {
+          this.filteredRemissions = this.remissions;
+        }
+        else {
+          if (this.remissions?.length) {
+            this.filteredRemissions = this.remissions.filter(item => {
+            const filter = `${item.remission}`;
+              if (item.remission == value) {
+                this.remissionNumId = item.id;
+              }
+            return filter.includes(value);
+          });
+        }
+      }
+    });
+  }
+
+  filterClient() {
+    this.GetFormGroup['clientName'].valueChanges
+      .pipe(
+        debounceTime(300)
+      )
+      .subscribe(value => {
+        if (value === null) {
+          this.filteredClients = this.clients;
+        }
+        else {
+          if (this.clients?.length) {
+            this.filteredClients = this.clients.filter(item => {
+            const filter = `${item.clientName}`;
+              if (item.clientName?.toLowerCase() === value.toLowerCase()) {
+                this.clientId = item.id;
+              }
+            return filter.toLowerCase().includes(value.toLowerCase());
+          });
+        }
+      }
+    });
+  }
+
+  filterDocument() {
+    this.GetFormGroup['document'].valueChanges
+      .pipe(
+        debounceTime(300)
+      )
+      .subscribe(value => {
+        if (value === null || value === undefined) {
+          this.filteredDocuments = this.documents;
+        }
+        else {
+          if (this.documents?.length) {
+            if (this.selectedToggle == 'bill') {
+              this.filteredDocuments = this.documents.filter(item => {
+                const filter = `${item.bill}`;
+                if (item.bill === value) {
+                  this.billId = item.id;
+                }
+                return filter.includes(value);
+              });
+            }
+            else {
+              this.filteredDocuments = this.documents.filter(item => {
+                const filter = `${item.remission}`;
+                if (item.remission === value) {
+                  this.remissionId = item.id;
+                }
+                return filter.includes(value);
+              });
+            }
+          }
+        }
+      }
+    );
+  }
+
   loadClients() {
     this.clientsSubscription = this.businessLogic.getClientService().listClients().subscribe({
       next: (clientData: ClientModel[]) => {
         this.clients = clientData;
+        this.filteredClients = this.clients;
       },
       error: () => {
         alert('No se cargaron los clientes')
@@ -133,6 +222,7 @@ export class EditSaleComponent {
     this.documentsSubscription = this.businessLogic.getBillService().listBills().subscribe({
       next: (documentsData: BillModel[]) => {
         this.documents = documentsData;
+        this.filteredDocuments = this.documents;
       },
       error: () => {
         alert('No se cargaron las facturas')
@@ -148,6 +238,7 @@ export class EditSaleComponent {
       this.documentsSubscription = this.businessLogic.getRemissionService().listRemissions().subscribe({
         next: (documentsData: RemissionModel[]) => {
           this.documents = documentsData;
+          this.filteredDocuments =  this.documents;
         },
         error: () => {
           alert('No se cargaron las remisiones')
@@ -160,16 +251,17 @@ export class EditSaleComponent {
 
   loadRemissions() {
     this.remissionsSubscription = this.businessLogic.getRemissionService().listRemissions().subscribe({
-        next: (remissionsData: RemissionModel[]) => {
-          this.remissions = remissionsData;
-        },
-        error: () => {
-          alert('No se cargaron las remisiones')
-          console.log('====================================');
-          console.log('Error al cargar las remisiones');
-          console.log('====================================');
-        }
-      });
+      next: (remissionsData: RemissionModel[]) => {
+        this.remissions = remissionsData;
+        this.filteredRemissions = this.remissions;
+      },
+      error: () => {
+        alert('No se cargaron las remisiones')
+        console.log('====================================');
+        console.log('Error al cargar las remisiones');
+        console.log('====================================');
+      }
+    });
   }
 
   chooseClient(client: ClientModel): void {
@@ -204,7 +296,7 @@ export class EditSaleComponent {
   chooseRem(remission: RemissionModel): void {
     this.remissionNumId = remission.id;
     this.fGroup.patchValue({
-      remissionNum: remission.remission,
+      remissionNum: remission.remission
     });
   }
 
@@ -247,7 +339,7 @@ export class EditSaleComponent {
     if (remissionNum?.remission != this.GetFormGroup['remissionNum'].value) {
       remissionNum = {
         id: this.remissionNumId,
-        remission: this.GetFormGroup['remissionNum'].value
+        remission: this.GetFormGroup['remissionNum'].value? this.GetFormGroup['remissionNum'].value: this.remissionNum?.remission,
       }
     }
 
@@ -255,7 +347,7 @@ export class EditSaleComponent {
     if (client?.clientName != this.GetFormGroup['clientName'].value) {
       client = {
         id: this.clientId,
-        clientName: this.GetFormGroup['clientName'].value
+        clientName: this.GetFormGroup['clientName'].value ? this.GetFormGroup['clientName'].value : this.client?.clientName,
       }
     }
 
@@ -264,7 +356,7 @@ export class EditSaleComponent {
     if (this.selectedToggle == 'bill') {
         bill = {
           id: this.billId,
-          bill: this.GetFormGroup['document'].value
+          bill: this.GetFormGroup['document'].value ? this.GetFormGroup['document'].value : this.bill?.bill,
         }
         this.sale = {
           id: this.sale.id,
@@ -280,7 +372,7 @@ export class EditSaleComponent {
     } else if (this.selectedToggle == 'remission') {
         remission = {
           id: this.remissionId,
-          remission: this.GetFormGroup['document'].value
+          remission: this.GetFormGroup['document'].value ? this.GetFormGroup['document'].value : this.remission?.remission,
         }
         this.sale = {
         id: this.sale.id,

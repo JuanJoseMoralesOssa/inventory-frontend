@@ -65,7 +65,7 @@ export class ClientDataSourceService {
   }
 
   loadDefaultClients(): void {
-      alert('Error al cargar los empaques');
+      alert('Error al cargar los clientes');
 
     this.clients = [
       {

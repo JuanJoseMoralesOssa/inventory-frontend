@@ -51,8 +51,8 @@
                   </button>
                   <div [style.display]="accordionMenu1.expanded ? '': 'none' " class="relative">
                     <ul
-                      class="p-2 flex flex-col text-sm text-gray-700 absolute top-0 left-0 z-20 bg-yellow-50 w-full rounded-b-lg">
-                      <li *ngFor="let sale of sales">
+                      class="p-2 border-2 border-t-0 border-gray-300 flex flex-col text-sm text-gray-700 absolute top-0 left-0 z-20 bg-yellow-50 w-full rounded-b-lg overflow-y-auto max-h-56 h-fit">
+                      <li *ngFor="let sale of filteredSales">
                         <a class="block py-1 px-3 truncate hover:whitespace-normal hover:bg-gray-800 hover:text-white"
                           (click)="chooseSale(sale); accordionMenu1.expanded = false"><fa-icon
                             [icon]="faDollarSign"></fa-icon>&nbsp;
@@ -72,7 +72,7 @@
                     (click)="accordionMenu.toggle()">
                     <input type="text" name="productName" id="productName" formControlName="productName"
                       class="block py-2.5 px-2 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-emerald-700 peer rounded-b-md"
-                      placeholder=" " required autofocus />
+                      placeholder=" " required autofocus autocomplete="off"/>
                     <label for="productName"
                       class="block px-2 pt-3 peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-emerald-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
                       Nuevo producto
@@ -87,8 +87,8 @@
                   </button>
                   <div [style.display]="accordionMenu.expanded ? '': 'none' " class="relative">
                     <ul
-                      class="p-2 flex flex-col text-sm text-gray-700 absolute top-0 left-0 z-20 bg-yellow-50 w-full rounded-b-lg">
-                      <li *ngFor="let product of products">
+                      class="p-2 border-2 border-t-0 border-gray-300 flex flex-col text-sm text-gray-700 absolute top-0 left-0 z-20 bg-yellow-50 w-full rounded-b-lg overflow-y-auto max-h-56 h-fit">
+                      <li *ngFor="let product of filteredProducts">
                         <a class="block py-1 px-3 truncate hover:whitespace-normal hover:bg-gray-800 hover:text-white"
                           (click)="chooseProduct(product); accordionMenu.expanded = false"><fa-icon
                             [icon]="faBoxesPacking"></fa-icon>&nbsp;

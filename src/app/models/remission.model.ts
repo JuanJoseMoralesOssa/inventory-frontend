@@ -4,4 +4,5 @@ export interface RemissionModel {
   id?: number;
   remission?: number;
   sale?: SaleModel;
+  bill?: number;
 }

@@ -29,17 +29,15 @@ export class DataSourceSale extends DataSource<SaleModel> {
     /**
      *solucion
 
-    const newSales = this.originalData
-     .filter(item => {
-      const word = `${item.id}-${item.title}-${item.price}}`;
-      return word.toLowerCase().includes(query.toLowerCase())
-     });
-    this.data.next(newSales);
-
      *
      */
 
-
+    const newSales = this.originalData
+    .filter(item => {
+      const word = `${item.id}-${item.bill?.bill}-${item.client?.clientName}-${item.client?.clientName}}`;
+      return word.toLowerCase().includes(query.toLowerCase())
+    });
+    this.data.next(newSales);
 
 
     // const newSales = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
