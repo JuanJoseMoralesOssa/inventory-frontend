@@ -26,19 +26,12 @@ export class DataSourceSale extends DataSource<SaleModel> {
 
   find(query: string) {
 
-    /**
-     *solucion
-
-     *
-     */
-
     const newSales = this.originalData
     .filter(item => {
-      const word = `${item.id}-${item.bill?.bill}-${item.client?.clientName}-${item.client?.clientName}}`;
+      const word = `${item.id}-${item.remissionNum?.remission}-${item.client?.clientName?.toLowerCase()}-${item.remission?.remission}-${item.bill?.bill}}`;
       return word.toLowerCase().includes(query.toLowerCase())
     });
     this.data.next(newSales);
-
 
     // const newSales = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
     // this.data.next(newSales);

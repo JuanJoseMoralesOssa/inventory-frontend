@@ -27,20 +27,13 @@ export class DataSourceProductSale extends DataSource<ProductSaleModel> {
 
   find(query: string) {
 
-    /**
-     *solucion
-
     const newProductSales = this.originalData
-     .filter(item => {
-      const word = `${item.id}-${item.title}-${item.price}}`;
+    .filter(item => {
+      const word = `${item.id}-${item.saleId}-${item.product?.productName?.toLocaleLowerCase()}}`;
       return word.toLowerCase().includes(query.toLowerCase())
-     });
+    });
     this.data.next(newProductSales);
 
-     *
-     */
-    // const newProductSales = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-    // this.data.next(newProductSales);
   }
 
     create(productSale: ProductSaleModel) {

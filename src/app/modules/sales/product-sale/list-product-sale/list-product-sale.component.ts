@@ -56,15 +56,6 @@ export class ListProductSaleComponent {
   //       this.total = this.dataSourceProducts.getTotal();
   //     });
 
-  //   this.input.valueChanges
-  //     .pipe(
-  //       debounceTime(300)
-  //     )
-  //     .subscribe(value => {
-  //       this.dataSourceProducts.find(value);
-  //     });
-  // }
-
   update(p_productSale: ProductSaleModel) {
     this.businessLogic.getProductsSaleService().updateProductSale(p_productSale).subscribe({
       next: () => {

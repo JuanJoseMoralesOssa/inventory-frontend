@@ -26,21 +26,13 @@ export class DataSourceClient extends DataSource<ClientModel> {
 
   find(query: string) {
 
-    /**
-     *solucion
-
-    const newProducts = this.originalData
-     .filter(item => {
-      const word = `${item.id}-${item.title}-${item.price}}`;
+    const newClients = this.originalData
+    .filter(item => {
+      const word = `${item.id}-${item.clientName?.toLocaleLowerCase()}}`;
       return word.toLowerCase().includes(query.toLowerCase())
-     });
-    this.data.next(newProducts);
+    });
+    this.data.next(newClients);
 
-     *
-     */
-
-    // const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-    // this.data.next(newProducts);
   }
 
   create(client: ClientModel) {

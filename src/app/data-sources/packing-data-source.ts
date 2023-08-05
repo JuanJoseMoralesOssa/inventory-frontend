@@ -11,9 +11,9 @@ export class DataSourcePacking extends DataSource<PackingModel> {
     return this.data
   }
 
-  init(products: PackingModel[]) {
-    this.originalData = products;
-    this.data.next(products);
+  init(packings: PackingModel[]) {
+    this.originalData = packings;
+    this.data.next(packings);
   }
 
   getTotal() {
@@ -22,28 +22,15 @@ export class DataSourcePacking extends DataSource<PackingModel> {
     //       .map(item => item.price)
     //       .reduce((price, total) => price + total, 0);
   }
-
-
+  
   find(query: string) {
 
-    /**
-     *solucion
-
-    const newProducts = this.originalData
-     .filter(item => {
-      const word = `${item.id}-${item.title}-${item.price}}`;
+    const newPackings = this.originalData
+    .filter(item => {
+      const word = `${item.id}-${item.packing?.toLocaleLowerCase()}`;
       return word.toLowerCase().includes(query.toLowerCase())
-     });
-    this.data.next(newProducts);
-
-     *
-     */
-
-
-
-
-    // const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-    // this.data.next(newProducts);
+    });
+    this.data.next(newPackings);
   }
 
   create(packing: PackingModel) {

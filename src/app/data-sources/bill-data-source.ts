@@ -11,9 +11,9 @@ export class DataSourceBill extends DataSource<BillModel> {
     return this.data
   }
 
-  init(products: BillModel[]) {
-    this.originalData = products;
-    this.data.next(products);
+  init(bills: BillModel[]) {
+    this.originalData = bills;
+    this.data.next(bills);
   }
 
   getTotal() {
@@ -23,27 +23,15 @@ export class DataSourceBill extends DataSource<BillModel> {
     //       .reduce((price, total) => price + total, 0);
   }
 
-
   find(query: string) {
 
-    /**
-     *solucion
-
     const newProducts = this.originalData
-     .filter(item => {
-      const word = `${item.id}-${item.title}-${item.price}}`;
-      return word.toLowerCase().includes(query.toLowerCase())
-     });
+    .filter(item => {
+      const word = `${item.id}-${item.bill}`;
+      return word.includes(query)
+    });
     this.data.next(newProducts);
 
-     *
-     */
-
-
-
-
-    // const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-    // this.data.next(newProducts);
   }
 
   create(bill: BillModel) {

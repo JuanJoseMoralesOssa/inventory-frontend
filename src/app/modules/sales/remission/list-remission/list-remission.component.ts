@@ -55,15 +55,6 @@ export class ListRemissionComponent {
   //       this.total = this.dataSourceProducts.getTotal();
   //     });
 
-  //   this.input.valueChanges
-  //     .pipe(
-  //       debounceTime(300)
-  //     )
-  //     .subscribe(value => {
-  //       this.dataSourceProducts.find(value);
-  //     });
-  // }
-
   update(p_remission: RemissionModel) {
     this.businessLogic.getRemissionService().updateRemission(p_remission).subscribe({
       next: () => {

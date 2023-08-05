@@ -57,15 +57,6 @@ export class ListClientComponent {
   //       this.total = this.dataSourceProducts.getTotal();
   //     });
 
-  //   this.input.valueChanges
-  //     .pipe(
-  //       debounceTime(300)
-  //     )
-  //     .subscribe(value => {
-  //       this.dataSourceProducts.find(value);
-  //     });
-  // }
-
   update(client: ClientModel) {
     this.businessLogic.getClientService().updateClient(client).subscribe({
       next: () => {

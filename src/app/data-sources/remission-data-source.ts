@@ -11,9 +11,9 @@ export class DataSourceRemission extends DataSource<RemissionModel> {
     return this.data
   }
 
-  init(products: RemissionModel[]) {
-    this.originalData = products;
-    this.data.next(products);
+  init(remissions: RemissionModel[]) {
+    this.originalData = remissions;
+    this.data.next(remissions);
   }
 
   getTotal() {
@@ -23,27 +23,14 @@ export class DataSourceRemission extends DataSource<RemissionModel> {
     //       .reduce((price, total) => price + total, 0);
   }
 
-
   find(query: string) {
+    const newRemissions = this.originalData
+    .filter(item => {
+      const word = `${item.id}-${item.remission}}`;
+      return word.includes(query)
+    });
+    this.data.next(newRemissions);
 
-    /**
-     *solucion
-
-    const newProducts = this.originalData
-     .filter(item => {
-      const word = `${item.id}-${item.title}-${item.price}}`;
-      return word.toLowerCase().includes(query.toLowerCase())
-     });
-    this.data.next(newProducts);
-
-     *
-     */
-
-
-
-
-    // const newProducts = this.originalData.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-    // this.data.next(newProducts);
   }
 
   create(remission: RemissionModel) {
