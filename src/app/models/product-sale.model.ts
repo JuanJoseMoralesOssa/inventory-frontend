@@ -7,7 +7,6 @@ export interface ProductSaleModel {
   sale?: SaleModel;
   productId?: number;
   product?: ProductModel;
-  quantity?: number;
   weight?: number;
   isBorrowed?: boolean;
 }

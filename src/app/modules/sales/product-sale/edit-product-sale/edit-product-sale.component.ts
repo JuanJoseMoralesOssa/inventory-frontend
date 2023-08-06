@@ -24,7 +24,6 @@ export class EditProductSaleComponent {
   selectedToggle: string = 'no';
 
   productSale: ProductSaleModel = {};
-  quantity: number | undefined;
   weight: number | undefined;
   isBorrowed: boolean | undefined;
 
@@ -48,7 +47,6 @@ export class EditProductSaleComponent {
     @Inject(DIALOG_DATA) updateProductSale: ProductSaleModel,
   ) {
     this.productSale = updateProductSale;
-    this.quantity = updateProductSale.quantity;
     this.sale = updateProductSale.sale;
     this.saleId = updateProductSale.saleId;
     this.product = updateProductSale.product;
@@ -68,7 +66,6 @@ export class EditProductSaleComponent {
 
   BuildForm() {
     this.fGroup = this.fb.group({
-      quantity: ['', [Validators.required]],
       saleId: ['', [Validators.required]],
       productName: ['', [Validators.required]],
       weight: ['', [Validators.required]],
@@ -180,7 +177,6 @@ export class EditProductSaleComponent {
 
   updateFormValues() {
     this.fGroup.patchValue({
-      quantity: this.quantity,
       saleId: this.sale ? this.sale.id: undefined,
       productName: this.product ? this.product.productName: undefined,
       weight: this.weight,
@@ -191,13 +187,12 @@ export class EditProductSaleComponent {
   closeWithRes() {
     this.productSale = {
       id: this.productSale.id,
-      quantity: this.GetFormGroup['quantity'].value,
+      saleId: this.saleId,
       sale: {id: this.saleId },
       product: { id: this.productId, productName: this.GetFormGroup['productName'].value },
+      productId: this.productId,
       weight: this.GetFormGroup['weight'].value,
       isBorrowed: this.selectedToggle == 'yes' ? true : false,
-      productId: this.productId,
-      saleId: this.saleId,
     }
     this.dialogRef.close(this.productSale);
   }

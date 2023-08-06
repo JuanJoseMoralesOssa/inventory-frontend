@@ -23,7 +23,7 @@ export class ListProductSaleComponent {
   faTrashCan = faTrashCan;
   dataSourceProductSales = new DataSourceProductSale();
   productSales: ProductSaleModel[] = [];
-  columns: string[] = ['id', 'quantity','sale', 'product', 'weight', 'isBorrowed', 'actions' ];
+  columns: string[] = ['id','sale', 'product', 'weight', 'isBorrowed', 'actions' ];
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
   input = new FormControl('', { nonNullable: true })
 
@@ -59,7 +59,7 @@ export class ListProductSaleComponent {
   update(p_productSale: ProductSaleModel) {
     this.businessLogic.getProductsSaleService().updateProductSale(p_productSale).subscribe({
       next: () => {
-        this.dataSourceProductSales.update(p_productSale.id, { id: p_productSale.id, quantity: p_productSale.quantity, sale: p_productSale.sale, product: p_productSale.product, weight: p_productSale.weight, isBorrowed: p_productSale.isBorrowed });
+        this.dataSourceProductSales.update(p_productSale.id, { id: p_productSale.id, sale: p_productSale.sale, product: p_productSale.product, weight: p_productSale.weight, isBorrowed: p_productSale.isBorrowed });
       },
       error: () => {
         alert('No se actualizo el producto por venta')
@@ -73,7 +73,7 @@ export class ListProductSaleComponent {
   create(p_productSale: ProductSaleModel) {
     this.businessLogic.getProductsSaleService().createProductSale(p_productSale).subscribe({
       next: () => {
-        this.dataSourceProductSales.create( { id: p_productSale.id, quantity: p_productSale.quantity, sale: p_productSale.sale, product: p_productSale.product, weight: p_productSale.weight, isBorrowed: p_productSale.isBorrowed });
+        this.dataSourceProductSales.create( { id: p_productSale.id, sale: p_productSale.sale, product: p_productSale.product, weight: p_productSale.weight, isBorrowed: p_productSale.isBorrowed });
       },
       error: () => {
         alert('No se creo el producto por venta')
@@ -162,7 +162,6 @@ export class ListProductSaleComponent {
     'id' in obj &&
     'saleId' in obj &&
     'productId' in obj &&
-    'quantity' in obj &&
     'weight' in obj &&
     'isBorrowed' in obj
     );

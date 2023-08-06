@@ -220,7 +220,6 @@ export class ListSaleComponent {
     'saleId' in obj &&
     'productId' in obj &&
     'product' in obj &&
-    'quantity' in obj &&
     'weight' in obj &&
     'isBorrowed' in obj
     );

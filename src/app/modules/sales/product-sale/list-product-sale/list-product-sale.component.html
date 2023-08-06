@@ -42,19 +42,6 @@
             <td cdk-footer-cell class="py-3 px-8 w-6" *cdkFooterCellDef></td>
           </ng-container>
 
-          <!-- Product Sale Quantity column -->
-          <ng-container cdkColumnDef="quantity">
-            <th cdk-header-cell class="py-3 px-3 w-6" *cdkHeaderCellDef>Cantidad</th>
-            <td cdk-cell class="py-3 px-4 w-12" *cdkCellDef="let row">
-              <div>
-                <p>
-                  {{row.quantity}}
-                </p>
-              </div>
-            </td>
-            <td cdk-footer-cell class="py-3 px-3 w-6" *cdkFooterCellDef></td>
-          </ng-container>
-
           <!-- Product-sale Sale column -->
           <ng-container cdkColumnDef="sale">
             <th cdk-header-cell class="py-3 px-8 w-6" *cdkHeaderCellDef>Venta</th>

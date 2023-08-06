@@ -53,18 +53,17 @@ export class CreateProductSaleComponent {
     this.BuildForm();
     this.loadSales();
     this.loadProducts();
-    this.filterSale();
-    this.filterProduct();
     if (this.saleId) {
       this.fGroup.patchValue({
         saleId: this.saleId,
       });
     }
+    this.filterSale();
+    this.filterProduct();
   }
 
   BuildForm() {
     this.fGroup = this.fb.group({
-      quantity: ['', [Validators.required]],
       saleId: ['', [Validators.required]],
       productName: ['', [Validators.required]],
       weight: ['', [Validators.required]],
@@ -177,13 +176,12 @@ export class CreateProductSaleComponent {
   closeWithRes() {
     this.productSale = {
       id: this.productSale.id,
-      quantity: this.GetFormGroup['quantity'].value,
+      saleId: this.saleId,
       sale: {id: this.saleId },
+      productId: this.productId,
       product: { id: this.productId, productName: this.GetFormGroup['productName'].value },
       weight: this.GetFormGroup['weight'].value,
       isBorrowed: this.selectedToggle == 'yes' ? true : false,
-      productId: this.productId,
-      saleId: this.saleId,
     }
     this.dialogRef.close(this.productSale);
   }

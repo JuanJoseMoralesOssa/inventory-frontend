@@ -77,7 +77,6 @@ export class ProductSaleDataSourceService {
     this.productSales = [
       {
         id: 30,
-        quantity: 1,
         sale: { id: 20 },
         product: { productName: 'Lecosin' },
         weight: 20.1,
@@ -85,7 +84,6 @@ export class ProductSaleDataSourceService {
       },
       {
         id: 31,
-        quantity: 1,
         sale: { id: 20 },
         product: { productName: 'Lecosin' },
         weight: 20.1,
@@ -93,7 +91,6 @@ export class ProductSaleDataSourceService {
       },
       {
         id: 32,
-        quantity: 1,
         sale: { id: 20 },
         product: { productName: 'Lecosin' },
         weight: 20.1,
