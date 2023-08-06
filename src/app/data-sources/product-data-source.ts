@@ -28,7 +28,7 @@ export class DataSourceProduct extends DataSource<ProductModel> {
 
     const newProducts = this.originalData
     .filter(item => {
-      const word = `${item.id}-${item.productName?.toLocaleLowerCase()}-${item.totalQuantity}-${item.totalWeight}}`;
+      const word = `${item.id}-${item.productName?.toLocaleLowerCase()}-${item.totalWeight}}`;
       return word.toLowerCase().includes(query.toLowerCase())
     });
     this.data.next(newProducts);

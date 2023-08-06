@@ -13,13 +13,6 @@ export namespace ConfigSideMenu {
       component: () => import('../modules/parameters/client/list-client/list-client.component').then(it => it.ListClientComponent),
     },
     {
-      id: "640e0d055e42613f78309e4d",
-      route: "/parameters/list-packing",
-      icon: faSuitcase,
-      text: "Empaques",
-      component: () => import('../modules/parameters/packing/list-packing/list-packing.component').then(it => it.ListPackingComponent),
-    },
-    {
       id: "642c36f3a4c7961414082956",
       route: "/parameters/list-product",
       icon: faBoxesPacking,

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ClientService } from './client.service';
 import { ProductService } from './product.service';
 import { ProductSaleService } from './product-sale.service';
-import { PackingService } from './packing.service';
 import { BillService } from './bill.service';
 import { RemissionService } from './remission.service';
 import { SaleService } from './sale.service';
@@ -15,7 +14,6 @@ export class BusinessLogicService {
   constructor(
     private clientService: ClientService,
     private productService: ProductService,
-    private packingService: PackingService,
     private billService: BillService,
     private remissionService: RemissionService,
     private saleService: SaleService,
@@ -28,10 +26,6 @@ export class BusinessLogicService {
 
   getProductService(): ProductService {
     return this.productService
-  }
-
-  getPackingService(): PackingService {
-    return this.packingService
   }
 
   getBillService(): BillService {

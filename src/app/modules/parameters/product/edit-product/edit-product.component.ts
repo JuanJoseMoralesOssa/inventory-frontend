@@ -2,7 +2,6 @@ import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
-import { PackingModel } from 'src/app/models/packing.model';
 import { ProductModel } from 'src/app/models/product.model';
 
 @Component({
@@ -15,12 +14,10 @@ export class EditProductComponent {
   fGroup: FormGroup = new FormGroup({});
 
   product: ProductModel;
-  productName: string = '';
+
   code: string = '';
-  totalQuantity: number = 0;
+  productName: string = '';
   totalWeight: number = 0;
-  packingId: number = 0;
-  packing: PackingModel = {};
 
   constructor(
     private dialogRef: DialogRef<ProductModel>,
@@ -28,12 +25,9 @@ export class EditProductComponent {
     @Inject(DIALOG_DATA) updateProduct: ProductModel,
   ) {
     this.product = updateProduct;
-    this.productName = updateProduct.productName!;
     this.code = updateProduct.code!;
-    this.totalQuantity = updateProduct.totalQuantity!;
+    this.productName = updateProduct.productName!;
     this.totalWeight = updateProduct.totalWeight!;
-    this.packingId = updateProduct.packingId!;
-    this.packing = updateProduct.packing!;
   }
 
   ngOnInit() {
@@ -43,9 +37,8 @@ export class EditProductComponent {
 
   BuildForm() {
     this.fGroup = this.fb.group({
-      productName: ['', [Validators.required]],
       code: ['', [Validators.required]],
-      totalQuantity: ['', [Validators.required]],
+      productName: ['', [Validators.required]],
       totalWeight: ['', [Validators.required]],
     });
   }
@@ -56,9 +49,8 @@ export class EditProductComponent {
 
   updateFormValues() {
     this.fGroup.patchValue({
-      productName: this.productName,
       code: this.code,
-      totalQuantity: this.totalQuantity,
+      productName: this.productName,
       totalWeight: this.totalWeight,
     });
   }
@@ -70,12 +62,9 @@ export class EditProductComponent {
   closeWithRes() {
     this.product = {
       id: this.product.id,
-      productName: this.GetFormGroup['productName'].value,
       code: this.GetFormGroup['code'].value,
-      totalQuantity: this.GetFormGroup['totalQuantity'].value,
+      productName: this.GetFormGroup['productName'].value,
       totalWeight: this.GetFormGroup['totalWeight'].value,
-      // packingId: this.product.packingId,
-      // packing: this.product.packing,
     }
     this.dialogRef.close(this.product);
   }

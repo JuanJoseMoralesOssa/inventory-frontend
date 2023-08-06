@@ -22,7 +22,9 @@ export class ListClientComponent {
   faEye = faEye;
   faPenToSquare = faPenToSquare;
   faTrashCan = faTrashCan;
+
   dataSourceClients = new DataSourceClient();
+
   clients: ClientModel[] = [];
   columns: string[] = ['id', 'clientName', 'sales', 'actions'];
   input = new FormControl('', { nonNullable: true })

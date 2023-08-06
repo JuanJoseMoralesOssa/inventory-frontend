@@ -4,7 +4,6 @@ import { ProductDataSourceService } from './product-data-source.service';
 import { ClientDataSourceService } from './client-data-source.service';
 import { BillDataSourceService } from './bill-data-source.service';
 import { RemissionDataSourceService } from './remission-data-source.service';
-import { PackingDataSourceService } from './packing-data-source.service';
 import { ProductSaleDataSourceService } from './product-sale-data-source.service';
 
 @Injectable({
@@ -18,7 +17,6 @@ export class DataSourceService {
     private clientDataSourceService: ClientDataSourceService,
     private billDataSourceService: BillDataSourceService,
     private remissionDataSourceService: RemissionDataSourceService,
-    private packingDataSourceService: PackingDataSourceService,
     private productSaleDataSourceService: ProductSaleDataSourceService,
   ) { }
 
@@ -45,8 +43,5 @@ export class DataSourceService {
   getProductsSaleData(): ProductSaleDataSourceService {
     return this.productSaleDataSourceService
   }
-
-  getPackingsData(): PackingDataSourceService {
-    return this.packingDataSourceService
-  }
+  
 }

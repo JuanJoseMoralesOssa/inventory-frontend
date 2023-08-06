@@ -21,9 +21,11 @@ export class ListProductComponent {
   faEye = faEye;
   faPenToSquare = faPenToSquare;
   faTrashCan = faTrashCan;
+
   dataSourceProducts = new DataSourceProduct();
+
   products: ProductModel[] = [];
-  columns: string[] = ['id', 'code', 'productName','totalQuantity','totalWeight', 'actions']; //'sales','packing'
+  columns: string[] = ['id', 'code', 'productName','totalWeight', 'actions']; //'sales'
   input = new FormControl('', { nonNullable: true })
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
 
@@ -59,7 +61,7 @@ export class ListProductComponent {
   update(product: ProductModel) {
     this.businessLogic.getProductService().updateProduct(product).subscribe({
       next: () => {
-        this.dataSourceProducts.update(product.id, { code: product.code, productName: product.productName, totalQuantity: product.totalQuantity, totalWeight:product.totalWeight });
+        this.dataSourceProducts.update(product.id, { code: product.code, productName: product.productName, totalWeight:product.totalWeight });
       },
       error: () => {
         alert('No se actualizo el producto')
@@ -73,7 +75,7 @@ export class ListProductComponent {
   create(product: ProductModel) {
     this.businessLogic.getProductService().createProduct(product).subscribe({
       next: () => {
-        this.dataSourceProducts.create( { id: product.id, code: product.code, productName: product.productName, totalQuantity: product.totalQuantity, totalWeight:product.totalWeight});
+        this.dataSourceProducts.create( { id: product.id, code: product.code, productName: product.productName, totalWeight:product.totalWeight});
       },
       error: () => {
         alert('No se creo el producto')
@@ -162,7 +164,6 @@ export class ListProductComponent {
     'id' in obj &&
     'code' in obj &&
     'productName' in obj &&
-    'totalQuantity' in obj &&
     'totalWeight' in obj
     );
   }

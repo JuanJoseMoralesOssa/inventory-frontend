@@ -28,9 +28,8 @@ export class CreateProductComponent {
 
   BuildForm() {
     this.fGroup = this.fb.group({
-      productName: ['', [Validators.required]],
       code: ['', [Validators.required]],
-      totalQuantity: ['', [Validators.required]],
+      productName: ['', [Validators.required]],
       totalWeight: ['', [Validators.required]],
     });
   }
@@ -46,12 +45,9 @@ export class CreateProductComponent {
   closeWithRes() {
     this.product = {
       id: undefined,
-      productName: this.GetFormGroup['productName'].value,
       code: this.GetFormGroup['code'].value,
-      totalQuantity: this.GetFormGroup['totalQuantity'].value,
+      productName: this.GetFormGroup['productName'].value,
       totalWeight: this.GetFormGroup['totalWeight'].value,
-      // packingId: 0,
-      // packing: {},
     }
     this.dialogRef.close(this.product);
   }

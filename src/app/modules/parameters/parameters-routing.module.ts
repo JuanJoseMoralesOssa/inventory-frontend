@@ -8,13 +8,8 @@ import { ListProductComponent } from './product/list-product/list-product.compon
 import { CreateProductComponent } from './product/create-product/create-product.component';
 import { DeleteProductComponent } from './product/delete-product/delete-product.component';
 import { EditProductComponent } from './product/edit-product/edit-product.component';
-import { ListPackingComponent } from './packing/list-packing/list-packing.component';
-import { EditPackingComponent } from './packing/edit-packing/edit-packing.component';
-import { DeletePackingComponent } from './packing/delete-packing/delete-packing.component';
-import { CreatePackingComponent } from './packing/create-packing/create-packing.component';
 import { ViewClientComponent } from './client/view-client/view-client.component';
 import { ViewProductComponent } from './product/view-product/view-product.component';
-import { ViewPackingComponent } from './packing/view-packing/view-packing.component';
 
 const routes: Routes = [
   {
@@ -56,26 +51,6 @@ const routes: Routes = [
   {
     path: "view-product",
     component: ViewProductComponent,
-  },
-  {
-    path: "list-packing",
-    component: ListPackingComponent,
-  },
-  {
-    path: "edit-packing/:id",
-    component: EditPackingComponent,
-  },
-  {
-    path: "delete-packing",
-    component: DeletePackingComponent,
-  },
-  {
-    path: "save-packing",
-    component: CreatePackingComponent,
-  },
-  {
-    path: "view-packing",
-    component: ViewPackingComponent,
   },
 ];
 
