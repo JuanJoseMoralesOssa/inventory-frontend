@@ -98,6 +98,10 @@ export class CreateSaleComponent {
             const filter = `${item.remission}`;
               if (item.remission === value) {
                 this.remissionNumId = item.id;
+                this.remissionNum = {
+                  id: item.id,
+                  remission: item.remission,
+                }
               }
             return filter.includes(value);
           });
@@ -121,6 +125,10 @@ export class CreateSaleComponent {
             const filter = `${item.clientName}`;
               if (item.clientName?.toLowerCase() === value.toLowerCase()) {
                 this.clientId = item.id;
+                this.client = {
+                  id: item.id,
+                  clientName: item.clientName,
+                }
               }
             return filter.toLowerCase().includes(value.toLowerCase());
           });
@@ -145,6 +153,10 @@ export class CreateSaleComponent {
                 const filter = `${item.bill}`;
                 if (item.bill === value) {
                   this.billId = item.id;
+                  this.bill = {
+                    id: item.id,
+                    bill: item.bill,
+                  }
                 }
                 return filter.includes(value);
               });
@@ -154,6 +166,10 @@ export class CreateSaleComponent {
                 const filter = `${item.remission}`;
                 if (item.remission === value) {
                   this.remissionId = item.id;
+                  this.remission = {
+                    id: item.id,
+                    remission: item.remission,
+                  }
                 }
                 return filter.includes(value);
               });
@@ -310,6 +326,15 @@ export class CreateSaleComponent {
         billId: this.billId,
         bill: this.bill,
       }
+      if (this.GetFormGroup['document'].value != this.bill?.bill || this.bill?.bill === undefined) {
+        this.sale = {
+          ...this.sale,
+          bill: {
+            bill: this.GetFormGroup['document'].value ? this.GetFormGroup['document'].value : undefined,
+          }
+        }
+      }
+
     } else if (this.selectedToggle == 'remission') {
       this.sale = {
         id: this.sale.id,
@@ -321,7 +346,35 @@ export class CreateSaleComponent {
         remissionId: this.remissionId,
         remission: this.remission,
       }
+      if (this.GetFormGroup['document'].value != this.remission?.remission || this.remission?.remission === undefined) {
+        this.sale = {
+          ...this.sale,
+          remission: {
+            remission: this.GetFormGroup['document'].value ? this.GetFormGroup['document'].value : undefined,
+          }
+        }
+      }
     }
+
+    if (this.GetFormGroup['remissionNum'].value != this.remissionNum?.remission || this.remissionNum?.remission === undefined) {
+      this.sale.remissionNumId = undefined;
+      this.sale = {
+          ...this.sale,
+          remissionNum: {
+            remission: this.GetFormGroup['remissionNum'].value ? this.GetFormGroup['remissionNum'].value : undefined,
+          }
+        }
+      }
+
+    if (this.GetFormGroup['clientName'].value != this.client?.clientName || this.client?.clientName === undefined) {
+      this.sale.clientId = undefined;
+      this.sale = {
+          ...this.sale,
+          client: {
+            clientName: this.GetFormGroup['clientName'].value ? this.GetFormGroup['clientName'].value : undefined,
+          }
+        }
+      }
 
     this.dialogRef.close(this.sale);
   }

@@ -29,17 +29,13 @@ export class EditSaleComponent {
   sale: SaleModel;
   remissionNum: RemissionModel | undefined;
   remissionNumId: number | undefined;
-  remissionNum_remission: number | undefined;
   saleDate: string | undefined;
   client: ClientModel | undefined;
   clientId: number | undefined;
-  clientName: string | undefined;
   bill: BillModel | undefined;
   billId: number | undefined;
-  bill_bill: number | undefined;
   remission: RemissionModel | undefined;
   remissionId: number | undefined;
-  remission_remission: number | undefined;
 
   clients: ClientModel[] | undefined;
   remissions: RemissionModel[] | undefined;
@@ -63,20 +59,16 @@ export class EditSaleComponent {
     this.saleDate = updateSale.saleDate;
     this.remissionNum = updateSale.remissionNum;
     this.remissionNumId = updateSale.remissionNumId;
-    this.remissionNum_remission = updateSale.remissionNum?.remission;
     this.client = updateSale.client;
     this.clientId = updateSale.client?.id;
-    this.clientName = updateSale.client?.clientName;
     this.bill = updateSale.bill;
     this.billId = updateSale.bill?.id;
-    this.bill_bill = updateSale.bill?.bill;
     this.remission = updateSale.remission;
     this.remissionId = updateSale.remission?.id;
-    this.remission_remission = updateSale.remission?.remission;
-    if (this.bill_bill && !this.remission_remission) {
+    if (this.bill?.bill && !this.remission?.remission) {
       this.selectedToggle = 'bill';
       this.loadBills();
-    } else if (!this.bill_bill && this.remission_remission){
+    } else if (!this.bill?.bill && this.remission?.remission){
       this.selectedToggle = 'remission';
       this.loadRemissionsDoc();
     } else {
@@ -137,6 +129,10 @@ export class EditSaleComponent {
             const filter = `${item.remission}`;
               if (item.remission == value) {
                 this.remissionNumId = item.id;
+                this.remissionNum = {
+                  id: item.id,
+                  remission: item.remission,
+                }
               }
             return filter.includes(value);
           });
@@ -160,6 +156,10 @@ export class EditSaleComponent {
             const filter = `${item.clientName}`;
               if (item.clientName?.toLowerCase() === value.toLowerCase()) {
                 this.clientId = item.id;
+                this.client = {
+                  id: item.id,
+                  clientName: item.clientName,
+                }
               }
             return filter.toLowerCase().includes(value.toLowerCase());
           });
@@ -184,6 +184,10 @@ export class EditSaleComponent {
                 const filter = `${item.bill}`;
                 if (item.bill === value) {
                   this.billId = item.id;
+                  this.bill = {
+                    id: item.id,
+                    bill: item.bill,
+                  }
                 }
                 return filter.includes(value);
               });
@@ -193,6 +197,10 @@ export class EditSaleComponent {
                 const filter = `${item.remission}`;
                 if (item.remission === value) {
                   this.remissionId = item.id;
+                  this.remission = {
+                    id: item.id,
+                    remission: item.remission,
+                  }
                 }
                 return filter.includes(value);
               });
@@ -310,11 +318,11 @@ export class EditSaleComponent {
   }
 
   updateFormValues() {
-    const document = this.bill_bill ? this.bill_bill : (this.remission_remission ? this.remission_remission : undefined);
+    const document = this.bill?.bill ? this.bill?.bill : (this.remission?.remission ? this.remission.remission : undefined);
     this.fGroup.patchValue({
       saleDate: this.getFormattedDate(),
-      remissionNum: this.remissionNum_remission,
-      clientName: this.clientName,
+      remissionNum: this.remissionNum?.remission,
+      clientName: this.client?.clientName,
       document: document,
     });
   }
@@ -335,56 +343,71 @@ export class EditSaleComponent {
   }
 
   closeWithRes() {
-    let remissionNum = this.remissionNum;
-    if (remissionNum?.remission != this.GetFormGroup['remissionNum'].value) {
-      remissionNum = {
-        id: this.remissionNumId,
-        remission: this.GetFormGroup['remissionNum'].value? this.GetFormGroup['remissionNum'].value: this.remissionNum?.remission,
-      }
-    }
 
-    let client = this.client;
-    if (client?.clientName != this.GetFormGroup['clientName'].value) {
-      client = {
-        id: this.clientId,
-        clientName: this.GetFormGroup['clientName'].value ? this.GetFormGroup['clientName'].value : this.client?.clientName,
-      }
-    }
-
-    let bill = this.bill;
-    let remission = this.remission;
     if (this.selectedToggle == 'bill') {
-        bill = {
-          id: this.billId,
-          bill: this.GetFormGroup['document'].value ? this.GetFormGroup['document'].value : this.bill?.bill,
-        }
+
         this.sale = {
           id: this.sale.id,
           saleDate: this.getSaleDate(),
           remissionNumId: this.remissionNumId,
-          remissionNum,
-          clientId: client?.id,
-          client,
+          remissionNum: this.remissionNum,
+          clientId: this.sale.clientId,
+          client: this.client,
           products: [],
           billId: this.billId,
-          bill,
+          bill: this.bill,
+        }
+
+      if (this.GetFormGroup['document'].value != this.bill?.bill || this.bill?.bill === undefined) {
+        this.sale.billId = undefined;
+        this.sale = {
+          ...this.sale,
+          bill: {
+            bill: this.GetFormGroup['document'].value ? this.GetFormGroup['document'].value : undefined,
+          }
+        }
       }
     } else if (this.selectedToggle == 'remission') {
-        remission = {
-          id: this.remissionId,
-          remission: this.GetFormGroup['document'].value ? this.GetFormGroup['document'].value : this.remission?.remission,
-        }
-        this.sale = {
+      this.sale = {
         id: this.sale.id,
         saleDate: this.getSaleDate(),
         remissionNumId: this.remissionNumId,
-        remissionNum,
+        remissionNum: this.remissionNum,
         clientId: this.clientId,
-        client,
+        client: this.client,
         remissionId: this.remissionId,
-        remission,
+        remission: this.remission,
+      }
+      if (this.GetFormGroup['document'].value != this.remission?.remission || this.remission?.remission === undefined) {
+        this.sale.remissionId = undefined;
+        this.sale = {
+          ...this.sale,
+          remission: {
+            remission: this.GetFormGroup['document'].value ? this.GetFormGroup['document'].value : undefined,
+          }
+        }
       }
     }
+
+    if (this.GetFormGroup['remissionNum'].value != this.remissionNum?.remission || this.remissionNum?.remission === undefined) {
+      this.sale.remissionNumId = undefined;
+      this.sale = {
+          ...this.sale,
+          remissionNum: {
+            remission: this.GetFormGroup['remissionNum'].value ? this.GetFormGroup['remissionNum'].value : undefined,
+          }
+        }
+      }
+
+    if (this.GetFormGroup['clientName'].value != this.client?.clientName || this.client?.clientName === undefined) {
+      this.sale.clientId = undefined;
+      this.sale = {
+          ...this.sale,
+          client: {
+            clientName: this.GetFormGroup['clientName'].value ? this.GetFormGroup['clientName'].value : undefined,
+          }
+        }
+      }
 
     this.dialogRef.close(this.sale);
   }
