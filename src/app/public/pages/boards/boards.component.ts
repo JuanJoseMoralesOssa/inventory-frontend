@@ -20,7 +20,6 @@ export class BoardsComponent {
   faGear = faGear;
   faUserGroup = faUserGroup;
 
-
   items = [
     {
       label: 'Item 1',
