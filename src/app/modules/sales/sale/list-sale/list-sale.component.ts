@@ -41,7 +41,6 @@ export class ListSaleComponent {
 
   ngOnInit(): void {
     this.dataSourceService.getSaleData().loadSales();
-
     this.input.valueChanges
       .pipe(
         debounceTime(300)
@@ -126,11 +125,15 @@ export class ListSaleComponent {
     });
   }
 
-  getSaleValue(sale: SaleModel) {
+  getSaleValue(sale: SaleModel): void {
     this.sale = sale;
   }
 
-  getDateFromString(dateString: string) {
+  getTotalWeightSale(sale: SaleModel): Number {
+    return this.dataSourceSales.getTotalWeigthSale(sale)
+  }
+
+  getDateFromString(dateString: string): Date {
     return new Date(dateString);
   }
 

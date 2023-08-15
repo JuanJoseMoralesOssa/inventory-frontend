@@ -16,13 +16,21 @@ export class DataSourceSale extends DataSource<SaleModel> {
     this.data.next(sales);
   }
 
+  getTotalWeigthSale(sale: SaleModel): Number {
+    if (sale.productSales) {
+      return sale.productSales
+          .map(item => item.weight!)
+          .reduce((weight, total) => weight + total, 0);
+    }
+    return 0
+  }
+
   getTotal() {
     // const sales = this.data.getValue();
     // return sales
     //       .map(item => item.price)
     //       .reduce((price, total) => price + total, 0);
   }
-
 
   find(query: string) {
 
