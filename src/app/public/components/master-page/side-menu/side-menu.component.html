@@ -1,26 +1,30 @@
-<div class="w-14 h-14 flex items-center bg-amber-700 transition-all ease-in-out shadow rounded-2xl mb-1"
+<div class="w-14 h-14 flex justify-center items-center bg-amber-700 transition-all ease-in-out shadow rounded-2xl mb-1"
   [ngClass]="collapsed ? 'h-fit w-full p-1': '' ">
-  <div class="flex items-center rounded-2xl px-2" [ngClass]="collapsed ? 'w-1/4 bg-amber-600 py-2 border-2 border-yellow-500': '' ">
+  <div class="flex items-center rounded-2xl px-1"
+    [ngClass]="collapsed ? 'w-fit bg-amber-600 py-1 border-2 border-yellow-500': '' ">
     <button (click)="collapsed = !collapsed"
-      class="bg-white text-center w-10 rounded-md p-1 font-black text-2xl border-none cursor-pointer" [ngClass]="collapsed ? 'text-amber-800': '' ">
+      class="bg-white text-center w-10 rounded-md p-1 font-black text-xl border-none cursor-pointer"
+      [ngClass]="collapsed ? 'text-amber-800': '' ">
       <fa-icon [icon]="fahouse"></fa-icon>
     </button>
     <div *ngIf="collapsed" (click)="collapsed = !collapsed"
-      class="ml-2 text-2xl font-bold text-white mr-auto cursor-pointer">
+      class="ml-1 text-xl font-semibold text-white mr-auto cursor-pointer">
       Dashboard </div>
-    <button (click)="collapsed = false" *ngIf="collapsed" class="mr-1 w-4 h-8 rounded-lg bg-transparent border-none">
-      <i class="text-white text-2xl cursor-pointer px-1 border-2 rounded-full border-yellow-50">x</i>
+    <button (click)="collapsed = false" *ngIf="collapsed" class="mx-1 w-4 h-8 rounded-lg bg-transparent border-none">
+      <i class="text-white text-xl cursor-pointer px-1 border-2 rounded-full border-yellow-50">x</i>
     </button>
   </div>
-  <ul class="list-none px-4 py-2 w-full flex flex-wrap justify-around items-center cursor-pointer" *ngIf="collapsed">
-    <li class="shrink w-40 border-y-2 my-1 border-yellow-50 mx-2 rounded-xl hover:bg-white text-white hover:text-black p-2"
+  <ul class="list-none p-1 w-full flex flex-wrap justify-around items-center cursor-pointer" *ngIf="collapsed">
+    <li
+      class="shrink w-fit border-y-2 my-1 border-yellow-50 mx-1 rounded-xl hover:bg-white text-white hover:text-black px-2 py-1"
       *ngFor="let option of options">
-      <a class="w-full flex justify-between items-center h-10 text-inherit text-center transition-all p-1"
+      <a class="w-fit flex justify-between items-center h-fit text-inherit text-center transition-all p-1 pl-0"
         (click)="chooseOption(option.text)">
-        <i class="text-xl w-8 ml-2">
+        <i class="text-xl w-7 mr-1">
           <fa-icon [icon]="option.icon"></fa-icon>
         </i>
-        <span class="w-full" *ngIf="collapsed">{{option.text}}</span>
+        <span class="w-fit" *ngIf="collapsed">{{option.text}}</span>
+
       </a>
     </li>
   </ul>
