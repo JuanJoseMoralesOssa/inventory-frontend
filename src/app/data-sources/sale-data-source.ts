@@ -56,7 +56,7 @@ export class DataSourceSale extends DataSource<SaleModel> {
       sale.id = 1;
     }
       if (sale.id) {
-      sales.push(sale)
+      sales.unshift(sale)
     }
     this.data.next(sales);
   }
