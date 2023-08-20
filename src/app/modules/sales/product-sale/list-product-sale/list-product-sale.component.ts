@@ -23,7 +23,7 @@ export class ListProductSaleComponent {
   faTrashCan = faTrashCan;
   dataSourceProductSales = new DataSourceProductSale();
   productSales: ProductSaleModel[] = [];
-  columns: string[] = ['id','sale', 'product', 'weight', 'isBorrowed', 'actions' ];
+  columns: string[] = ['sale', 'product', 'weight', 'isBorrowed', 'actions' ]; // 'id',
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
   input = new FormControl('', { nonNullable: true })
 

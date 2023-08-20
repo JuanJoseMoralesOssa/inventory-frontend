@@ -23,7 +23,7 @@ export class ListBillComponent {
   faTrashCan = faTrashCan;
   dataSourceBills = new DataSourceBill();
   bills: BillModel[] = [];
-  columns: string[] = ['id', 'billNum', 'sale', 'actions'];
+  columns: string[] = [ 'billNum', 'actions']; // 'id', 'sale',
   input = new FormControl('', { nonNullable: true })
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
 

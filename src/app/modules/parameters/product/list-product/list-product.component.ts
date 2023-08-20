@@ -25,7 +25,7 @@ export class ListProductComponent {
   dataSourceProducts = new DataSourceProduct();
 
   products: ProductModel[] = [];
-  columns: string[] = ['id', 'code', 'productName','totalWeight', 'actions']; //'sales'
+  columns: string[] = [ 'code', 'productName','totalWeight', 'actions']; //'id', 'sales'
   input = new FormControl('', { nonNullable: true })
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
 

@@ -23,7 +23,7 @@ export class ListRemissionComponent {
   faTrashCan = faTrashCan;
   dataSourceRemissions = new DataSourceRemission();
   remissions: RemissionModel[] = [];
-  columns: string[] = ['id', 'remissionNum', 'sale', 'actions'];
+  columns: string[] = [ 'remissionNum', 'actions']; // 'id', 'sale',
   input = new FormControl('', { nonNullable: true })
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
 

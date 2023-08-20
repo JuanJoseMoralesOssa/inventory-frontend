@@ -26,7 +26,7 @@ export class ListClientComponent {
   dataSourceClients = new DataSourceClient();
 
   clients: ClientModel[] = [];
-  columns: string[] = ['id', 'clientName', 'sales', 'actions'];
+  columns: string[] = [ 'clientName', 'actions']; //'id', 'sales',
   input = new FormControl('', { nonNullable: true })
   action: 'edit' | 'view' | 'remove' | 'create' = 'view';
 
