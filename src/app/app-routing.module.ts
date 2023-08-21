@@ -4,6 +4,7 @@ import { HomeComponent } from './public/components/home/home.component';
 import { PathNotFoundComponent } from './public/components/errors/path-not-found/path-not-found.component';
 import { BoardsComponent } from './public/pages/boards/boards.component';
 import { DashboardComponent } from './public/pages/dashboard/dashboard.component';
+import { StatisticsComponent } from './modules/reports/statistics/statistics.component';
 
 const routes: Routes = [
   {
@@ -32,8 +33,16 @@ const routes: Routes = [
     loadChildren: () => import("./modules/parameters/parameters.module").then(m => m.ParametersModule),
   },
   {
-    path: "reports",
-    loadChildren: () => import("./modules/reports/reports.module").then(m => m.ReportsModule)
+    path: "reports/statistics",
+    component: StatisticsComponent,
+    children: [
+      {
+        path: 'reports',
+        loadChildren: () => import("./modules/reports/reports.module").then(m => m.ReportsModule)
+      }
+    ]
+    // loadChildren: () => import("./modules/reports/reports.module").then(m => m.ReportsModule)
+
   },
   {
     path: "sales",

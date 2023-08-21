@@ -129,9 +129,6 @@ export class SaleService {
         }
       }
     }
-    console.log('====================================');
-    console.log(newSale);
-    console.log('====================================');
     return this.http.put<SaleModel>(`${this.urlBase}sale-default/${data.id}`, newSale);
   }
 

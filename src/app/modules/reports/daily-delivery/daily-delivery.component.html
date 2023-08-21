@@ -1,0 +1,12 @@
+<div>
+  <label for="startDate">Fecha de inicio:</label>
+  <input type="date" id="startDate" [(ngModel)]="startDate">
+
+  <label for="endDate">Fecha final:</label>
+  <input type="date" id="endDate" [(ngModel)]="endDate">
+
+  <button (click)="search()">Buscar</button>
+</div>
+
+<textarea [(ngModel)]="resultData" rows="10" cols="50"></textarea>
+<button (click)="copyToClipboard()">Copiar al portapapeles</button>
