@@ -1,7 +1,7 @@
 <router-outlet name="statisticsDetails">
 </router-outlet>
 <div class="mx-1 my-2 md:mx-80 md:my-4 bg-yellow-100">
-  <div class="p-4 pb-0">
+  <div class="p-4">
     <h2 class="text-orange-900 text-lg font-medium">Consultar las ventas segun dos fechas:</h2>
   </div>
   <div class=" rounded-lg px-4 flex flex-wrap justify-evenly w-full">
@@ -17,7 +17,7 @@
       class="w-full bg-orange-400 text-orange-800 p-2 rounded-lg hover:text-white hover:bg-orange-500">Consultar</button>
   </div>
 
-  <div *ngIf="result" class="p-2">
+  <div *ngIf="result" class="p-2 pt-0">
     <p class="w-full h-52 mb-3 overflow-y-auto">{{ result }}</p>
     <button (click)="copyToClipboard()"
       class="w-full bg-orange-400 text-orange-800 p-2 rounded-lg hover:text-white hover:bg-orange-500">Copiar al
