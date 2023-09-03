@@ -76,8 +76,10 @@ export class ListSaleComponent {
 
   create(p_sale: SaleModel) {
     this.businessLogic.getSaleService().createSale(p_sale).subscribe({
-      next: () => {
-        this.dataSourceSales.create({ id: p_sale.id, saleDate: p_sale.saleDate, remissionNum: p_sale.remissionNum, client: p_sale.client, remission: p_sale.remission, bill: p_sale.bill });
+      next: (data: SaleModel) => {
+        if (data.clientId && data.remissionNumId) {
+          this.dataSourceSales.create({ id: p_sale.id, saleDate: p_sale.saleDate, remissionNum: p_sale.remissionNum, client: p_sale.client, remission: p_sale.remission, bill: p_sale.bill });
+        }
       },
       error: () => {
         alert('No se creo la venta')
@@ -107,22 +109,26 @@ export class ListSaleComponent {
   }
 
   createProductSale(product_sale: ProductSaleModel) {
-    this.businessLogic.getProductsSaleService().createProductSale(product_sale).subscribe({
-      next: () => {
-        if (this.sale.productSales?.length) {
-          this.sale.productSales.push({ weight: product_sale.weight, product: product_sale.product })
-          this.dataSourceSales.update(this.sale.id, { products: this.sale.productSales});
+    if (product_sale.productId) {
+      this.businessLogic.getProductsSaleService().createProductSale(product_sale).subscribe({
+        next: () => {
+          if (this.sale.productSales?.length) {
+            this.sale.productSales.push({ weight: product_sale.weight, product: product_sale.product })
+            this.dataSourceSales.update(this.sale.id, { products: this.sale.productSales });
+          }
+          this.sale.productSales = [{ weight: product_sale.weight, product: product_sale.product }]
+          this.dataSourceSales.update(this.sale.id, { products: this.sale.productSales });
+        },
+        error: () => {
+          alert('No se agrego el producto a la venta')
+          console.log('====================================');
+          console.log('Error al agregar el producto a la venta');
+          console.log('====================================');
         }
-        this.sale.productSales = [ { weight: product_sale.weight, product: product_sale.product } ]
-        this.dataSourceSales.update(this.sale.id, { products: this.sale.productSales});
-      },
-      error: () => {
-        alert('No se agrego el producto a la venta')
-        console.log('====================================');
-        console.log('Error al agregar el producto a la venta');
-        console.log('====================================');
-      }
-    });
+      });
+    } else {
+      alert('No se agrego el producto a la venta')
+    }
   }
 
   getSaleValue(sale: SaleModel): void {
@@ -145,7 +151,7 @@ export class ListSaleComponent {
     });
     dialogRefCreate.closed.subscribe(output => {
       if (this.isProductSaleModel(output)) {
-            this.createProductSale(output);
+          this.createProductSale(output);
         } else {
           console.error('Tipo de salida Invalida. Se esperada ProductSaleModel.');
         }

@@ -305,12 +305,15 @@ export class CreateSaleComponent {
 
   getSaleDate(): string {
     const dateString = this.GetFormGroup['saleDate'].value;
-    const dateParts = dateString.split("-");
-    const day = parseInt(dateParts[2], 10);
-    const month = parseInt(dateParts[1], 10);
-    const year = parseInt(dateParts[0], 10);
-    const dateObject = new Date(year, month - 1, day);
-    return dateObject.toISOString();
+    if (dateString) {
+      const dateParts = dateString.split("-");
+      const day = parseInt(dateParts[2], 10);
+      const month = parseInt(dateParts[1], 10);
+      const year = parseInt(dateParts[0], 10);
+      const dateObject = new Date(year, month - 1, day);
+      return dateObject.toISOString();
+    }
+    return '';
   }
 
   closeWithRes() {

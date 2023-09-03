@@ -334,12 +334,15 @@ export class EditSaleComponent {
 
   getSaleDate(): string {
     const dateString = this.GetFormGroup['saleDate'].value;
-    const dateParts = dateString.split("-");
-    const day = parseInt(dateParts[2], 10);
-    const month = parseInt(dateParts[1], 10);
-    const year = parseInt(dateParts[0], 10);
-    const dateObject = new Date(year, month - 1, day);
-    return dateObject.toISOString();
+    if (dateString) {
+      const dateParts = dateString.split("-");
+      const day = parseInt(dateParts[2], 10);
+      const month = parseInt(dateParts[1], 10);
+      const year = parseInt(dateParts[0], 10);
+      const dateObject = new Date(year, month - 1, day);
+      return dateObject.toISOString();
+    }
+    return '';
   }
 
   closeWithRes() {
@@ -351,7 +354,7 @@ export class EditSaleComponent {
           saleDate: this.getSaleDate(),
           remissionNumId: this.remissionNumId,
           remissionNum: this.remissionNum,
-          clientId: this.sale.clientId,
+          clientId: this.client?.id,
           client: this.client,
           products: [],
           billId: this.billId,
@@ -373,7 +376,7 @@ export class EditSaleComponent {
         saleDate: this.getSaleDate(),
         remissionNumId: this.remissionNumId,
         remissionNum: this.remissionNum,
-        clientId: this.clientId,
+        clientId: this.client?.id,
         client: this.client,
         remissionId: this.remissionId,
         remission: this.remission,
@@ -407,7 +410,11 @@ export class EditSaleComponent {
             clientName: this.GetFormGroup['clientName'].value ? this.GetFormGroup['clientName'].value : undefined,
           }
         }
-      }
+    }
+
+    console.log('====================================');
+    console.log(this.sale);
+    console.log('====================================');
 
     this.dialogRef.close(this.sale);
   }
